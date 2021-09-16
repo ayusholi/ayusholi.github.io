@@ -11,134 +11,15 @@
     <title>Water for Turtles</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <style type="text/css">
-
-        body{
-
-        }
-        /*     General overwrite     */
-        a{
-            color: #2C93FF;
-        }
-        a:hover, a:focus {
-            color: #1084FF;
-        }
-        a:focus, a:active,
-        button::-moz-focus-inner,
-        input[type="reset"]::-moz-focus-inner,
-        input[type="button"]::-moz-focus-inner,
-        input[type="submit"]::-moz-focus-inner,
-        select::-moz-focus-inner,
-        input[type="file"] > input[type="button"]::-moz-focus-inner {
-            outline : 0;
-        }
-
-        /*           Typography          */
-
-        p{
-            font-size: 16px;
-            line-height: 1.6180em;
-        }
-
-        .main{
-            background-image: url('https://free4kwallpapers.com/uploads/originals/2020/04/17/rocket-astronaut-sw-wallpaper.jpg');
-            background-position: center center;
-            background-size: cover;
-            height: auto;
-            left: 0;
-            min-height: 100%;
-            min-width: 100%;
-            position: absolute;
-            top: 0;
-            width: auto;
-        }
-        .cover{
-            position: fixed;
-            opacity: 1;
-            background-color: rgba(0,0,0,.4);
-            left: 0px;
-            top: 0px;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .cover.black{
-            background-color: rgba(0,0,0,.4);
-        }
-
-        .logo-container .logo{
-            overflow: hidden;
-            border-radius: 50%;
-            border: 1px solid #333333;
-            width: 60px;
-            float: left;
-        }
-
-        .main .logo{
-            color: #FFFFFF;
-            font-size: 56px;
-            font-weight: 300;
-            position: relative;
-            text-align: center;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.33);
-            margin-top: 150px;
-            z-index: 3;
-        }
-        .main .logo.cursive{
-            font-family: 'Merriweather';
-            font-size: 82px;
-            font-weight: 600;
-            font-style: italic;
-
-        }
-        .main .content{
-            position: relative;
-            z-index: 4;
-        }
-        .main .motto{
-            min-height: 140px;
-        }
-        .main .motto, .main .subscribe .info-text{
-            font-size: 28px;
-            color: #FFFFFF;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.33);
-            text-align: center;
-            margin-top: 50px;
-
-        }
-        .main .subscribe .info-text{
-            font-size: 18px;
-            margin-bottom: 30px;
-        }
-
-        .footer{
-            position: relative;
-            bottom: 20px;
-            right: 0;
-            width: 100%;
-            color: #AAAAAA;
-            z-index: 4;
-            text-align: right;
-            margin-top: 50px;
-        }
-        .footer a{
-            color: #FFFFFF;
-        }
-
-        @media (min-width:991px){
-            .footer{
-                position: fixed;
-                bottom: 20px;
-            }
-        }
-
-    </style>
+    <link rel="stylesheet" href="style.css">
 
     <!--     Fonts     -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;0,900;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
 
 </head>
 
@@ -151,8 +32,29 @@
         </h1>
 
         <div class="content">
-            <h4 class="motto">Have patience. I'll be back</h4>
+            <h4 class="motto">Have patience. I'll be <a href="neumorph.html">back</a></h4>
         </div>
+
+        <div class="social-panel">
+            <div class ="frame">
+                <a href="https://github.com/ayusholi" class="btn">
+            <i class="fab fa-github" style="color: #1A1D21;"></i>
+            </a>
+            <a href="https://twitter.com/McLovinChinaMan" class="btn">
+                <i class="fab fa-twitter" style="color: #00acee;"></i>
+            </a>
+            <a href="https://www.linkedin.com/in/ayush-oli-368a13142/" class="btn">
+                <i class="fab fa-linkedin-in" style="color:#0e76a8;"></i>
+            </a>
+            <a href="#" class="btn">
+                <i class="fab fa-get-pocket" style="color:#ee4056;"></i>
+            </a>
+            <a href="mailto:reehoodayush@gmail.com" class="btn">
+                <i class="far fa-envelope"></i>
+            </a>
+            </div>
+        </div>
+        
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" type="text/javascript"></script>
