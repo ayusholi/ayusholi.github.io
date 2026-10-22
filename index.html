@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayush Oli — Product Engineer, AI</title>
+  <meta name="description" content="Ayush Oli — Product Engineer working on AI. Full stack, from Nepal, based in London." />
+
+  <!-- Apply saved / system theme before paint to avoid a flash -->
+  <script>
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (!t) t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <a href="#top" class="nav__logo">AO.</a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#life">Life</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn btn--icon" id="theme-toggle" aria-label="Toggle dark mode">
+      <span class="theme-icon theme-icon--light">☾</span>
+      <span class="theme-icon theme-icon--dark">☀</span>
+    </button>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero section" data-animate>
+      <div class="hero__tag">
+        <span class="flag">🇳🇵</span><span class="hero__tag-text">Nepal</span>
+        <span class="arrow">→</span>
+        <span class="flag">🇬🇧</span><span class="hero__tag-text">London</span>
+      </div>
+      <h1 class="hero__name">Ayush Oli</h1>
+      <p class="hero__headline"><span class="highlight">Product Engineer</span> — AI</p>
+      <p class="hero__sub">From Nepal, based in London. I build products end to end, from architecture to the last pixel.</p>
+      <div class="hero__actions">
+        <a href="#projects" class="btn btn--primary">See my work</a>
+        <a href="#contact" class="btn">Get in touch</a>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section id="about" class="section" data-animate>
+      <h2 class="section__title">About</h2>
+      <div class="card">
+        <p>
+          I'm an MSc Artificial Intelligence graduate and a full-stack engineer.
+          I work across Next.js, React, Express, NestJS, AWS, Docker and Tailwind,
+          and I've built mobile apps with Flutter.
+        </p>
+        <p>
+          Outside of code, I'm a barber, a photographer and a musician.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section id="skills" class="section" data-animate>
+      <h2 class="section__title">Skills</h2>
+      <ul class="tags">
+        <li class="tag">React</li>
+        <li class="tag">Next.js</li>
+        <li class="tag">JavaScript</li>
+        <li class="tag">Go</li>
+        <li class="tag">Docker</li>
+        <li class="tag">System Architecture</li>
+      </ul>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section id="projects" class="section" data-animate>
+      <h2 class="section__title">Projects</h2>
+      <div class="grid">
+        <article class="card card--project">
+          <div class="card__head">
+            <h3>The Chair</h3>
+            <span class="badge">Live</span>
+          </div>
+          <!-- TODO: replace with your own 1–2 line description -->
+          <p>A booking app for barbers. I use it to take bookings for my own cuts.</p>
+          <!-- TODO: add tech tags, e.g. <li class="tag tag--sm">Next.js</li> -->
+          <ul class="tags tags--sm"></ul>
+          <a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Visit site ↗</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ EXPERIENCE ============ -->
+    <section id="experience" class="section" data-animate>
+      <h2 class="section__title">Experience</h2>
+      <ol class="timeline">
+        <li class="card timeline__item">
+          <span class="timeline__date">Apr 2022 — Sep 2025</span>
+          <h3>Senior Software Engineer</h3>
+          <p class="timeline__org">Fusemachines Nepal</p>
+        </li>
+        <li class="card timeline__item">
+          <span class="timeline__date">Mar 2021 — Apr 2022</span>
+          <h3>Software Engineer</h3>
+          <p class="timeline__org">Hazesoft</p>
+        </li>
+        <li class="card timeline__item">
+          <span class="timeline__date">2020 — 2021</span>
+          <h3>Software Engineer</h3>
+          <p class="timeline__org">Diprung Technologies</p>
+        </li>
+      </ol>
+
+      <h3 class="subhead">Education</h3>
+      <div class="card timeline__item">
+        <h3>MSc Artificial Intelligence</h3>
+        <p class="timeline__org">Northumbria University</p>
+      </div>
+    </section>
+
+    <!-- ============ LIFE OUTSIDE TECH ============ -->
+    <section id="life" class="section" data-animate>
+      <h2 class="section__title">Outside tech</h2>
+
+      <div class="grid grid--3">
+        <article class="card card--life">
+          <span class="card__icon">✂</span>
+          <h3>Barbering</h3>
+          <p>I'm a self-taught professional barber. I take bookings through my own app.</p>
+          <a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" class="link">Book a cut ↗</a>
+        </article>
+
+        <article class="card card--life">
+          <span class="card__icon">◉</span>
+          <h3>Photography</h3>
+          <p>Street, landscape and vintage, shot around London and Nepal.</p>
+          <a href="#gallery" class="link">See photos ↓</a>
+        </article>
+
+        <article class="card card--life">
+          <span class="card__icon">♫</span>
+          <h3>Music</h3>
+          <p>I play guitar and sing.</p>
+        </article>
+      </div>
+
+      <!-- Photo gallery
+           To add a photo: put the file in /images and replace a slot with
+           <figure class="photo"><img src="images/your-photo.jpg" alt="Describe the photo" loading="lazy" /></figure>
+      -->
+      <div id="gallery" class="gallery">
+        <div class="photo photo--empty">Photo</div>
+        <div class="photo photo--empty">Photo</div>
+        <div class="photo photo--empty">Photo</div>
+        <div class="photo photo--empty">Photo</div>
+        <div class="photo photo--empty">Photo</div>
+        <div class="photo photo--empty">Photo</div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section id="contact" class="section" data-animate>
+      <h2 class="section__title">Contact</h2>
+      <div class="card card--contact">
+        <p class="contact__lead">Want to build something together? Say hi.</p>
+        <a href="mailto:ayusholi540@gmail.com" class="btn btn--primary btn--lg">ayusholi540@gmail.com</a>
+        <div class="contact__links">
+          <a href="https://github.com/ayusholi" target="_blank" rel="noopener" class="btn">GitHub ↗</a>
+          <a href="https://www.linkedin.com/in/ayush-o-368a13142" target="_blank" rel="noopener" class="btn">LinkedIn ↗</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Ayush Oli · Nepal → London</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
