@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ayush Oli — Product Engineer, AI</title>
   <meta name="description" content="Ayush Oli — Product Engineer working on AI. Full stack, from Nepal, based in London." />
+  <meta name="theme-color" content="#FE3602" />
 
   <!-- Apply saved / system theme before paint to avoid a flash -->
   <script>
@@ -18,15 +19,18 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400..700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a href="#main" class="skip">Skip to content</a>
+  <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
   <!-- ============ NAV ============ -->
-  <header class="nav">
-    <a href="#top" class="nav__logo">AO.</a>
-    <nav class="nav__links" aria-label="Main">
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__logo" aria-label="Ayush Oli, back to top">AO.</a>
+    <nav class="nav__links" id="nav-links" aria-label="Main">
+      <span class="nav__indicator" aria-hidden="true"></span>
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
@@ -39,118 +43,211 @@
       <span class="theme-icon theme-icon--light">☾</span>
       <span class="theme-icon theme-icon--dark">☀</span>
     </button>
+    <button class="btn btn--icon nav__burger" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span>
+    </button>
   </header>
 
-  <main id="top">
+  <main id="main">
 
     <!-- ============ HERO ============ -->
-    <section class="hero section" data-animate>
-      <div class="hero__tag">
-        <span class="flag">🇳🇵</span><span class="hero__tag-text">Nepal</span>
-        <span class="arrow">→</span>
-        <span class="flag">🇬🇧</span><span class="hero__tag-text">London</span>
+    <section class="hero" id="top">
+      <div class="hero__grid" aria-hidden="true"></div>
+
+      <div class="hero__inner">
+        <div class="hero__tag" data-reveal>
+          <span class="flag">🇳🇵</span><span class="hero__tag-text">Nepal</span>
+          <span class="arrow">→</span>
+          <span class="flag">🇬🇧</span><span class="hero__tag-text">London</span>
+        </div>
+
+        <h1 class="hero__name" id="hero-name" aria-label="Ayush Oli">
+          <span class="word" data-split>Ayush</span>
+          <span class="word" data-split>Oli</span>
+        </h1>
+
+        <div class="hero__row">
+          <p class="hero__headline" data-reveal><span class="highlight">Product Engineer</span> — AI</p>
+          <p class="hero__sub" data-reveal>From Nepal, based in London. I build products end to end, from architecture to the last pixel.</p>
+        </div>
+
+        <div class="hero__actions" data-reveal>
+          <a href="#projects" class="btn btn--primary btn--fill"><span>See my work</span><span class="btn__arrow" aria-hidden="true">↓</span></a>
+          <a href="#contact" class="btn btn--fill"><span>Get in touch</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+        </div>
       </div>
-      <h1 class="hero__name">Ayush Oli</h1>
-      <p class="hero__headline"><span class="highlight">Product Engineer</span> — AI</p>
-      <p class="hero__sub">From Nepal, based in London. I build products end to end, from architecture to the last pixel.</p>
-      <div class="hero__actions">
-        <a href="#projects" class="btn btn--primary">See my work</a>
-        <a href="#contact" class="btn">Get in touch</a>
-      </div>
+
+      <a href="#about" class="scroll-cue" aria-label="Scroll to about">
+        <span>Scroll</span><span class="scroll-cue__line" aria-hidden="true"></span>
+      </a>
     </section>
 
+    <!-- Skills ticker: decorative, pauses on hover/focus, static under reduced motion -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>React ✦ Next.js ✦ TypeScript ✦ NestJS ✦ Python ✦ LLMs &amp; RAG ✦ MCP Servers ✦ Go ✦ Docker ✦ AWS ✦ </span>
+        <span>React ✦ Next.js ✦ TypeScript ✦ NestJS ✦ Python ✦ LLMs &amp; RAG ✦ MCP Servers ✦ Go ✦ Docker ✦ AWS ✦ </span>
+      </div>
+    </div>
+
     <!-- ============ ABOUT ============ -->
-    <section id="about" class="section" data-animate>
-      <h2 class="section__title">About</h2>
-      <div class="card">
-        <p>
-          I'm an MSc Artificial Intelligence graduate and a full-stack engineer.
-          I work across Next.js, React, Express, NestJS, AWS, Docker and Tailwind,
-          and I've built mobile apps with Flutter.
+    <section id="about" class="section">
+      <h2 class="section__title" data-mask><span><i>01</i> About</span></h2>
+      <div class="about">
+        <p class="about__lead" data-reveal>
+          I'm an <mark>MSc Artificial Intelligence</mark> graduate and a <mark>full-stack engineer</mark>.
         </p>
-        <p>
-          Outside of code, I'm a barber, a photographer and a musician.
-        </p>
+        <div class="about__side" data-reveal>
+          <p>
+            I work across Next.js, React, Express, NestJS, AWS, Docker and Tailwind,
+            and I've built mobile apps with Flutter.
+          </p>
+          <p>
+            Outside of code, I'm a barber, a photographer and a musician.
+          </p>
+        </div>
       </div>
     </section>
 
     <!-- ============ SKILLS ============ -->
-    <section id="skills" class="section" data-animate>
-      <h2 class="section__title">Skills</h2>
-      <ul class="tags">
-        <li class="tag">React</li>
-        <li class="tag">Next.js</li>
-        <li class="tag">JavaScript</li>
-        <li class="tag">Go</li>
-        <li class="tag">Docker</li>
-        <li class="tag">System Architecture</li>
-        <li class="tag">TypeScript</li>
-        <li class="tag">NestJS</li>
-        <li class="tag">Python</li>
-        <li class="tag">LLMs &amp; RAG</li>
-        <li class="tag">MCP Servers</li>
-        <li class="tag">AWS</li>
-      </ul>
+    <section id="skills" class="section">
+      <h2 class="section__title" data-mask><span><i>02</i> Skills</span></h2>
+      <div class="skills" data-stagger>
+        <article class="skill" data-reveal>
+          <h3><span>AI / ML &amp; Data</span></h3>
+          <ul>
+            <li>LLMs</li><li>RAG ingestion</li><li>MCP servers</li><li>Python</li><li>LangChain</li><li>Ollama</li><li>n8n agentic workflows</li>
+          </ul>
+        </article>
+        <article class="skill" data-reveal>
+          <h3><span>Software</span></h3>
+          <ul>
+            <li>React</li><li>Next.js</li><li>TypeScript</li><li>NestJS</li><li>Express</li><li>Go</li><li>GraphQL</li>
+          </ul>
+        </article>
+        <article class="skill" data-reveal>
+          <h3><span>Cloud &amp; DevOps</span></h3>
+          <ul>
+            <li>AWS</li><li>GCP</li><li>Docker</li><li>GitHub Actions</li><li>Nginx</li><li>System architecture</li>
+          </ul>
+        </article>
+        <article class="skill" data-reveal>
+          <h3><span>Databases</span></h3>
+          <ul>
+            <li>SQL</li><li>NoSQL</li><li>Vector DB</li><li>Serverless DB</li>
+          </ul>
+        </article>
+      </div>
     </section>
 
     <!-- ============ PROJECTS ============ -->
-    <section id="projects" class="section" data-animate>
-      <h2 class="section__title">Projects</h2>
-      <div class="grid">
-        <article class="card card--project">
-          <div class="card__head">
-            <h3>The Chair</h3>
-            <span class="badge">Live</span>
+    <section id="projects" class="section">
+      <h2 class="section__title" data-mask><span><i>03</i> Projects</span></h2>
+
+      <div class="work">
+        <!-- Previews are built in HTML/CSS: swap a .preview for an <img> once you have screenshots. -->
+        <article class="project project--feature" data-reveal>
+          <div class="preview pv--accent" data-tilt>
+            <div class="preview__bar"><i></i><i></i><i></i><span>thechair.flowtiva.co.uk</span></div>
+            <div class="preview__body">
+              <span class="preview__num">01</span>
+              <span class="preview__mark">The<br />Chair</span>
+              <span class="preview__shape preview__shape--chair" aria-hidden="true"></span>
+            </div>
           </div>
-          <!-- TODO: replace with your own 1–2 line description -->
-          <p>A booking app for barbers. I use it to take bookings for my own cuts.</p>
-          <!-- TODO: add tech tags, e.g. <li class="tag tag--sm">Next.js</li> -->
-          <ul class="tags tags--sm"></ul>
-          <a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Visit site ↗</a>
+          <div class="project__info">
+            <div class="card__head">
+              <h3><a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" class="project__link">The Chair<span class="project__arrow" aria-hidden="true">↗</span></a></h3>
+              <span class="badge">Live</span>
+            </div>
+            <!-- TODO: replace with your own 1–2 line description -->
+            <p>A booking app for barbers. I use it to take bookings for my own cuts.</p>
+            <ul class="tags tags--sm"></ul>
+          </div>
         </article>
-        <article class="card card--project">
-          <div class="card__head">
-            <h3>Hairswagg</h3>
-            <span class="badge">Live</span>
+
+        <article class="project project--side" data-reveal>
+          <div class="preview pv--ink">
+            <div class="preview__bar"><i></i><i></i><i></i><span>hairswagg.com</span></div>
+            <div class="preview__body">
+              <span class="preview__num">02</span>
+              <span class="preview__mark">Hair<br />swagg</span>
+              <span class="preview__shape preview__shape--stripes" aria-hidden="true"></span>
+            </div>
           </div>
-          <p>Marketing site for Hairswagg.</p>
-          <ul class="tags tags--sm"></ul>
-          <a href="https://hairswagg.com" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Visit site ↗</a>
+          <div class="project__info">
+            <div class="card__head">
+              <h3><a href="https://hairswagg.com" target="_blank" rel="noopener" class="project__link">Hairswagg<span class="project__arrow" aria-hidden="true">↗</span></a></h3>
+              <span class="badge">Live</span>
+            </div>
+            <p>Marketing site for Hairswagg.</p>
+            <ul class="tags tags--sm"></ul>
+          </div>
         </article>
-        <article class="card card--project">
-          <div class="card__head">
-            <h3>Hairswagg App</h3>
-            <span class="badge">Live</span>
+
+        <article class="project project--side" data-reveal>
+          <div class="preview pv--sun">
+            <div class="preview__bar"><i></i><i></i><i></i><span>app.hairswagg.com</span></div>
+            <div class="preview__body">
+              <span class="preview__num">03</span>
+              <span class="preview__mark">Hair<br />swagg<br />app</span>
+              <span class="preview__shape preview__shape--dots" aria-hidden="true"></span>
+            </div>
           </div>
-          <p>The web app behind Hairswagg.</p>
-          <ul class="tags tags--sm"></ul>
-          <a href="https://app.hairswagg.com" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Visit site ↗</a>
+          <div class="project__info">
+            <div class="card__head">
+              <h3><a href="https://app.hairswagg.com" target="_blank" rel="noopener" class="project__link">Hairswagg App<span class="project__arrow" aria-hidden="true">↗</span></a></h3>
+              <span class="badge">Live</span>
+            </div>
+            <p>The web app behind Hairswagg.</p>
+            <ul class="tags tags--sm"></ul>
+          </div>
         </article>
-        <article class="card card--project">
-          <div class="card__head">
-            <h3>Alls Legal</h3>
-            <span class="badge">Live</span>
+
+        <article class="project project--feature project--flip" data-reveal>
+          <div class="preview pv--paper">
+            <div class="preview__bar"><i></i><i></i><i></i><span>alls-legal.co.uk</span></div>
+            <div class="preview__body">
+              <span class="preview__num">04</span>
+              <span class="preview__mark">Alls<br />Legal</span>
+              <span class="preview__shape preview__shape--lines" aria-hidden="true"></span>
+            </div>
           </div>
-          <p>Website for Alls Legal, a UK legal services business.</p>
-          <ul class="tags tags--sm"></ul>
-          <a href="https://alls-legal.co.uk" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Visit site ↗</a>
+          <div class="project__info">
+            <div class="card__head">
+              <h3><a href="https://alls-legal.co.uk" target="_blank" rel="noopener" class="project__link">Alls Legal<span class="project__arrow" aria-hidden="true">↗</span></a></h3>
+              <span class="badge">Live</span>
+            </div>
+            <p>Website for Alls Legal, a UK legal services business.</p>
+            <ul class="tags tags--sm"></ul>
+          </div>
         </article>
-        <article class="card card--project">
-          <div class="card__head">
-            <h3>Flowtiva</h3>
-            <span class="badge">Live</span>
+
+        <article class="project project--wide" data-reveal>
+          <div class="preview pv--ink">
+            <div class="preview__bar"><i></i><i></i><i></i><span>flowtiva.co.uk</span></div>
+            <div class="preview__body">
+              <span class="preview__num">05</span>
+              <span class="preview__mark">Flowtiva</span>
+              <span class="preview__shape preview__shape--flow" aria-hidden="true"></span>
+            </div>
           </div>
-          <p>Flowtiva's company site, the home of my products.</p>
-          <ul class="tags tags--sm"></ul>
-          <a href="https://flowtiva.co.uk" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Visit site ↗</a>
+          <div class="project__info">
+            <div class="card__head">
+              <h3><a href="https://flowtiva.co.uk" target="_blank" rel="noopener" class="project__link">Flowtiva<span class="project__arrow" aria-hidden="true">↗</span></a></h3>
+              <span class="badge">Live</span>
+            </div>
+            <p>Flowtiva's company site, the home of my products.</p>
+            <ul class="tags tags--sm"></ul>
+          </div>
         </article>
       </div>
     </section>
 
     <!-- ============ FOUNDER ============ -->
-    <section id="founder" class="section" data-animate>
-      <h2 class="section__title">Founder</h2>
-      <div class="card timeline__item">
+    <section id="founder" class="section">
+      <h2 class="section__title" data-mask><span><i>04</i> Founder</span></h2>
+      <div class="card timeline__item founder" data-reveal>
         <span class="timeline__date">Present</span>
         <h3>Product Owner, Founder</h3>
         <p class="timeline__org">The Clippr apps</p>
@@ -162,10 +259,11 @@
     </section>
 
     <!-- ============ EXPERIENCE ============ -->
-    <section id="experience" class="section" data-animate>
-      <h2 class="section__title">Experience</h2>
-      <ol class="timeline">
-        <li class="card timeline__item">
+    <section id="experience" class="section">
+      <h2 class="section__title" data-mask><span><i>05</i> Experience</span></h2>
+      <ol class="timeline" id="timeline">
+        <span class="timeline__track" aria-hidden="true"><span class="timeline__fill" id="timeline-fill"></span></span>
+        <li class="card timeline__item" data-reveal>
           <span class="timeline__date">Apr 2022 — Sep 2025</span>
           <h3>Senior Software Engineer</h3>
           <p class="timeline__org">Fusemachines Nepal · Kathmandu</p>
@@ -175,7 +273,7 @@
             <li>Worked across the full product lifecycle, from requirements and market research to launch and post-launch support.</li>
           </ul>
         </li>
-        <li class="card timeline__item">
+        <li class="card timeline__item" data-reveal>
           <span class="timeline__date">Jun 2024 — Feb 2025</span>
           <h3>Software Engineer</h3>
           <p class="timeline__org">Coax · Melbourne, Australia</p>
@@ -186,7 +284,7 @@
             <li>Created Workato/Ruby automations and embeddable customer plugins.</li>
           </ul>
         </li>
-        <li class="card timeline__item">
+        <li class="card timeline__item" data-reveal>
           <span class="timeline__date">Apr 2021 — Apr 2022</span>
           <h3>Software Engineer</h3>
           <p class="timeline__org">Hazesoft · Kathmandu</p>
@@ -196,7 +294,7 @@
             <li>Managed deployments and CI/CD with GitLab.</li>
           </ul>
         </li>
-        <li class="card timeline__item">
+        <li class="card timeline__item" data-reveal>
           <span class="timeline__date">Aug 2019 — Dec 2020</span>
           <h3>Full Stack Developer</h3>
           <p class="timeline__org">Diprung Technologies · Kathmandu</p>
@@ -207,14 +305,14 @@
         </li>
       </ol>
 
-      <h3 class="subhead">Education</h3>
-      <div class="timeline">
-        <div class="card timeline__item">
+      <h3 class="subhead" data-reveal>Education</h3>
+      <div class="timeline timeline--plain">
+        <div class="card timeline__item" data-reveal>
           <span class="timeline__date">2025 — 2026</span>
           <h3>MSc Artificial Intelligence Technology</h3>
           <p class="timeline__org">Northumbria University, London</p>
         </div>
-        <div class="card timeline__item">
+        <div class="card timeline__item" data-reveal>
           <span class="timeline__date">2017 — 2024</span>
           <h3>BSc Information Technology</h3>
           <p class="timeline__org">ISMT College, Kathmandu (University of Sunderland)</p>
@@ -223,25 +321,25 @@
     </section>
 
     <!-- ============ LIFE OUTSIDE TECH ============ -->
-    <section id="life" class="section" data-animate>
-      <h2 class="section__title">Outside tech</h2>
+    <section id="life" class="section">
+      <h2 class="section__title" data-mask><span><i>06</i> Outside tech</span></h2>
 
-      <div class="grid grid--3">
-        <article class="card card--life">
+      <div class="grid grid--3" data-stagger>
+        <article class="card card--life" data-reveal>
           <span class="card__icon">✂</span>
           <h3>Barbering</h3>
           <p>I'm a self-taught professional barber. I take bookings through my own app.</p>
           <a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" class="link">Book a cut ↗</a>
         </article>
 
-        <article class="card card--life">
+        <article class="card card--life" data-reveal>
           <span class="card__icon">◉</span>
           <h3>Photography</h3>
           <p>Street, landscape and vintage, shot around London and Nepal.</p>
           <a href="#gallery" class="link">See photos ↓</a>
         </article>
 
-        <article class="card card--life">
+        <article class="card card--life" data-reveal>
           <span class="card__icon">♫</span>
           <h3>Music</h3>
           <p>I play guitar and sing.</p>
@@ -249,31 +347,30 @@
       </div>
 
       <!-- Photo gallery
-           To add a photo: put the file in /images and replace a slot with
-           <figure class="photo"><img src="images/your-photo.jpg" alt="Describe the photo" loading="lazy" /></figure>
+           To add a photo: put the file in /images and add
+           <figure class="photo" data-reveal="mask"><img src="images/your-photo.jpg" alt="Describe the photo" loading="lazy" /></figure>
       -->
       <div id="gallery" class="gallery">
-        <figure class="photo"><img src="images/web/photo1.jpg" alt="Photograph 1" width="1200" height="1600" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo2.jpg" alt="Photograph 2" width="1200" height="1600" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo3.jpg" alt="Photograph 3" width="1200" height="1600" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo4.jpg" alt="Photograph 4" width="1200" height="1584" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo5.jpg" alt="Photograph 5" width="1181" height="1600" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo6.jpg" alt="Photograph 6" width="1200" height="1600" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo7.jpg" alt="Photograph 7" width="1200" height="1600" loading="lazy" /></figure>
-        <figure class="photo"><img src="images/web/photo8.jpg" alt="Photograph 8" width="1200" height="1586" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo1.jpg" alt="Photograph 1" width="1200" height="1600" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo2.jpg" alt="Photograph 2" width="1200" height="1600" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo3.jpg" alt="Photograph 3" width="1200" height="1600" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo4.jpg" alt="Photograph 4" width="1200" height="1584" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo5.jpg" alt="Photograph 5" width="1181" height="1600" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo6.jpg" alt="Photograph 6" width="1200" height="1600" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo7.jpg" alt="Photograph 7" width="1200" height="1600" loading="lazy" /></figure>
+        <figure class="photo" data-reveal="mask"><img src="images/web/photo8.jpg" alt="Photograph 8" width="1200" height="1586" loading="lazy" /></figure>
       </div>
     </section>
 
     <!-- ============ CONTACT ============ -->
-    <section id="contact" class="section" data-animate>
-      <h2 class="section__title">Contact</h2>
-      <div class="card card--contact">
-        <p class="contact__lead">Want to build something together? Say hi.</p>
-        <a href="mailto:ayusholi540@gmail.com" class="btn btn--primary btn--lg">ayusholi540@gmail.com</a>
-        <div class="contact__links">
-          <a href="https://github.com/ayusholi" target="_blank" rel="noopener" class="btn">GitHub ↗</a>
-          <a href="https://www.linkedin.com/in/ayush-o-368a13142" target="_blank" rel="noopener" class="btn">LinkedIn ↗</a>
-        </div>
+    <section id="contact" class="section contact">
+      <h2 class="section__title" data-mask><span><i>07</i> Contact</span></h2>
+      <p class="contact__big" data-reveal>Want to build<br />something <em>together?</em></p>
+      <p class="contact__lead" data-reveal>Say hi.</p>
+      <a href="mailto:ayusholi540@gmail.com" class="btn btn--primary btn--lg btn--fill" data-reveal><span>ayusholi540@gmail.com</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+      <div class="contact__links" data-reveal>
+        <a href="https://github.com/ayusholi" target="_blank" rel="noopener" class="btn btn--fill"><span>GitHub</span><span class="btn__arrow" aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/ayush-o-368a13142" target="_blank" rel="noopener" class="btn btn--fill"><span>LinkedIn</span><span class="btn__arrow" aria-hidden="true">↗</span></a>
       </div>
     </section>
 
@@ -281,6 +378,7 @@
 
   <footer class="footer">
     <p>© <span id="year"></span> Ayush Oli · Nepal → London</p>
+    <a href="#top" class="footer__top">Back to top ↑</a>
   </footer>
 
   <script src="script.js"></script>
