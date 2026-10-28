@@ -1111,6 +1111,9 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   --sb-accent: #b2432a;        /* grease pencil */
   --sb-film: #1c1a17;
   --sb-film-edge: #b9a77f;
+  --sb-stamp: #f2913d;         /* film-camera date imprint */
+  --sb-tint: #ede7dc;          /* hovered note */
+  --sb-tint-deep: #e2d9c7;     /* hovered shaded note */
 
   /* Type */
   --sb-f-display: "Instrument Serif", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -1143,6 +1146,7 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   --sb-col-gap: clamp(0.75rem, 2.2vw, 2rem);
   --sb-section-y: clamp(4.5rem, 3rem + 7vw, 10rem);
   --sb-measure: 36rem;
+  --sb-note-pad: clamp(1rem, 0.75rem + 1vw, 1.75rem);
 
   /* Motion */
   --sb-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
@@ -1259,6 +1263,26 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   transition: opacity 600ms ease, transform 600ms var(--sb-ease);
 }
 
+/* A selected few annotations add one more detail when their subject is hovered */
+.scrapbook .scrawl__more {
+  display: inline-block;
+  margin-left: 0.35em;
+  font-size: 0.8em;
+  color: var(--sb-muted);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 450ms ease, transform 450ms var(--sb-ease);
+}
+@media (hover: hover) {
+  .scrapbook .strip:hover .scrawl__more,
+  .scrapbook .feature__scrawl:hover .scrawl__more,
+  .scrapbook .feature__aside--print:hover ~ .feature__scrawl .scrawl__more {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Section header: number, label, hairline */
 .scrapbook .section {
   padding-block: var(--sb-section-y) 0;
@@ -1285,6 +1309,7 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
 .scrapbook .frame { position: relative; }
 
 .scrapbook .frame__img {
+  position: relative;
   display: block;
   overflow: hidden;
   background: var(--sb-paper-deep);
@@ -1295,6 +1320,19 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   aspect-ratio: var(--ratio, 4 / 5);
   object-fit: cover;
   transition: transform 1200ms var(--sb-ease);
+}
+
+/* Orange date imprint, as an old point-and-shoot would burn into the corner */
+.scrapbook .stamp {
+  position: absolute;
+  left: 5%;                    /* bottom-left: the overlapping print covers the other corner */
+  bottom: 3.5%;
+  font: 500 clamp(0.75rem, 0.6rem + 0.4vw, 1.05rem) / 1 var(--sb-f-mono);
+  letter-spacing: 0.18em;
+  color: var(--sb-stamp);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--sb-stamp) 60%, transparent);
+  opacity: 0.9;
+  pointer-events: none;
 }
 
 /* Remote image failed: keep the frame, label the gap */
@@ -1650,6 +1688,21 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   grid-template-columns: auto 1fr;
   column-gap: clamp(1rem, 2vw, 1.75rem);
   align-items: start;
+  padding: var(--sb-note-pad);
+  transition: background-color 500ms ease;
+}
+/* a short grease-pencil tick drawn along the top edge on hover */
+.scrapbook .note::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 2.5rem;
+  height: 2px;
+  background: var(--sb-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms var(--sb-ease);
 }
 .scrapbook .note__num {
   font-family: var(--sb-f-display);
@@ -1659,13 +1712,12 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   color: var(--sb-rule);
   transition: color 500ms ease;
 }
-.scrapbook .note:hover .note__num { color: var(--sb-accent); }
 
 .scrapbook .note__meta {
   color: var(--sb-muted);
   margin-bottom: var(--sb-s-2);
 }
-.scrapbook .note__meta span { color: var(--sb-rule); margin-inline: 0.3em; }
+.scrapbook .note__meta span { color: var(--sb-rule); margin-inline: 0.3em; transition: color 500ms ease; }
 .scrapbook .note__title {
   font-family: var(--sb-f-display);
   font-weight: 400;
@@ -1673,16 +1725,66 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   line-height: 1.1;
   margin-bottom: var(--sb-s-3);
 }
-.scrapbook .note__body p:last-child {
+.scrapbook .note__body > p:not(.note__meta),
+.scrapbook .note__more p {
   max-width: 34rem;
   color: var(--sb-ink-soft);
+}
+
+.scrapbook .note:hover,
+.scrapbook .note:focus-within { background-color: var(--sb-tint); }
+.scrapbook .note:hover::before,
+.scrapbook .note:focus-within::before { transform: scaleX(1); }
+.scrapbook .note:hover .note__num,
+.scrapbook .note:focus-within .note__num,
+.scrapbook .note:hover .note__meta span,
+.scrapbook .note:focus-within .note__meta span { color: var(--sb-accent); }
+
+/* "More" reveals one extra paragraph. Without JS the button stays hidden and the text shows. */
+.scrapbook .note__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-top: var(--sb-s-3);
+  padding: 0.2em 0;
+  border: 0;
+  background: none;
+  color: var(--sb-accent);
+  font: 400 var(--sb-t-label) / 1 var(--sb-f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.scrapbook .note__toggle[hidden] { display: none; }
+.scrapbook .note__toggle span {
+  display: inline-block;
+  font-size: 1.4em;
+  transition: transform 400ms var(--sb-ease);
+}
+.scrapbook .note__toggle[aria-expanded="true"] span { transform: rotate(45deg); }
+
+.scrapbook .note__more p {
+  padding-top: var(--sb-s-3);
+  font-size: 0.97rem;
+  font-style: italic;
+}
+.sb-js .scrapbook .note__more {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 450ms var(--sb-ease), visibility 0s linear 450ms;
+}
+.sb-js .scrapbook .note__more > * { min-height: 0; overflow: hidden; }
+.sb-js .scrapbook .note.is-open .note__more {
+  grid-template-rows: 1fr;
+  visibility: visible;
+  transition: grid-template-rows 450ms var(--sb-ease), visibility 0s;
 }
 
 /* Each note sits differently on the page */
 .scrapbook .note--one {
   grid-column: 5 / 11;
   grid-row: 1;
-  padding-top: var(--sb-s-5);
   border-top: 1px solid var(--sb-ink);
 }
 .scrapbook .note--one .note__scrawl {
@@ -1699,8 +1801,10 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   padding: clamp(1.25rem, 1rem + 1.5vw, 2.25rem);
   background: var(--sb-paper-deep);
 }
+.scrapbook .note--two:hover,
+.scrapbook .note--two:focus-within { background-color: var(--sb-tint-deep); }
 .scrapbook .note--two .note__num { color: color-mix(in srgb, var(--sb-muted) 45%, var(--sb-paper-deep)); }
-.scrapbook .note--two .note__body p:last-child { font-size: 1.125rem; }
+.scrapbook .note--two .note__body > p:not(.note__meta) { font-size: 1.125rem; }
 .scrapbook .note--two .note__scrawl {
   grid-column: 2;
   margin-top: var(--sb-s-4);
@@ -1712,7 +1816,6 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
 .scrapbook .note--three {
   grid-column: 5 / 10;
   grid-row: 3;
-  padding-left: clamp(1rem, 2vw, 1.75rem);
   border-left: 1px solid var(--sb-accent);
 }
 
@@ -1767,9 +1870,9 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   font-size: 1.5rem;
 }
 .scrapbook .tile--c { grid-column: 2 / 6;  grid-row: 2; margin-top: clamp(4rem, 2rem + 5vw, 8rem); }
-.scrapbook .tile--d { grid-column: 7 / 13; grid-row: 2; margin-top: clamp(8rem, 4rem + 10vw, 16rem); }
+.scrapbook .tile--d { grid-column: 8 / 12; grid-row: 2; margin-top: clamp(6rem, 3rem + 7vw, 12rem); }
 .scrapbook .tile--e { grid-column: 1 / 8;  grid-row: 3; margin-top: clamp(4rem, 2rem + 5vw, 7rem); }
-.scrapbook .tile--f { grid-column: 9 / 12; grid-row: 3; margin-top: clamp(2rem, 1rem + 3vw, 4rem); }
+.scrapbook .tile--f { grid-column: 9 / 13; grid-row: 3; margin-top: clamp(6rem, 3rem + 6vw, 10rem); }
 
 /* Contact strip */
 .scrapbook .strip { position: relative; }
@@ -1793,6 +1896,14 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   gap: clamp(0.4rem, 0.8vw, 0.75rem);
 }
 .scrapbook .strip__frames .frame__img { background: #2a2722; }
+.scrapbook .strip__date {
+  display: block;
+  margin-top: 0.35rem;
+  font: 500 0.5625rem / 1 var(--sb-f-mono);
+  letter-spacing: 0.18em;
+  color: var(--sb-film-edge);
+  opacity: 0.75;
+}
 
 .scrapbook .strip__circle {
   position: absolute;
@@ -1813,7 +1924,8 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
 .scrapbook .strip__note {
   position: absolute;
   top: -2.1rem;
-  left: 58%;
+  left: 52%;
+  white-space: nowrap;
   font-size: 1.6rem;
   transform: rotate(-6deg);
 }
@@ -1822,9 +1934,15 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
    F. Reflection
    ========================================================= */
 
+.scrapbook .reflection__grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--sb-col-gap);
+}
 .scrapbook .reflection__body {
+  grid-column: 6 / 12;
+  grid-row: 1;
   max-width: var(--sb-measure);
-  margin-left: clamp(0px, 25%, 22rem);
 }
 .scrapbook .reflection__title {
   font-family: var(--sb-f-display);
@@ -1856,11 +1974,53 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   color: var(--sb-accent);
 }
 
+/* Plates in this issue: a closing index that bookends "In this issue" */
+.scrapbook .plates {
+  grid-column: 1 / 5;
+  grid-row: 1;
+  align-self: end;
+}
+.scrapbook .plates__label {
+  padding-bottom: var(--sb-s-2);
+  font: 400 var(--sb-t-label) / 1.4 var(--sb-f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+}
+.scrapbook .plates li { border-top: 1px solid var(--sb-rule); }
+.scrapbook .plates li:last-child { border-bottom: 1px solid var(--sb-rule); }
+.scrapbook .plates a {
+  display: grid;
+  grid-template-columns: 2.25rem 1fr auto;
+  align-items: baseline;
+  gap: var(--sb-s-2);
+  padding-block: 0.4rem;
+  font-size: var(--sb-t-small);
+  text-decoration: none;
+  transition: color 250ms ease, transform 400ms var(--sb-ease);
+}
+.scrapbook .plates__no,
+.scrapbook .plates time,
+.scrapbook .plates__aside {
+  font: 400 0.625rem / 1 var(--sb-f-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sb-muted);
+  transition: color 250ms ease;
+}
+.scrapbook .plates__no { color: var(--sb-accent); }
+.scrapbook .plates a:hover { color: var(--sb-accent); transform: translateX(4px); }
+.scrapbook .plates a:hover time { color: var(--sb-accent); }
+
+/* Arriving at a plate from the index briefly marks it */
+.scrapbook .frame:target .frame__img,
+.scrapbook .strip:target .strip__film { outline: 1.5px solid var(--sb-accent); outline-offset: 6px; }
+
 /* =========================================================
    G. Colophon
    ========================================================= */
 
-.scrapbook .colophon { margin-top: var(--sb-section-y); }
+.scrapbook .colophon { margin-top: clamp(4rem, 2.5rem + 4vw, 7rem); }
 .scrapbook .colophon__inner {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1980,12 +2140,14 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   .scrapbook .tile--a { grid-column: 1 / 7; }
   .scrapbook .tile__scrawl--b { grid-column: 1 / 3; align-self: center; margin: 0; }
   .scrapbook .tile--b { grid-column: 3 / 7; margin-top: calc(var(--sb-s-8) * -0.4); }
-  .scrapbook .tile--c { grid-column: 1 / 5; }
-  .scrapbook .tile--d { grid-column: 2 / 7; margin-top: calc(var(--sb-s-6) * -1); }
+  .scrapbook .tile--c { grid-column: 1 / 4; }
+  .scrapbook .tile--d { grid-column: 4 / 7; margin-top: var(--sb-s-8); }
   .scrapbook .tile--e { grid-column: 1 / 7; margin-top: var(--sb-s-5); }
-  .scrapbook .tile--f { grid-column: 3 / 6; }
+  .scrapbook .tile--f { grid-column: 2 / 7; }
 
-  .scrapbook .reflection__body { margin-left: 0; }
+  .scrapbook .reflection__grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .scrapbook .reflection__body { grid-column: 1 / 6; }
+  .scrapbook .plates { grid-column: 1 / 5; grid-row: 2; margin-top: var(--sb-s-8); }
 }
 
 /* Phones */
@@ -2019,6 +2181,8 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   .scrapbook .note--two { margin-inline: calc(var(--sb-gutter) * -0.5); }
   .scrapbook .note--two .note__scrawl { grid-column: 1; }
   .scrapbook .note--one .note__scrawl { position: static; margin-top: var(--sb-s-4); justify-self: end; }
+  .scrapbook .note--one, .scrapbook .note--three { padding-inline: 0; }
+  .scrapbook .note--three { padding-left: var(--sb-note-pad); }
 
   .scrapbook .journey { row-gap: var(--sb-s-7); }
   .scrapbook .tile--a { margin-inline: calc(var(--sb-gutter) * -1); }
@@ -2026,9 +2190,12 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   .scrapbook .tile__scrawl--b { grid-column: 1 / 3; font-size: 1.3rem; }
   .scrapbook .tile--b { grid-column: 2 / 7; margin-top: calc(var(--sb-s-6) * -0.5); }
   .scrapbook .tile--c { grid-column: 1 / 6; }
-  .scrapbook .tile--d { grid-column: 1 / 7; margin-top: 0; }
+  .scrapbook .tile--d { grid-column: 2 / 7; margin-top: 0; }
   .scrapbook .tile--e { margin-top: var(--sb-s-6); }
-  .scrapbook .tile--f { grid-column: 3 / 7; }
+  .scrapbook .tile--f { grid-column: 1 / 7; }
+
+  .scrapbook .reflection__body,
+  .scrapbook .plates { grid-column: 1 / 7; }
 
   .scrapbook .colophon__inner { grid-template-columns: 1fr; }
   .scrapbook .colophon__links,

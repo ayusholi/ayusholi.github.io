@@ -77,12 +77,14 @@
       </header>
 
       <article class="feature">
-        <figure class="frame feature__lead" style="--ratio: 3 / 4" data-sb-reveal="image">
+        <figure class="frame feature__lead" id="pl-01" style="--ratio: 3 / 4" data-sb-reveal="image">
           <span class="frame__img"><img src="images/web/blog-1.jpg" alt="A narrow street at night, people gathered outside lit bars, a red neon sign glowing on the right."
-               width="1200" height="1600" /></span>
+               width="1200" height="1600" />
+            <!-- film-camera date imprint; keep it in step with the date in the caption -->
+            <span class="stamp" aria-hidden="true">&rsquo;26 5 8</span></span>
           <figcaption class="caption">
             <span class="caption__plate">Pl. 01</span>
-            Side street, after dark. <span class="caption__credit">Photo: A.O.</span>
+            Side street, after dark. <span class="caption__credit">Photo: A.O. · <time datetime="2026-05-08">08.05.26</time></span>
           </figcaption>
         </figure>
 
@@ -108,26 +110,26 @@
           <a class="link link--read" href="#entry-001">Read the entry <span aria-hidden="true">→</span></a>
         </div>
 
-        <figure class="frame feature__aside feature__aside--side" style="--ratio: 4 / 5" data-sb-reveal="image">
+        <figure class="frame feature__aside feature__aside--side" id="pl-02" style="--ratio: 4 / 5" data-sb-reveal="image">
           <span class="frame__img"><img src="images/web/blog-2.jpg" alt="A dim bar in purple and red light, a blue neon sign reading &ldquo;Sing it back&rdquo; above the counter."
                width="1200" height="1600" loading="lazy" /></span>
           <figcaption class="caption">
             <span class="caption__plate">Pl. 02</span>
-            &ldquo;Sing it back&rdquo;, in neon. <span class="caption__credit">Photo: A.O.</span>
+            &ldquo;Sing it back&rdquo;, in neon. <span class="caption__credit">Photo: A.O. · <time datetime="2026-05-07">07.05.26</time></span>
           </figcaption>
         </figure>
 
-        <figure class="frame feature__aside feature__aside--print" style="--ratio: 1 / 1" data-sb-reveal="image">
+        <figure class="frame feature__aside feature__aside--print" id="pl-03" style="--ratio: 1 / 1" data-sb-reveal="image">
           <span class="frame__img"><img src="images/web/barber-1.jpg"
                alt="Black-and-white close-up of a young man mid-haircut, eyes closed, as a barber's tattooed hand lines up his hairline with clippers."
                width="1200" height="1600" loading="lazy" /></span>
           <figcaption class="caption">
             <span class="caption__plate">Pl. 03</span>
-            Behind the chair. <span class="caption__credit">Photo: A.O.</span>
+            Behind the chair. <span class="caption__credit">Photo: A.O. · <time datetime="2026-06-06">06.06.26</time></span>
           </figcaption>
         </figure>
 
-        <p class="scrawl feature__scrawl" aria-hidden="true">the other day job ↖</p>
+        <p class="scrawl feature__scrawl" aria-hidden="true">the other day job ↖ <span class="scrawl__more">barber, London</span></p>
       </article>
     </section>
 
@@ -150,6 +152,10 @@
             <p class="note__meta">Field note 01 <span>·</span> Engineering</p>
             <h3 class="note__title">Building again</h3>
             <p>Back to spending more time thinking about systems, product decisions, and how AI can become genuinely useful rather than just impressive in a demo.</p>
+            <button class="note__toggle" type="button" aria-expanded="false" aria-controls="note-01-more" hidden>More <span aria-hidden="true">+</span></button>
+            <div class="note__more" id="note-01-more">
+              <p>Around eight years of full-stack, backend and cloud work so far, more of it lately spent wiring AI services into real products. Before that came an MSc in Artificial Intelligence at Northumbria University London.</p>
+            </div>
           </div>
           <p class="scrawl note__scrawl" aria-hidden="true">useful &gt; impressive</p>
         </article>
@@ -160,8 +166,12 @@
             <p class="note__meta">Field note 02 <span>·</span> Barbering</p>
             <h3 class="note__title">Behind the chair</h3>
             <p>Barbering taught me things about people, trust, and running a business that I wouldn't have learned by writing software alone. Those lessons still influence the products I want to build.</p>
+            <button class="note__toggle" type="button" aria-expanded="false" aria-controls="note-02-more" hidden>More <span aria-hidden="true">+</span></button>
+            <div class="note__more" id="note-02-more">
+              <p>It also turned into software: I built a tool to help a barbershop manage appointments, payments, expenses and the rest of the day-to-day running of the business.</p>
+            </div>
           </div>
-          <p class="scrawl note__scrawl" aria-hidden="true">→ ended up writing the shop's booking, payments &amp; expenses software</p>
+          <p class="scrawl note__scrawl" aria-hidden="true">→ and then it became software</p>
         </article>
 
         <article class="note note--three" data-sb-reveal>
@@ -170,6 +180,10 @@
             <p class="note__meta">Field note 03 <span>·</span> Photography</p>
             <h3 class="note__title">Noticing things</h3>
             <p>Photography is a reason to slow down and pay attention. I'm interested in the little details, the atmosphere of a place, and the stories hiding in ordinary moments.</p>
+            <button class="note__toggle" type="button" aria-expanded="false" aria-controls="note-03-more" hidden>More <span aria-hidden="true">+</span></button>
+            <div class="note__more" id="note-03-more">
+              <p>Apart from the engineering stand-in, the photographs on this page are mine: most taken on a phone, the mountains on a Sony &alpha;6400.</p>
+            </div>
           </div>
         </article>
       </div>
@@ -192,7 +206,7 @@
 
         <div class="journey">
           <!-- 1. Engineering & AI -->
-          <figure class="frame tile tile--a is-stand-in" style="--ratio: 4 / 3" data-sb-reveal="image">
+          <figure class="frame tile tile--a is-stand-in" id="pl-i" style="--ratio: 4 / 3" data-sb-reveal="image">
             <span class="frame__img"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1400&h=1050&q=75"
                  alt="A laptop in a dim room, its screen full of code in a dark editor theme."
                  width="1400" height="1050" loading="lazy" /></span>
@@ -206,47 +220,48 @@
           <p class="scrawl tile__scrawl tile__scrawl--b" aria-hidden="true">same problems,<br />different chair ↓</p>
 
           <!-- 2. Barbering & craftsmanship -->
-          <figure class="frame tile tile--b" style="--ratio: 4 / 5" data-sb-reveal="image">
+          <figure class="frame tile tile--b" id="pl-ii" style="--ratio: 4 / 5" data-sb-reveal="image">
             <span class="frame__img"><img src="images/web/barber-2.jpg"
                  alt="Black-and-white photo inside a barbershop: a barber cuts a young boy's hair while the boy sits under a patterned cape."
                  width="1200" height="1600" loading="lazy" /></span>
             <figcaption class="caption caption--theme">
               <span class="caption__theme">II — Barbering &amp; craft</span>
               <span class="caption__line">A craft built around people.</span>
-              <span class="caption__credit">Photo: A.O.</span>
+              <span class="caption__credit">Photo: A.O. · <time datetime="2026-04-11">11.04.26</time></span>
             </figcaption>
           </figure>
 
           <!-- 3. Photography & everyday observations -->
-          <figure class="frame tile tile--c" style="--ratio: 3 / 4" data-sb-reveal="image">
+          <figure class="frame tile tile--c" id="pl-iii" style="--ratio: 3 / 4" data-sb-reveal="image">
             <span class="frame__img"><img src="images/web/blog-3.jpg" alt="A huge sculpture clad in stone-like tiles sits between two modern office blocks, a residential tower beyond under a pale sky."
                  width="1200" height="1539" loading="lazy" /></span>
             <figcaption class="caption caption--theme">
               <span class="caption__theme">III — Photography</span>
               <span class="caption__line">Things worth noticing.</span>
-              <span class="caption__credit">Photo: A.O.</span>
+              <span class="caption__credit">Photo: A.O. · <time datetime="2026-06-07">07.06.26</time></span>
             </figcaption>
           </figure>
 
-          <!-- 4. London & personal experiences -->
-          <figure class="frame tile tile--d" style="--ratio: 3 / 2" data-sb-reveal="image">
-            <span class="frame__img"><img src="images/web/blog-6.jpg" alt="A rocky mountain ridge at dusk, a snow-capped peak catching the last light beneath a deep teal sky."
-                 width="1800" height="1200" loading="lazy" /></span>
+          <!-- 4. Life in London -->
+          <figure class="frame tile tile--d" id="pl-iv" style="--ratio: 4 / 5" data-sb-reveal="image">
+            <span class="frame__img"><img src="images/web/blog-4.jpg" alt="A large white yacht moored on dark water beneath two glass residential towers, under an overcast sky."
+                 width="1200" height="1601" loading="lazy" /></span>
             <figcaption class="caption caption--theme">
-              <span class="caption__theme">IV — Further afield</span>
+              <span class="caption__theme">IV — Life in London</span>
               <span class="caption__line">Life between projects.</span>
-              <span class="caption__credit">Photo: A.O.</span>
+              <span class="caption__credit">Photo: A.O. · <time datetime="2026-06-07">07.06.26</time></span>
             </figcaption>
           </figure>
 
-          <!-- Contact strip: three small frames from the same "roll" -->
-          <figure class="strip tile--e" data-sb-reveal>
+          <!-- Contact strip: three small frames, each dated under its frame -->
+          <figure class="strip tile--e" id="pl-contact" data-sb-reveal>
             <div class="strip__film">
               <p class="strip__edge" aria-hidden="true"><span>A.O. 2026</span><span>▸ 14</span><span>▸ 15</span><span>▸ 16</span></p>
               <ol class="strip__frames">
                 <li class="frame" style="--ratio: 3 / 4">
                   <span class="frame__img"><img src="images/web/photo1.jpg" alt="Two lattice crane towers silhouetted against a dusk sky above a dark building."
                        width="1200" height="1600" loading="lazy" /></span>
+                  <span class="strip__date" aria-hidden="true">24.05</span>
                 </li>
                 <li class="frame strip__pick" style="--ratio: 3 / 4">
                   <span class="frame__img"><img src="images/web/photo7.jpg" alt="Tower blocks and a construction crane in silhouette against a deep teal evening sky."
@@ -254,26 +269,29 @@
                   <svg class="strip__circle" viewBox="0 0 120 150" aria-hidden="true" preserveAspectRatio="none">
                     <path pathLength="1" d="M62 6C30 4 8 30 7 74c-1 42 22 70 56 70 33 0 52-30 51-72C113 34 92 9 58 8 47 8 38 12 33 16" />
                   </svg>
+                  <span class="strip__date" aria-hidden="true">21.06</span>
                 </li>
                 <li class="frame" style="--ratio: 3 / 4">
                   <span class="frame__img"><img src="images/web/photo8.jpg" alt="A tall tower in silhouette against a blue night sky, with a thin crescent moon beside it."
                        width="1200" height="1586" loading="lazy" /></span>
+                  <span class="strip__date" aria-hidden="true">20.06</span>
                 </li>
               </ol>
             </div>
             <figcaption class="caption">
               <span class="caption__plate">Contact</span>
-              Three frames, one evening walk. <span class="caption__credit">Photos: A.O.</span>
+              Three evenings, late spring. <span class="caption__credit">Photos: A.O. · <time datetime="2026-05">May</time>–<time datetime="2026-06">June 2026</time></span>
             </figcaption>
-            <p class="scrawl strip__note" aria-hidden="true">this one.</p>
+            <p class="scrawl strip__note" aria-hidden="true">this one. <span class="scrawl__more">21.06, just after nine</span></p>
           </figure>
 
-          <figure class="frame tile tile--f" style="--ratio: 3 / 4" data-sb-reveal="image">
-            <span class="frame__img"><img src="images/web/blog-4.jpg" alt="A large white yacht moored on dark water beneath two glass residential towers, under an overcast sky."
-                 width="1200" height="1601" loading="lazy" /></span>
+          <!-- Closing plate: further from home -->
+          <figure class="frame tile tile--f" id="pl-04" style="--ratio: 3 / 2" data-sb-reveal="image">
+            <span class="frame__img"><img src="images/web/blog-6.jpg" alt="A rocky mountain ridge at dusk, a snow-capped peak catching the last light beneath a deep teal sky."
+                 width="1800" height="1200" loading="lazy" /></span>
             <figcaption class="caption">
               <span class="caption__plate">Pl. 04</span>
-              Grey afternoon, by the water. <span class="caption__credit">Photo: A.O.</span>
+              Further afield, at dusk. <span class="caption__credit">Photo: A.O. · <time datetime="2024-11-16">16.11.24</time></span>
             </figcaption>
           </figure>
         </div>
@@ -287,16 +305,34 @@
         <span class="section-head__label">Afterword</span>
       </header>
 
-      <div class="reflection__body" data-sb-reveal>
-        <h2 class="reflection__title" id="about-title">Sussing it out <em>out.</em></h2>
+      <div class="reflection__grid">
+        <div class="reflection__body" data-sb-reveal>
+          <h2 class="reflection__title" id="about-title">Sussing it <em>out.</em></h2>
 
-        <p class="reflection__lead">I'm interested in the space between technology and the real world — the problems people deal with every day, the tools that make those problems easier, and the creative process of turning an idea into something useful.</p>
+          <p class="reflection__lead">I'm interested in the space between technology and the real world — the problems people deal with every day, the tools that make those problems easier, and the creative process of turning an idea into something useful.</p>
 
-        <p>Right now, that means learning more about AI, building products, finding my place in engineering again, and holding on to the things that make life interesting outside a screen.</p>
+          <p>Right now, that means learning more about AI, building products, finding my place in engineering again, and holding on to the things that make life interesting outside a screen.</p>
 
-        <p class="reflection__close">Moving towards greater things.</p>
+          <p class="reflection__close">Moving towards greater things.</p>
 
-        <p class="scrawl reflection__sign" aria-hidden="true">— Ayush.</p>
+          <p class="scrawl reflection__sign" aria-hidden="true">— Ayush.</p>
+        </div>
+
+        <!-- Plates in this issue: mirrors "In this issue" at the top. Keep in step with the captions above. -->
+        <nav class="plates" aria-labelledby="plates-title" data-sb-reveal>
+          <p class="plates__label" id="plates-title">Plates in this issue</p>
+          <ol>
+            <li><a href="#pl-01"><span class="plates__no">01</span> Side street, after dark <time datetime="2026-05-08">08.05.26</time></a></li>
+            <li><a href="#pl-02"><span class="plates__no">02</span> &ldquo;Sing it back&rdquo; <time datetime="2026-05-07">07.05.26</time></a></li>
+            <li><a href="#pl-03"><span class="plates__no">03</span> Behind the chair <time datetime="2026-06-06">06.06.26</time></a></li>
+            <li><a href="#pl-i"><span class="plates__no">I</span> Ideas becoming real <span class="plates__aside">stand-in</span></a></li>
+            <li><a href="#pl-ii"><span class="plates__no">II</span> A craft built around people <time datetime="2026-04-11">11.04.26</time></a></li>
+            <li><a href="#pl-iii"><span class="plates__no">III</span> Things worth noticing <time datetime="2026-06-07">07.06.26</time></a></li>
+            <li><a href="#pl-iv"><span class="plates__no">IV</span> Life between projects <time datetime="2026-06-07">07.06.26</time></a></li>
+            <li><a href="#pl-contact"><span class="plates__no">C</span> Three evenings <time datetime="2026-06">05&ndash;06.26</time></a></li>
+            <li><a href="#pl-04"><span class="plates__no">04</span> Further afield <time datetime="2024-11-16">16.11.24</time></a></li>
+          </ol>
+        </nav>
       </div>
     </section>
 
