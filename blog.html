@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Scrapbook — Ayush Oli</title>
+  <meta name="description" content="The Scrapbook: a growing collection of things Ayush Oli is building, learning, seeing, and figuring out along the way." />
+  <meta name="theme-color" content="#f3efe6" />
+  <link rel="icon" href="images/assets/favicon.ico" sizes="any" />
+
+  <!-- Marks the page as JS-enabled before paint, so reveal styles only apply when the script can undo them -->
+  <script>document.documentElement.classList.add("sb-js");</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="scrapbook">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ============ A. NAVIGATION ============ -->
+  <header class="masthead">
+    <div class="masthead__inner wrap">
+      <a class="wordmark" href="#top" aria-label="The Scrapbook, home">
+        <span class="wordmark__title"><em>The</em> Scrapbook</span>
+        <span class="wordmark__sub">A collection of things along the way.</span>
+      </a>
+      <nav class="masthead__nav" aria-label="Scrapbook">
+        <a class="link" href="#about">About</a>
+        <a class="link" href="#archive">Archive</a>
+        <a class="link masthead__back" href="index.html"><span aria-hidden="true">←</span> Portfolio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ B. OPENING INTRODUCTION ============ -->
+    <section class="opening wrap" id="top" aria-labelledby="opening-title">
+      <p class="kicker opening__kicker">Vol. 01 <span class="dot" aria-hidden="true"></span> Ongoing</p>
+
+      <h1 class="opening__title" id="opening-title">
+        The work, the <em>detours,</em> and everything in between.
+      </h1>
+
+      <div class="opening__foot">
+        <p class="opening__lede">
+          A growing collection of things I'm building, learning, seeing, and figuring out along the way.
+        </p>
+
+        <ul class="meta opening__meta" aria-label="About this journal">
+          <li>London, UK</li>
+          <li>Personal journal</li>
+          <li>2026</li>
+        </ul>
+
+        <nav class="contents" aria-label="In this issue">
+          <p class="contents__label">In this issue</p>
+          <ol>
+            <li><a href="#now"><span>01</span> Where I am right now</a></li>
+            <li><a href="#notes"><span>02</span> Field notes</a></li>
+            <li><a href="#collected"><span>03</span> Collected along the way</a></li>
+            <li><a href="#about"><span>04</span> Sussing it out</a></li>
+          </ol>
+        </nav>
+      </div>
+    </section>
+
+    <!-- ============ C. FEATURED ENTRY ============
+         Images: swap the src / alt / width / height on each <img>.
+         The frame keeps its shape from --ratio on the <figure>, so the layout holds while images load. -->
+    <section class="section wrap" id="now" aria-labelledby="now-title">
+      <header class="section-head">
+        <span class="section-head__num">01</span>
+        <span class="section-head__label">Where I am right now</span>
+      </header>
+
+      <article class="feature">
+        <figure class="frame feature__lead" style="--ratio: 3 / 4" data-sb-reveal="image">
+          <span class="frame__img"><img src="images/web/blog-1.jpg" alt="A narrow street at night, people gathered outside lit bars, a red neon sign glowing on the right."
+               width="1200" height="1600" /></span>
+          <figcaption class="caption">
+            <span class="caption__plate">Pl. 01</span>
+            Side street, after dark. <span class="caption__credit">Photo: A.O.</span>
+          </figcaption>
+        </figure>
+
+        <div class="feature__text" data-sb-reveal>
+          <p class="status">
+            <span class="status__dot" aria-hidden="true"></span>
+            Current entry <span class="status__sep">/</span> <time datetime="2026-10">October 2026</time>
+          </p>
+
+          <h2 class="feature__title" id="now-title">Somewhere between code and <em>creativity.</em></h2>
+
+          <p class="feature__intro">
+            I'm finding my way back into software engineering while exploring how AI is changing the way we build things. Alongside that, I'm still drawn to the creative side of life — the barbershop, photography, and the people and places that make London interesting.
+          </p>
+
+          <dl class="ledger">
+            <div><dt>Writing software</dt><dd>~8 years</dd></div>
+            <div><dt>Studied</dt><dd>MSc Artificial Intelligence, Northumbria University London</dd></div>
+            <div><dt>Behind the chair</dt><dd>Barber, London</dd></div>
+            <div><dt>Thinking about</dt><dd>Agentic AI in real workflows</dd></div>
+          </dl>
+
+          <a class="link link--read" href="#entry-001">Read the entry <span aria-hidden="true">→</span></a>
+        </div>
+
+        <figure class="frame feature__aside feature__aside--side" style="--ratio: 4 / 5" data-sb-reveal="image">
+          <span class="frame__img"><img src="images/web/blog-2.jpg" alt="A dim bar in purple and red light, a blue neon sign reading &ldquo;Sing it back&rdquo; above the counter."
+               width="1200" height="1600" loading="lazy" /></span>
+          <figcaption class="caption">
+            <span class="caption__plate">Pl. 02</span>
+            &ldquo;Sing it back&rdquo;, in neon. <span class="caption__credit">Photo: A.O.</span>
+          </figcaption>
+        </figure>
+
+        <figure class="frame feature__aside feature__aside--print" style="--ratio: 1 / 1" data-sb-reveal="image">
+          <span class="frame__img"><img src="images/web/barber-1.jpg"
+               alt="Black-and-white close-up of a young man mid-haircut, eyes closed, as a barber's tattooed hand lines up his hairline with clippers."
+               width="1200" height="1600" loading="lazy" /></span>
+          <figcaption class="caption">
+            <span class="caption__plate">Pl. 03</span>
+            Behind the chair. <span class="caption__credit">Photo: A.O.</span>
+          </figcaption>
+        </figure>
+
+        <p class="scrawl feature__scrawl" aria-hidden="true">the other day job ↖</p>
+      </article>
+    </section>
+
+    <!-- ============ D. FIELD NOTES ============ -->
+    <section class="section wrap" id="notes" aria-labelledby="notes-title">
+      <header class="section-head">
+        <span class="section-head__num">02</span>
+        <span class="section-head__label">Fragments</span>
+      </header>
+
+      <div class="notes">
+        <div class="notes__head">
+          <h2 class="notes__title" id="notes-title">Field <em>notes</em></h2>
+          <p class="notes__intro">Short things, written down before they slip away.</p>
+        </div>
+
+        <article class="note note--one" data-sb-reveal>
+          <p class="note__num" aria-hidden="true">01</p>
+          <div class="note__body">
+            <p class="note__meta">Field note 01 <span>·</span> Engineering</p>
+            <h3 class="note__title">Building again</h3>
+            <p>Back to spending more time thinking about systems, product decisions, and how AI can become genuinely useful rather than just impressive in a demo.</p>
+          </div>
+          <p class="scrawl note__scrawl" aria-hidden="true">useful &gt; impressive</p>
+        </article>
+
+        <article class="note note--two" data-sb-reveal>
+          <p class="note__num" aria-hidden="true">02</p>
+          <div class="note__body">
+            <p class="note__meta">Field note 02 <span>·</span> Barbering</p>
+            <h3 class="note__title">Behind the chair</h3>
+            <p>Barbering taught me things about people, trust, and running a business that I wouldn't have learned by writing software alone. Those lessons still influence the products I want to build.</p>
+          </div>
+          <p class="scrawl note__scrawl" aria-hidden="true">→ ended up writing the shop's booking, payments &amp; expenses software</p>
+        </article>
+
+        <article class="note note--three" data-sb-reveal>
+          <p class="note__num" aria-hidden="true">03</p>
+          <div class="note__body">
+            <p class="note__meta">Field note 03 <span>·</span> Photography</p>
+            <h3 class="note__title">Noticing things</h3>
+            <p>Photography is a reason to slow down and pay attention. I'm interested in the little details, the atmosphere of a place, and the stories hiding in ordinary moments.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ E. THE VISUAL JOURNEY ============
+         Each <figure> is one tile. Replace the <img> src/alt and the caption text.
+         --ratio sets the tile shape; keep width/height on the <img> roughly matching. -->
+    <section class="section section--journey" id="collected" aria-labelledby="collected-title">
+      <div class="wrap">
+        <header class="section-head">
+          <span class="section-head__num">03</span>
+          <span class="section-head__label">Plates</span>
+        </header>
+
+        <div class="journey__head">
+          <h2 class="journey__title" id="collected-title">Collected <em>along the way</em></h2>
+          <p class="journey__sub">A few different worlds, all part of the same story.</p>
+        </div>
+
+        <div class="journey">
+          <!-- 1. Engineering & AI -->
+          <figure class="frame tile tile--a is-stand-in" style="--ratio: 4 / 3" data-sb-reveal="image">
+            <span class="frame__img"><img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=1400&h=1050&q=75"
+                 alt="A laptop in a dim room, its screen full of code in a dark editor theme."
+                 width="1400" height="1050" loading="lazy" /></span>
+            <figcaption class="caption caption--theme">
+              <span class="caption__theme">I — Engineering &amp; AI</span>
+              <span class="caption__line">Ideas becoming real.</span>
+              <span class="caption__credit">Stand-in · Unsplash</span>
+            </figcaption>
+          </figure>
+
+          <p class="scrawl tile__scrawl tile__scrawl--b" aria-hidden="true">same problems,<br />different chair ↓</p>
+
+          <!-- 2. Barbering & craftsmanship -->
+          <figure class="frame tile tile--b" style="--ratio: 4 / 5" data-sb-reveal="image">
+            <span class="frame__img"><img src="images/web/barber-2.jpg"
+                 alt="Black-and-white photo inside a barbershop: a barber cuts a young boy's hair while the boy sits under a patterned cape."
+                 width="1200" height="1600" loading="lazy" /></span>
+            <figcaption class="caption caption--theme">
+              <span class="caption__theme">II — Barbering &amp; craft</span>
+              <span class="caption__line">A craft built around people.</span>
+              <span class="caption__credit">Photo: A.O.</span>
+            </figcaption>
+          </figure>
+
+          <!-- 3. Photography & everyday observations -->
+          <figure class="frame tile tile--c" style="--ratio: 3 / 4" data-sb-reveal="image">
+            <span class="frame__img"><img src="images/web/blog-3.jpg" alt="A huge sculpture clad in stone-like tiles sits between two modern office blocks, a residential tower beyond under a pale sky."
+                 width="1200" height="1539" loading="lazy" /></span>
+            <figcaption class="caption caption--theme">
+              <span class="caption__theme">III — Photography</span>
+              <span class="caption__line">Things worth noticing.</span>
+              <span class="caption__credit">Photo: A.O.</span>
+            </figcaption>
+          </figure>
+
+          <!-- 4. London & personal experiences -->
+          <figure class="frame tile tile--d" style="--ratio: 3 / 2" data-sb-reveal="image">
+            <span class="frame__img"><img src="images/web/blog-6.jpg" alt="A rocky mountain ridge at dusk, a snow-capped peak catching the last light beneath a deep teal sky."
+                 width="1800" height="1200" loading="lazy" /></span>
+            <figcaption class="caption caption--theme">
+              <span class="caption__theme">IV — Further afield</span>
+              <span class="caption__line">Life between projects.</span>
+              <span class="caption__credit">Photo: A.O.</span>
+            </figcaption>
+          </figure>
+
+          <!-- Contact strip: three small frames from the same "roll" -->
+          <figure class="strip tile--e" data-sb-reveal>
+            <div class="strip__film">
+              <p class="strip__edge" aria-hidden="true"><span>A.O. 2026</span><span>▸ 14</span><span>▸ 15</span><span>▸ 16</span></p>
+              <ol class="strip__frames">
+                <li class="frame" style="--ratio: 3 / 4">
+                  <span class="frame__img"><img src="images/web/photo1.jpg" alt="Two lattice crane towers silhouetted against a dusk sky above a dark building."
+                       width="1200" height="1600" loading="lazy" /></span>
+                </li>
+                <li class="frame strip__pick" style="--ratio: 3 / 4">
+                  <span class="frame__img"><img src="images/web/photo7.jpg" alt="Tower blocks and a construction crane in silhouette against a deep teal evening sky."
+                       width="1200" height="1600" loading="lazy" /></span>
+                  <svg class="strip__circle" viewBox="0 0 120 150" aria-hidden="true" preserveAspectRatio="none">
+                    <path pathLength="1" d="M62 6C30 4 8 30 7 74c-1 42 22 70 56 70 33 0 52-30 51-72C113 34 92 9 58 8 47 8 38 12 33 16" />
+                  </svg>
+                </li>
+                <li class="frame" style="--ratio: 3 / 4">
+                  <span class="frame__img"><img src="images/web/photo8.jpg" alt="A tall tower in silhouette against a blue night sky, with a thin crescent moon beside it."
+                       width="1200" height="1586" loading="lazy" /></span>
+                </li>
+              </ol>
+            </div>
+            <figcaption class="caption">
+              <span class="caption__plate">Contact</span>
+              Three frames, one evening walk. <span class="caption__credit">Photos: A.O.</span>
+            </figcaption>
+            <p class="scrawl strip__note" aria-hidden="true">this one.</p>
+          </figure>
+
+          <figure class="frame tile tile--f" style="--ratio: 3 / 4" data-sb-reveal="image">
+            <span class="frame__img"><img src="images/web/blog-4.jpg" alt="A large white yacht moored on dark water beneath two glass residential towers, under an overcast sky."
+                 width="1200" height="1601" loading="lazy" /></span>
+            <figcaption class="caption">
+              <span class="caption__plate">Pl. 04</span>
+              Grey afternoon, by the water. <span class="caption__credit">Photo: A.O.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ F. REFLECTION ============ -->
+    <section class="section reflection wrap" id="about" aria-labelledby="about-title">
+      <header class="section-head">
+        <span class="section-head__num">04</span>
+        <span class="section-head__label">Afterword</span>
+      </header>
+
+      <div class="reflection__body" data-sb-reveal>
+        <h2 class="reflection__title" id="about-title">Sussing it out <em>out.</em></h2>
+
+        <p class="reflection__lead">I'm interested in the space between technology and the real world — the problems people deal with every day, the tools that make those problems easier, and the creative process of turning an idea into something useful.</p>
+
+        <p>Right now, that means learning more about AI, building products, finding my place in engineering again, and holding on to the things that make life interesting outside a screen.</p>
+
+        <p class="reflection__close">Moving towards greater things.</p>
+
+        <p class="scrawl reflection__sign" aria-hidden="true">— Ayush.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ G. FOOTER ============ -->
+  <footer class="colophon">
+    <div class="wrap colophon__inner">
+      <p class="wordmark__title colophon__mark"><em>The</em> Scrapbook</p>
+      <p class="colophon__more">More to come.</p>
+      <p class="colophon__links">
+        <a class="link" href="index.html"><span aria-hidden="true">←</span> Back to the portfolio</a>
+      </p>
+      <ul class="meta colophon__meta"><li>London, UK</li><li>© <span id="year">2026</span></li></ul>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
