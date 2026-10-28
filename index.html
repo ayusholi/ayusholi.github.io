@@ -23,6 +23,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Shared icon sprite (referenced with <use href="#i-…">) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-scissors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square">
+        <g class="blade blade--a"><circle cx="6" cy="18" r="3"/><path d="M8.2 16 20 4"/></g>
+        <g class="blade blade--b"><circle cx="6" cy="6" r="3"/><path d="M8.2 8 20 20"/></g>
+      </symbol>
+      <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M2 7h5l2-3h6l2 3h5v13H2z"/><circle class="lens" cx="12" cy="13" r="4"/><circle class="aperture" cx="12" cy="13" r="1.6" fill="currentColor" stroke="none"/>
+      </symbol>
+      <symbol id="i-eq" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="3" y="8" width="3" height="12"/><rect x="8.5" y="4" width="3" height="16"/><rect x="14" y="10" width="3" height="10"/><rect x="19.5" y="6" width="3" height="14"/>
+      </symbol>
+    </defs>
+  </svg>
   <a href="#main" class="skip">Skip to content</a>
   <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
@@ -34,6 +49,7 @@
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#systems">Systems</a>
       <a href="#founder">Founder</a>
       <a href="#experience">Experience</a>
       <a href="#life">Life</a>
@@ -67,13 +83,13 @@
         </h1>
 
         <div class="hero__row">
-          <p class="hero__headline" data-reveal><span class="highlight">Product Engineer</span> — AI</p>
+          <p class="hero__headline" data-reveal><span class="highlight">Product Engineer</span> — AI<span class="caret" aria-hidden="true"></span></p>
           <p class="hero__sub" data-reveal>From Nepal, based in London. I build products end to end, from architecture to the last pixel.</p>
         </div>
 
         <div class="hero__actions" data-reveal>
-          <a href="#projects" class="btn btn--primary btn--fill"><span>See my work</span><span class="btn__arrow" aria-hidden="true">↓</span></a>
-          <a href="#contact" class="btn btn--fill"><span>Get in touch</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a href="#projects" class="btn btn--primary btn--fill" data-magnetic><span>See my work</span><span class="btn__arrow" aria-hidden="true">↓</span></a>
+          <a href="#contact" class="btn btn--fill" data-magnetic><span>Get in touch</span><span class="btn__arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
 
@@ -103,7 +119,7 @@
             and I've built mobile apps with Flutter.
           </p>
           <p>
-            Outside of code, I'm a barber, a photographer and a musician.
+            Outside of code, I'm a barber<svg class="motif motif--snip" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-scissors"/></svg>, a photographer<svg class="motif" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"/></svg> and a musician<svg class="motif" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eq"/></svg>.
           </p>
         </div>
       </div>
@@ -244,9 +260,103 @@
       </div>
     </section>
 
+    <!-- ============ UNDER THE HOOD (architecture playground) ============ -->
+    <section id="systems" class="section">
+      <h2 class="section__title" data-mask><span><i>04</i> Under the hood</span></h2>
+      <div class="pg__intro" data-reveal>
+        <p class="pg__lead">How I think about the products I build.</p>
+        <p class="pg__note">An <strong>illustrative</strong> architecture for a booking product with an AI assistant. It isn't a diagram of any specific live system, and nothing here is real traffic. Pick a component, or run a scenario.</p>
+      </div>
+
+      <div class="pg" id="playground" data-reveal>
+        <div class="pg__toolbar" role="group" aria-label="Scenarios">
+          <span class="pg__label">Run a scenario</span>
+          <button type="button" class="chip" data-scenario="booking">Make a booking</button>
+          <button type="button" class="chip" data-scenario="payment">Take a payment</button>
+          <button type="button" class="chip" data-scenario="notify">Send a reminder</button>
+          <button type="button" class="chip chip--ai" data-scenario="agent">AI agent uses a tool</button>
+          <button type="button" class="chip" data-scenario="failure">Fail and recover</button>
+          <button type="button" class="chip chip--ghost" id="pg-reset">Reset</button>
+        </div>
+
+        <div class="pg__stage">
+          <p class="pg__hint" aria-hidden="true">Swipe the diagram sideways →</p>
+          <div class="pg__scroll" tabindex="0" role="region" aria-label="Architecture diagram. Scroll sideways on small screens.">
+            <div class="pg__diagram" id="pg-diagram">
+              <svg class="pg__wires" id="pg-wires" aria-hidden="true">
+                <defs>
+                  <marker id="pg-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                    <path d="M0 0 10 5 0 10z" fill="currentColor"/>
+                  </marker>
+                </defs>
+              </svg>
+
+              <button type="button" class="node" data-node="client" style="--c:1;--r:1"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">▢</span><span class="node__name">Client</span><span class="node__tip">Browser or mobile app</span></button>
+              <button type="button" class="node" data-node="web" style="--c:2;--r:1"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">&lt;/&gt;</span><span class="node__name">Frontend</span><span class="node__tip">UI, routing, form checks</span></button>
+              <button type="button" class="node" data-node="api" style="--c:3;--r:1"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">{ }</span><span class="node__name">API</span><span class="node__tip">Business rules live here</span></button>
+              <button type="button" class="node" data-node="db" style="--c:4;--r:1"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">≡</span><span class="node__name">Database</span><span class="node__tip">Source of truth</span></button>
+              <button type="button" class="node node--ai" data-node="llm" style="--c:2;--r:2"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">✦</span><span class="node__name">AI model</span><span class="node__tip">Proposes, never executes</span></button>
+              <button type="button" class="node node--ai" data-node="agent" style="--c:3;--r:2"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">⌘</span><span class="node__name">Agent runtime</span><span class="node__tip">Validates every tool call</span></button>
+              <button type="button" class="node" data-node="queue" style="--c:4;--r:2"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">⇶</span><span class="node__name">Event queue</span><span class="node__tip">Decouples slow work</span></button>
+              <button type="button" class="node node--ai" data-node="tools" style="--c:2;--r:3"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">⚙</span><span class="node__name">Tools</span><span class="node__tip">App functions the agent may call</span></button>
+              <button type="button" class="node" data-node="ext" style="--c:3;--r:3"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">↗</span><span class="node__name">External APIs</span><span class="node__tip">Payments, email, SMS</span></button>
+              <button type="button" class="node" data-node="worker" style="--c:4;--r:3"><span class="node__dot" aria-hidden="true"></span><span class="node__icon" aria-hidden="true">↻</span><span class="node__name">Workers</span><span class="node__tip">Background jobs with retries</span></button>
+
+              <!-- The robot's home: it only ever moves inside this dock -->
+              <div class="pg__dock" id="robot-dock">
+                <div class="robot" id="robot">
+                  <p class="robot__bubble" id="robot-bubble" aria-live="polite"></p>
+                  <button type="button" class="robot__btn" id="robot-btn" aria-label="Say hello to the robot">
+                    <svg class="robot__svg" viewBox="0 0 80 100" aria-hidden="true">
+                      <g class="robot__body-wrap">
+                        <line x1="40" y1="4" x2="40" y2="14" class="robot__stroke"/>
+                        <rect x="35" y="0" width="10" height="8" class="robot__antenna"/>
+                        <g class="robot__head">
+                          <rect x="14" y="14" width="52" height="36" class="robot__plate"/>
+                          <rect x="20" y="20" width="40" height="22" class="robot__visor"/>
+                          <g class="robot__eyes">
+                            <rect x="27" y="26" width="7" height="10" class="robot__eye"/>
+                            <rect x="46" y="26" width="7" height="10" class="robot__eye"/>
+                          </g>
+                        </g>
+                        <rect x="22" y="54" width="36" height="28" class="robot__plate"/>
+                        <rect x="34" y="61" width="12" height="6" class="robot__light"/>
+                        <g class="robot__arm robot__arm--l"><rect x="9" y="56" width="10" height="20" class="robot__plate"/></g>
+                        <g class="robot__arm robot__arm--r"><rect x="61" y="56" width="10" height="20" class="robot__plate"/></g>
+                        <g class="robot__leg robot__leg--l"><rect x="27" y="84" width="9" height="13" class="robot__plate"/></g>
+                        <g class="robot__leg robot__leg--r"><rect x="44" y="84" width="9" height="13" class="robot__plate"/></g>
+                      </g>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <ul class="pg__legend" aria-label="Legend">
+                <li><span class="lg lg--wire"></span>Request path</li>
+                <li><span class="lg lg--packet"></span>Data packet</li>
+                <li><span class="lg lg--ai"></span>AI component</li>
+                <li><span class="lg lg--err"></span>Failure, then retry</li>
+              </ul>
+            </div>
+          </div>
+
+          <aside class="pg__panel" id="pg-panel" aria-live="polite">
+            <div class="pg__panel-head">
+              <p class="pg__kicker" id="pg-kicker">Explore</p>
+              <button type="button" class="pg__close" id="pg-close" aria-label="Close details" hidden>×</button>
+            </div>
+            <div id="pg-content">
+              <h3>Pick a component</h3>
+              <p>Hover or tab to a box to see what it does. Click it for the details, or run a scenario above to watch a request move through the system.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ FOUNDER ============ -->
     <section id="founder" class="section">
-      <h2 class="section__title" data-mask><span><i>04</i> Founder</span></h2>
+      <h2 class="section__title" data-mask><span><i>05</i> Founder</span></h2>
       <div class="card timeline__item founder" data-reveal>
         <span class="timeline__date">Present</span>
         <h3>Product Owner, Founder</h3>
@@ -260,7 +370,7 @@
 
     <!-- ============ EXPERIENCE ============ -->
     <section id="experience" class="section">
-      <h2 class="section__title" data-mask><span><i>05</i> Experience</span></h2>
+      <h2 class="section__title" data-mask><span><i>06</i> Experience</span></h2>
       <ol class="timeline" id="timeline">
         <span class="timeline__track" aria-hidden="true"><span class="timeline__fill" id="timeline-fill"></span></span>
         <li class="card timeline__item" data-reveal>
@@ -322,25 +432,25 @@
 
     <!-- ============ LIFE OUTSIDE TECH ============ -->
     <section id="life" class="section">
-      <h2 class="section__title" data-mask><span><i>06</i> Outside tech</span></h2>
+      <h2 class="section__title" data-mask><span><i>07</i> Outside tech</span></h2>
 
       <div class="grid grid--3" data-stagger>
         <article class="card card--life" data-reveal>
-          <span class="card__icon">✂</span>
+          <span class="card__icon card__icon--pole"><svg class="icon icon--snip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="square" aria-hidden="true"><g class="blade blade--a"><circle cx="6" cy="18" r="3"/><path d="M8.2 16 20 4"/></g><g class="blade blade--b"><circle cx="6" cy="6" r="3"/><path d="M8.2 8 20 20"/></g></svg></span>
           <h3>Barbering</h3>
           <p>I'm a self-taught professional barber. I take bookings through my own app.</p>
           <a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" class="link">Book a cut ↗</a>
         </article>
 
         <article class="card card--life" data-reveal>
-          <span class="card__icon">◉</span>
+          <span class="card__icon"><svg class="icon icon--shutter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M2 7h5l2-3h6l2 3h5v13H2z"/><circle cx="12" cy="13" r="4"/><circle class="aperture" cx="12" cy="13" r="1.6" fill="currentColor" stroke="none"/></svg></span>
           <h3>Photography</h3>
           <p>Street, landscape and vintage, shot around London and Nepal.</p>
           <a href="#gallery" class="link">See photos ↓</a>
         </article>
 
         <article class="card card--life" data-reveal>
-          <span class="card__icon">♫</span>
+          <span class="card__icon"><svg class="icon icon--eq" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="3" height="12"/><rect x="8.5" y="4" width="3" height="16"/><rect x="14" y="10" width="3" height="10"/><rect x="19.5" y="6" width="3" height="14"/></svg></span>
           <h3>Music</h3>
           <p>I play guitar and sing.</p>
         </article>
@@ -364,13 +474,17 @@
 
     <!-- ============ CONTACT ============ -->
     <section id="contact" class="section contact">
-      <h2 class="section__title" data-mask><span><i>07</i> Contact</span></h2>
+      <h2 class="section__title" data-mask><span><i>08</i> Contact</span></h2>
       <p class="contact__big" data-reveal>Want to build<br />something <em>together?</em></p>
       <p class="contact__lead" data-reveal>Say hi.</p>
-      <a href="mailto:ayusholi540@gmail.com" class="btn btn--primary btn--lg btn--fill" data-reveal><span>ayusholi540@gmail.com</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+      <div class="contact__email" data-reveal>
+        <a href="mailto:ayusholi540@gmail.com" class="btn btn--primary btn--lg btn--fill" data-magnetic><span>ayusholi540@gmail.com</span><span class="btn__arrow" aria-hidden="true">→</span></a>
+        <button type="button" class="btn btn--fill copy" id="copy-email" data-copy="ayusholi540@gmail.com"><span class="copy__label">Copy</span></button>
+        <span class="copy__status" id="copy-status" role="status"></span>
+      </div>
       <div class="contact__links" data-reveal>
-        <a href="https://github.com/ayusholi" target="_blank" rel="noopener" class="btn btn--fill"><span>GitHub</span><span class="btn__arrow" aria-hidden="true">↗</span></a>
-        <a href="https://www.linkedin.com/in/ayush-o-368a13142" target="_blank" rel="noopener" class="btn btn--fill"><span>LinkedIn</span><span class="btn__arrow" aria-hidden="true">↗</span></a>
+        <a href="https://github.com/ayusholi" target="_blank" rel="noopener" class="btn btn--fill" data-magnetic><span>GitHub</span><span class="btn__arrow" aria-hidden="true">↗</span></a>
+        <a href="https://www.linkedin.com/in/ayush-o-368a13142" target="_blank" rel="noopener" class="btn btn--fill" data-magnetic><span>LinkedIn</span><span class="btn__arrow" aria-hidden="true">↗</span></a>
       </div>
     </section>
 
@@ -378,9 +492,11 @@
 
   <footer class="footer">
     <p>© <span id="year"></span> Ayush Oli · Nepal → London</p>
+    <p class="footer__note"><span class="status-dot" aria-hidden="true"></span> Hand-built: HTML, CSS and a little JS <svg class="motif motif--eq" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eq"/></svg></p>
     <a href="#top" class="footer__top">Back to top ↑</a>
   </footer>
 
   <script src="script.js"></script>
+  <script src="playground.js"></script>
 </body>
 </html>

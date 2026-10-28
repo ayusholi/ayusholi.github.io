@@ -4,8 +4,21 @@ const toggle = document.getElementById("theme-toggle");
 
 toggle.addEventListener("click", () => {
   const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-  root.setAttribute("data-theme", next);
-  try { localStorage.setItem("theme", next); } catch (e) {}
+  const apply = () => {
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  };
+  // Where supported, the new theme grows out of the toggle as a circle
+  if (!document.startViewTransition || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return apply();
+  const r = toggle.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const radius = Math.hypot(Math.max(cx, innerWidth - cx), Math.max(cy, innerHeight - cy));
+  document.startViewTransition(apply).ready.then(() => {
+    root.animate(
+      { clipPath: [`circle(0px at ${cx}px ${cy}px)`, `circle(${radius}px at ${cx}px ${cy}px)`] },
+      { duration: 600, easing: "cubic-bezier(0.22, 1, 0.36, 1)", pseudoElement: "::view-transition-new(root)" }
+    );
+  });
 });
 
 // ===== Footer year =====
@@ -194,8 +207,82 @@ const setMenu = (open) => {
   menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
 };
 menuToggle.addEventListener("click", () => setMenu(menuToggle.getAttribute("aria-expanded") !== "true"));
-links.forEach((a) => a.addEventListener("click", () => setMenu(false)));
+links.forEach((a) => a.addEventListener("click", () => {
+  setMenu(false);
+  // briefly mark the destination's title once the scroll has landed
+  const title = document.querySelector(`${a.getAttribute("href")} .section__title`);
+  if (!title) return;
+  setTimeout(() => {
+    title.classList.remove("is-flash");
+    void title.offsetWidth;
+    title.classList.add("is-flash");
+  }, reduceMotion ? 0 : 650);
+}));
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") { setMenu(false); menuToggle.focus(); }
 });
-window.matchMedia("(min-width: 901px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
+window.matchMedia("(min-width: 1001px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
+
+// ===== Magnetic buttons =====
+// Elements marked [data-magnetic] drift a few pixels toward a nearby pointer,
+// with their label moving a little further. Uses the `translate` property so
+// it composes with the existing hover/active `transform` press effect.
+const magnets = [...document.querySelectorAll("[data-magnetic]")];
+if (finePointer && !reduceMotion && magnets.length) {
+  const RANGE = 70, PULL = 0.22, MAX = 8;
+  const state = magnets.map((el) => ({ el, label: el.querySelector("span"), dx: 0, dy: 0 }));
+  let mx = -1e4, my = -1e4, queued = false;
+
+  const frame = () => {
+    queued = false;
+    state.forEach((s) => {
+      const r = s.el.getBoundingClientRect();
+      // measure from the resting position, not the displaced one
+      const cx = r.left - s.dx + r.width / 2, cy = r.top - s.dy + r.height / 2;
+      const ox = mx - cx, oy = my - cy;
+      const inside = Math.abs(ox) < r.width / 2 + RANGE && Math.abs(oy) < r.height / 2 + RANGE;
+      s.dx = inside ? Math.max(-MAX, Math.min(MAX, ox * PULL)) : 0;
+      s.dy = inside ? Math.max(-MAX, Math.min(MAX, oy * PULL)) : 0;
+      s.el.style.translate = `${s.dx.toFixed(1)}px ${s.dy.toFixed(1)}px`;
+      if (s.label) s.label.style.translate = `${(s.dx * 0.4).toFixed(1)}px ${(s.dy * 0.4).toFixed(1)}px`;
+      s.el.classList.toggle("is-magnet", inside);
+    });
+  };
+  window.addEventListener("pointermove", (e) => {
+    mx = e.clientX; my = e.clientY;
+    if (!queued) { queued = true; requestAnimationFrame(frame); }
+  }, { passive: true });
+  // pointer left the window: let everything settle back
+  window.addEventListener("pointerout", (e) => { if (!e.relatedTarget) { mx = my = -1e4; requestAnimationFrame(frame); } });
+}
+
+// ===== Copy email =====
+const copyBtn = document.getElementById("copy-email");
+if (copyBtn) {
+  const label = copyBtn.querySelector(".copy__label");
+  const status = document.getElementById("copy-status");
+  let resetTimer = 0;
+  copyBtn.addEventListener("click", async () => {
+    const email = copyBtn.dataset.copy;
+    let ok = false;
+    try { await navigator.clipboard.writeText(email); ok = true; } catch (e) {
+      // older browsers / blocked Clipboard API: copy through a temporary field
+      const field = Object.assign(document.createElement("textarea"), { value: email });
+      field.setAttribute("readonly", "");
+      field.style.cssText = "position:fixed;opacity:0";
+      document.body.appendChild(field);
+      field.select();
+      try { ok = document.execCommand("copy"); } catch (err) {}
+      field.remove();
+    }
+    label.textContent = ok ? "Copied ✓" : "Copy failed";
+    status.textContent = ok ? "Email address copied" : `Couldn't copy. The address is ${email}`;
+    copyBtn.classList.toggle("is-copied", ok);
+    clearTimeout(resetTimer);
+    resetTimer = setTimeout(() => {
+      label.textContent = "Copy";
+      status.textContent = "";
+      copyBtn.classList.remove("is-copied");
+    }, 2000);
+  });
+}
