@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "../../styles/publication.css" layer(components);
+
+/* Tailwind reads the publication's tokens, so utilities and the component
+   stylesheet share one system. The ground, ink and rule colours are `inline`
+   because each paper stock redefines them. */
+@theme inline {
+  --color-ground: var(--ground);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-lift: var(--lift);
+  --color-rule: var(--rule);
+  --color-signal: var(--signal);
+  --font-display: var(--f-display);
+  --font-body: var(--f-body);
+  --font-mono: var(--f-mono);
+  --ease-sheet: var(--ease);
+  --breakpoint-phone: 45rem;   /* 720px, the stylesheet's phone break */
+  --breakpoint-tablet: 67.5rem;/* 1080px, its tablet break */
+}

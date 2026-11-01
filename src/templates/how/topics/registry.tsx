@@ -1,0 +1,15 @@
+import dynamic from "next/dynamic";
+import { createElement, type ComponentType, type ReactNode } from "react";
+import type { ExperienceSlug } from "./published";
+
+// Maps a topic slug to its page template. Each topic brings its own body. Dynamic imports keep one topic's
+// simulation out of every other topic's bundle, while still rendering on the server.
+export const EXPERIENCES: Record<ExperienceSlug, ComponentType> = {
+  redis: dynamic(() => import("./RedisArticle")),
+  "apache-kafka": dynamic(() => import("./KafkaArticle")),
+};
+
+export const renderExperience = (slug: string): ReactNode => {
+  const component = EXPERIENCES[slug as ExperienceSlug];
+  return component ? createElement(component) : null;
+};
