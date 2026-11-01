@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apache Kafka · How Things Work — Ayush Oli</title>
+  <meta name="description" content="An interactive simulation of Apache Kafka: partitions, offsets, consumer groups, lag, rebalancing and reprocessing." />
+  <meta name="theme-color" content="#101a1c" />
+  <link rel="canonical" href="https://www.ayusholi.com.np/how/kafka/" />
+  <link rel="icon" href="../../images/assets/favicon.ico" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..100,400..700&family=Martian+Mono:wdth,wght@75..100,300..600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../how.css" />
+</head>
+<body class="stock-ink">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="mast">
+    <div class="mast__in wrap">
+      <a class="wordmark" href="../" data-pub-name>How Things Work</a>
+      <nav class="label" aria-label="Publication">
+        <a href="../#plates">All topics</a>
+        <a href="../#collections">Collections</a>
+        <a href="../../">← Ayush Oli</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="topic-open wrap" aria-labelledby="title">
+      <p class="topic-open__meta label">
+        <span>Mechanism 02</span><span>Distributed Systems</span><span>Interactive · 8 min</span>
+      </p>
+      <h1 class="display display--q" id="title">How does data move between systems that never talk to each other?</h1>
+      <div class="topic-open__foot">
+        <p class="lede">They share a log. Producers append to the end of a tape, and each reader keeps its own place. Reading removes nothing, and most of what makes Kafka unusual follows from that.</p>
+        <p class="label">One topic, one consumer group, one simulated clock. Each tick is a chance for every running consumer to process one record.</p>
+      </div>
+    </section>
+
+    <section class="wrap" aria-label="Kafka simulation">
+      <div class="bench sheet" id="bench">
+        <div class="tabs" id="tabs" role="group" aria-label="Experiments"></div>
+        <p class="lesson" id="lesson"></p>
+
+        <div class="yard" id="yard">
+          <svg class="yard__wires" id="wires" aria-hidden="true"></svg>
+          <p class="rebalance" id="banner" hidden></p>
+
+          <div class="yard__col">
+            <div class="yard__h label">Producer</div>
+            <div class="producer" id="producer">
+              <b>orders-api</b>
+              <button type="button" class="btn btn--solid btn--wide" id="send">Send record</button>
+              <button type="button" class="btn btn--wide" id="send-10">Send 10</button>
+              <span class="label">Keep sending</span>
+              <div class="seg" id="auto"><button type="button" data-value="off" aria-pressed="true">Off</button><button type="button" data-value="on">On</button></div>
+              <span class="label">Use keys</span>
+              <div class="seg" id="keys"><button type="button" data-value="on">A B C</button><button type="button" data-value="off">None</button></div>
+            </div>
+          </div>
+
+          <div class="yard__col">
+            <div class="yard__h label">Topic: orders · each cell is record, offset</div>
+            <div id="tapes"></div>
+          </div>
+
+          <div class="yard__col yard__col--group">
+            <div class="yard__h label">Consumer group: demo</div>
+            <div class="yard__col yard__list" id="consumers"></div>
+          </div>
+        </div>
+
+        <div class="caption" id="caption" style="grid-template-columns:1fr"></div>
+        <p class="sr" id="status" role="status"></p>
+        <div class="transport-bar"><div id="transport"></div></div>
+
+        <div class="sinkrow">
+          <div class="readout__h label"><span>What the application did, in order</span><span>dashed = duplicate · filled = out of key order</span></div>
+          <div class="sink" id="sink"></div>
+          <div class="counters counters--wide" id="stats"></div>
+        </div>
+
+        <div class="kcontrols" aria-label="Experiment">
+          <div class="control">
+            <span class="label">Topic</span>
+            <button type="button" class="btn" id="add-part">+ Partition</button>
+            <div class="seekform">
+              <label class="label" for="fresh-n">New topic with</label>
+              <select id="fresh-n"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>6</option><option>8</option></select>
+              <button type="button" class="btn" id="fresh">Start over</button>
+            </div>
+          </div>
+          <div class="control">
+            <span class="label">Group</span>
+            <button type="button" class="btn" id="add-cons">+ Consumer</button>
+            <span class="control__hint">Pause, crash or stop consumers on their own cards.</span>
+          </div>
+          <div class="control">
+            <span class="label">Records per poll, then commit</span>
+            <div class="seg" id="commit-every"><button type="button" data-value="1">1</button><button type="button" data-value="3">3</button><button type="button" data-value="5">5</button></div>
+            <span class="label">Commit</span>
+            <div class="seg" id="commit-mode"><button type="button" data-value="after">After processing</button><button type="button" data-value="before">Before</button></div>
+            <span class="label">Idempotent application</span>
+            <div class="seg" id="sink-mode"><button type="button" data-value="off">Off</button><button type="button" data-value="on">On</button></div>
+          </div>
+          <div class="control">
+            <span class="label">Restart from an offset</span>
+            <form class="seekform" id="seek-form">
+              <select id="seek-p" aria-label="Partition"></select>
+              <input id="seek-o" type="number" min="0" value="0" aria-label="Offset" />
+              <button type="submit" class="btn">Seek</button>
+            </form>
+            <span class="control__hint">Or click any record on a tape.</span>
+          </div>
+        </div>
+
+        <div class="block label">
+          <span><b>Sheet 02</b> · Topic, partitions, consumer group</span>
+          <span>Single broker view, no replication</span>
+          <span>Ticks are not real time</span>
+        </div>
+      </div>
+      <noscript><p class="prose">This simulation needs JavaScript. The explanations below still work without it.</p></noscript>
+    </section>
+
+    <section class="section wrap" aria-labelledby="ideas">
+      <header class="section__head">
+        <span class="label">The model</span>
+        <h2 class="h2" id="ideas">Four rules explain most of it</h2>
+      </header>
+      <div class="breaks">
+        <article class="break">
+          <span class="label">Rule 1</span>
+          <h3>A partition is an append-only log</h3>
+          <p>Records are added at the end and get the next offset. Retention removes old records later, but consuming never does. Two groups can read the same data independently.</p>
+        </article>
+        <article class="break">
+          <span class="label">Rule 2</span>
+          <h3>Order exists within a partition</h3>
+          <p>There's no order across a multi-partition topic. If events about one customer must stay in sequence, give them a key so they share a partition.</p>
+        </article>
+        <article class="break">
+          <span class="label">Rule 3</span>
+          <h3>One owner per partition, per group</h3>
+          <p>That's what keeps a partition's order intact while it's processed. It also means more consumers than partitions adds spares, not throughput.</p>
+        </article>
+      </div>
+      <div class="breaks" style="margin-top:-1px;grid-template-columns:minmax(0,1fr)">
+        <article class="break">
+          <span class="label">Rule 4</span>
+          <h3>Progress is a number the consumer commits</h3>
+          <p>The broker doesn't track each record as done. A group stores an offset per partition, and lag is the gap between that offset and the end of the log. Everything about redelivery follows from when that number gets written.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="hood">
+      <header class="section__head">
+        <span class="label">Under the hood</span>
+        <h2 class="h2" id="hood">The same state, as an operator sees it</h2>
+      </header>
+      <div class="split">
+        <div>
+          <p class="readout__h label"><span>Live: this table reads the simulation above</span></p>
+          <pre class="cli" id="cli" tabindex="0" aria-label="Consumer group status table"></pre>
+        </div>
+        <div class="prose">
+          <p>This is the shape of <span class="inline-code">kafka-consumer-groups --describe</span>. <strong>CURRENT-OFFSET</strong> is what the group last committed, so it moves in steps and lags behind the yellow cursor while a batch is in progress. The dashed line on each tape marks it.</p>
+          <p>A consumer is a loop around <span class="inline-code">poll()</span>: fetch a batch, process it, commit. The order of those last two steps is the choice between processing a record twice and possibly not at all.</p>
+<pre class="code" tabindex="0" aria-label="Consumer loop example"><code><span class="ln">while (running) {</span><span class="ln">  const batch = await consumer.poll();</span><span class="ln">  for (const record of batch) {</span><span class="ln">    await handle(record);    // crash here…</span><span class="ln">  }</span><span class="ln">  await consumer.commit();   // …and this never ran</span><span class="ln">}</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="breaks">
+      <header class="section__head">
+        <span class="label">When it breaks</span>
+        <h2 class="h2" id="breaks">Guarantees depend on what you built</h2>
+      </header>
+      <div class="breaks">
+        <article class="break">
+          <span class="label">Commit after · at-least-once</span>
+          <h3>Crash, and records come back</h3>
+          <p>Experiment 4. The successor restarts from the last commit, so work between that commit and the crash runs again. Nothing is lost, and side effects may repeat.</p>
+        </article>
+        <article class="break">
+          <span class="label">Commit before · at-most-once</span>
+          <h3>Crash, and records vanish</h3>
+          <p>Set “Commit: Before”, send 10 records, and crash a consumer while it’s working. “Never processed” climbs: the group has moved past records nobody handled.</p>
+        </article>
+        <article class="break">
+          <span class="label">The practical answer</span>
+          <h3>Assume delivery can repeat</h3>
+          <p>Make handlers idempotent, for instance with a unique constraint on a record's ID. Turn on “Idempotent application” and duplicates arrive but do nothing.</p>
+        </article>
+      </div>
+      <div class="prose" style="margin-top:24px">
+        <p>Kafka's transactions give exactly-once processing for read-process-write flows inside Kafka. They don't extend to an arbitrary database or an email provider on the other side of your handler. That part is still yours to design.</p>
+      </div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="test">
+      <header class="section__head">
+        <span class="label">Test yourself</span>
+        <h2 class="h2" id="test">Two predictions</h2>
+      </header>
+      <div class="challenge" id="challenge"></div>
+      <div class="challenge" id="challenge-2" style="margin-top:44px"></div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="simplified">
+      <header class="section__head">
+        <span class="label">Fine print</span>
+        <h2 class="h2" id="simplified">What this model leaves out</h2>
+      </header>
+      <div class="notes">
+        <details>
+          <summary>Brokers, replication and leaders</summary>
+          <div><p>The tapes behave as one reliable log. Real partitions are replicated across brokers with a leader and followers, and <span class="inline-code">acks</span> and <span class="inline-code">min.insync.replicas</span> decide what “written” means.</p></div>
+        </details>
+        <details>
+          <summary>Partitioning and assignment</summary>
+          <div><p>The default partitioner hashes keys with murmur2, and keyless records go in sticky batches, far larger than the two records used here. Assignment here is a simple range. Real strategies include cooperative-sticky, which avoids stopping every consumer during a rebalance.</p></div>
+        </details>
+        <details>
+          <summary>Commits and timing</summary>
+          <div><p>Commits are offsets stored in an internal topic, and clients often commit on a timer. Lag here is measured from the committed offset, as the CLI does. A running consumer's real position is usually ahead of it. Sessions are measured in seconds, not ticks.</p></div>
+        </details>
+        <details>
+          <summary>Pausing a consumer</summary>
+          <div><p>This models the client's <span class="inline-code">pause()</span>, which stops fetching while polling continues. A consumer that simply stops calling <span class="inline-code">poll()</span> for too long gets removed from the group, which looks more like the crash path.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="next">
+      <header class="section__head">
+        <span class="label">Keep going</span>
+        <h2 class="h2" id="next">Connected mechanisms</h2>
+      </header>
+      <div class="nexts" id="related" data-topic="kafka"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__in wrap label">
+      <span><span data-pub-name>How Things Work</span> · A simulation, not a Kafka cluster</span>
+      <a href="../">Back to all topics</a>
+      <a href="../../">Ayush Oli</a>
+    </div>
+  </footer>
+
+  <script type="module" src="../js/chrome.js"></script>
+  <script type="module" src="bench.js"></script>
+</body>
+</html>
