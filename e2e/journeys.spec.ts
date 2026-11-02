@@ -163,8 +163,44 @@ test("routes work by direct entry, refresh and history", async () => {
   await p.context().close();
 });
 
-test("planned topics are honest and unknown ones are not found", async () => {
+test("DOCKER, KUBERNETES, CI/CD, GITHUB ACTIONS", async () => {
+  // Each bench runs its first scenario on sight, and the counters match what its engine says.
   const p = await open("/scrapebook/how-things-works/topics/docker/");
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "downloadedMb") === 117, "docker: a cold run downloads every layer", await cnt(p, "downloadedMb"));
+  await p.locator('#tabs [data-value="warm"]').click();
+  await idle(p);
+  ok(await cnt(p, "reusedLayers") === 3, "docker: a warm run reuses every layer");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/kubernetes/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await expect(p.locator('[data-c="created"] b')).toHaveText("4", { timeout: 30000 });
+  await expect(p.locator('[data-c="ready"] b')).toHaveText("3", { timeout: 30000 });
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/ci-cd/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await p.locator('#tabs [data-value="escape"]').click();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "errorRate") === 100, "ci/cd: the escaped bug hits everyone");
+  await p.locator("#rollback").click();
+  await idle(p);
+  ok(await cnt(p, "errorRate") === 0, "ci/cd: rollback restores the old artifact");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/github-actions/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await p.locator('#tabs [data-value="pr"]').click();
+  await sp(p);
+  await expect(p.locator("#board")).toContainText("– skipped", { timeout: 30000 });
+  await expect(p.locator("#runlog")).toContainText("success", { timeout: 30000 });
+  await p.context().close();
+});
+
+test("planned topics are honest and unknown ones are not found", async () => {
+  const p = await open("/scrapebook/how-things-works/topics/llms/");
   await expect(p.locator("body")).toContainText("hasn't been built yet");
   await expect(p.locator("#bench")).toHaveCount(0);
   const missing = await p.goto(`${U}/scrapebook/how-things-works/topics/nope/`);
@@ -190,7 +226,7 @@ test("static HTML carries the content before any script runs", async ({ request 
 
 for (const [width, height] of [[390, 844], [820, 1100], [1440, 900]] as const) {
   test(`no horizontal overflow at ${width}px`, async () => {
-    for (const url of ["/scrapebook/how-things-works/", "/scrapebook/how-things-works/topics/redis/", "/scrapebook/how-things-works/topics/apache-kafka/"]) {
+    for (const url of ["/scrapebook/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions"].map((t) => `/scrapebook/how-things-works/topics/${t}/`)]) {
       const p = await open(url, { viewport: { width, height } });
       await p.waitForTimeout(600);
       const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

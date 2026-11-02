@@ -7,6 +7,10 @@ import type { ExperienceSlug } from "./published";
 export const EXPERIENCES: Record<ExperienceSlug, ComponentType> = {
   redis: dynamic(() => import("./RedisArticle")),
   "apache-kafka": dynamic(() => import("./KafkaArticle")),
+  docker: dynamic(() => import("./DockerArticle")),
+  kubernetes: dynamic(() => import("./KubernetesArticle")),
+  "ci-cd": dynamic(() => import("./CicdArticle")),
+  "github-actions": dynamic(() => import("./ActionsArticle")),
 };
 
 export const renderExperience = (slug: string): ReactNode => {
