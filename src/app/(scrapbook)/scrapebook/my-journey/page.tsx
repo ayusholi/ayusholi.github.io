@@ -1,5 +1,5 @@
 import { ScrapbookPage } from "@/templates/scrapbook/ScrapbookPage";
 
-export default function Blog() {
+export default function MyJourney() {
   return <ScrapbookPage />;
 }

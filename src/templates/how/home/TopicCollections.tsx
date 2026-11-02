@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Collection } from "@/lib/content/content-types";
 import { Section } from "@/components/layout/Section";
+import { topicUrl } from "@/lib/site";
 
 export const TopicCollections = ({ collections }: { collections: Collection[] }) => (
   <Section id="coll-h" anchor="collections" label="Collections" title="How the pieces connect">
@@ -15,7 +16,7 @@ export const TopicCollections = ({ collections }: { collections: Collection[] })
           </summary>
           <div className="coll__items">
             {c.concepts.map((x) => (x.topic
-              ? <Link key={x.name} className="concept" href={`/how/topics/${x.topic}`}>{x.name}</Link>
+              ? <Link key={x.name} className="concept" href={topicUrl(x.topic)}>{x.name}</Link>
               : <span key={x.name} className="concept">{x.name}</span>))}
           </div>
         </details>

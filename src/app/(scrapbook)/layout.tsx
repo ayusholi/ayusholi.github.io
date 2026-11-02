@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { JOURNEY_URL } from "@/lib/site";
 import "@/styles/portfolio.css";
 
 export const viewport: Viewport = { themeColor: "#f3efe6" };
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.ayusholi.com.np"),
   title: "The Scrapbook — Ayush Oli",
   description: "The Scrapbook: a growing collection of things Ayush Oli is building, learning, seeing, and figuring out along the way.",
-  alternates: { canonical: "/blog/" },
+  alternates: { canonical: JOURNEY_URL },
   icons: { icon: [{ url: "/images/assets/favicon.ico", sizes: "any" }] },
 };
 

@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { Collection, Topic } from "@/lib/content/content-types";
 import { Section } from "@/components/layout/Section";
 import { TopicPreview } from "@/components/topics/TopicPreview";
+import { topicUrl } from "@/lib/site";
 
 const Plate = ({ topic, index, collection }: { topic: Topic; index: number; collection: string }) => {
   const live = topic.status === "published";
   const className = `plate plate--${topic.plate.size} stock-${topic.plate.stock}${live ? " plate--live" : ""}`;
   const find = `${topic.title} ${topic.question} ${collection}`.toLowerCase();
   return (
-    <Link className={className} href={`/how/topics/${topic.slug}`} data-find={find}>
+    <Link className={className} href={topicUrl(topic.slug)} data-find={find}>
       <div className="plate__top label"><span>Nº {String(index + 1).padStart(2, "0")}</span><span>{collection}</span></div>
       <div className="plate__art"><TopicPreview slug={topic.slug} /></div>
       <div>

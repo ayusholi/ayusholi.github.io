@@ -24,7 +24,7 @@ test.beforeEach(({ browser }) => { b = browser; errs.length = 0; });
 test.afterEach(() => { expect(errs, "page errors and hydration warnings").toEqual([]); });
 
 test("REDIS", async () => {
-const p = await open('/how/topics/redis/');
+const p = await open('/scrapebook/how-things-works/topics/redis/');
 await p.locator('#stage').scrollIntoViewIfNeeded(); await sp(p); await p.waitForTimeout(500); await idle(p);
 ok(await cnt(p,'misses')===1 && await cnt(p,'dbQueries')===1,'A miss');
 ok((await p.locator('#strips').innerText()).includes('150 ms'),'A latency');
@@ -79,7 +79,7 @@ await p.context().close();
 });
 
 test("KAFKA", async () => {
-const p = await open('/how/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await sp(p); await p.waitForTimeout(3500);
+const p = await open('/scrapebook/how-things-works/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await sp(p); await p.waitForTimeout(3500);
 ok(await stat(p,'delivered')===9,'ordering drains'); ok(await stat(p,'lag')===0,'lag 0');
 await p.click('#keys [data-value=off]'); await p.click('#send-10'); await p.waitForTimeout(600);  await p.click('#send-10'); await p.waitForTimeout(6000);
 ok(await stat(p,'outOfOrder')>0,'keyless overtakes', await stat(p,'outOfOrder'));
@@ -114,7 +114,7 @@ await p.context().close();
 
 test("HOME", async () => {
   let p: Page;
-p=await open('/how/'); await p.waitForTimeout(8500);
+p=await open('/scrapebook/how-things-works/'); await p.waitForTimeout(8500);
 
 const s=await p.locator('#hero-strips').innerText(); ok(s.includes('152 ms')&&s.includes('7 ms'),'home miss+hit',s);
 await p.click('#hero-wait'); await p.waitForTimeout(500); await p.click('#hero-send'); await p.waitForTimeout(9000);
@@ -123,9 +123,9 @@ await p.click('[data-node=edge]'); ok((await p.locator('#hero-inspect').innerTex
 await p.fill('#find','agents'); ok(await p.locator('.plate:not(.is-hidden)').count()===1,'search'); ok(await p.locator('.coll[open]').count()>=1,'search opens');
 await p.fill('#find','zzz'); ok(await p.locator('#find-none').isVisible(),'none');
 await p.fill('#find',''); ok(await p.locator('.plate:not(.is-hidden)').count()===11,'clear');
-await p.click('a.plate >> nth=0'); await p.waitForURL('**/how/topics/redis/'); ok(true,'plate link');
+await p.click('a.plate >> nth=0'); await p.waitForURL('**/scrapebook/how-things-works/topics/redis/'); ok(true,'plate link');
 await p.click('.mast nav a:last-child'); await p.waitForURL(U+'/'); await p.waitForTimeout(400);
-ok(await p.locator('a[href="/how/"]').count()===1,'portfolio link');
+ok(await p.locator('a[href="/scrapebook/how-things-works/"]').count()===2,'portfolio link');
 ok(await p.evaluate(()=>!!document.getElementById('hero-name')?.querySelector('.ch')),'portfolio js works');
 await p.click('[data-scenario=booking]'); await p.waitForTimeout(800); ok((await p.locator('#pg-content').innerText()).includes('booking'),'playground intact');
 await p.context().close();
@@ -134,29 +134,29 @@ p=await open('/blog.html'); await p.waitForTimeout(500); ok(await p.locator('.op
 });
 
 test("reduced motion", async () => {
-let p = await open('/how/topics/redis/',{reducedMotion:'reduce'}); await p.locator('#stage').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500);
+let p = await open('/scrapebook/how-things-works/topics/redis/',{reducedMotion:'reduce'}); await p.locator('#stage').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500);
 ok(await p.locator('.pk').count()>0 && await p.locator('.js-in').count()===0,'rm packet static');
 const rm1=await p.locator('.pk').first().getAttribute('transform'); await p.waitForTimeout(300); ok(rm1===await p.locator('.pk').first().getAttribute('transform'),'rm no travel');
 await p.getByRole('button',{name:'2×'}).click(); await idle(p); ok(await cnt(p,'misses')===1,'rm completes');
 ok((await p.locator('#status').textContent())!.length>0,'status text');
 await p.context().close();
 // offscreen: no frames when hidden
-p=await open('/how/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await p.waitForTimeout(1200); await p.click('#auto [data-value=on]'); await p.waitForTimeout(800);
+p=await open('/scrapebook/how-things-works/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await p.waitForTimeout(1200); await p.click('#auto [data-value=on]'); await p.waitForTimeout(800);
 await p.evaluate(()=>window.scrollTo(0,document.body.scrollHeight)); await p.waitForTimeout(600); const a=await p.locator('[data-testid=position]').textContent(); await p.waitForTimeout(1200); ok(a===await p.locator('[data-testid=position]').textContent(),'suspends offscreen');
 await p.context().close();
 });
 
 test("routes work by direct entry, refresh and history", async () => {
-  const p = await open("/how/topics/redis/");
+  const p = await open("/scrapebook/how-things-works/topics/redis/");
   await expect(p).toHaveTitle("Redis · How Things Work — Ayush Oli");
   await p.reload();
   await expect(p.locator("#title")).toContainText("5 ms");
-  await p.goto(`${U}/how/topics/apache-kafka/`);
+  await p.goto(`${U}/scrapebook/how-things-works/topics/apache-kafka/`);
   await expect(p).toHaveTitle(/Apache Kafka/);
   await p.getByRole("link", { name: "How Things Work" }).first().click();
-  await expect(p).toHaveURL(`${U}/how/`);
+  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/`);
   await p.goBack();
-  await expect(p).toHaveURL(`${U}/how/topics/apache-kafka/`);
+  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/topics/apache-kafka/`);
   await expect(p.locator("#yard")).toBeVisible();
   await p.goForward();
   await expect(p.locator("#hero")).toBeVisible();
@@ -164,10 +164,10 @@ test("routes work by direct entry, refresh and history", async () => {
 });
 
 test("planned topics are honest and unknown ones are not found", async () => {
-  const p = await open("/how/topics/docker/");
+  const p = await open("/scrapebook/how-things-works/topics/docker/");
   await expect(p.locator("body")).toContainText("hasn't been built yet");
   await expect(p.locator("#bench")).toHaveCount(0);
-  const missing = await p.goto(`${U}/how/topics/nope/`);
+  const missing = await p.goto(`${U}/scrapebook/how-things-works/topics/nope/`);
   expect(missing?.status()).toBe(404);
   await expect(p.locator("body")).toContainText("We haven't drawn this one.");
   await p.context().close();
@@ -176,21 +176,21 @@ test("planned topics are honest and unknown ones are not found", async () => {
 
 test("old URLs redirect to the new ones", async () => {
   const p = await open("/how/redis/");
-  await expect(p).toHaveURL(`${U}/how/topics/redis/`);
+  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/topics/redis/`);
   await p.goto(`${U}/how/kafka/`);
-  await expect(p).toHaveURL(`${U}/how/topics/apache-kafka/`);
+  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/topics/apache-kafka/`);
   await p.context().close();
 });
 
 test("static HTML carries the content before any script runs", async ({ request }) => {
-  const html = await (await request.get(`${U}/how/topics/redis/`)).text();
+  const html = await (await request.get(`${U}/scrapebook/how-things-works/topics/redis/`)).text();
   expect(html).toContain("The cache is a decision in your code");
   expect(html).toContain("GET user:42");
 });
 
 for (const [width, height] of [[390, 844], [820, 1100], [1440, 900]] as const) {
   test(`no horizontal overflow at ${width}px`, async () => {
-    for (const url of ["/how/", "/how/topics/redis/", "/how/topics/apache-kafka/"]) {
+    for (const url of ["/scrapebook/how-things-works/", "/scrapebook/how-things-works/topics/redis/", "/scrapebook/how-things-works/topics/apache-kafka/"]) {
       const p = await open(url, { viewport: { width, height } });
       await p.waitForTimeout(600);
       const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

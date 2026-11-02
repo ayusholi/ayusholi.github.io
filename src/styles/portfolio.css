@@ -149,6 +149,8 @@ main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
 }
 .nav__links a:hover { text-decoration: underline; text-decoration-thickness: 3px; text-underline-offset: 5px; text-decoration-color: var(--accent); }
 .nav__links a.is-active { color: var(--accent-text); text-decoration: none; }
+/* Nine links only just fit above the burger breakpoint */
+@media (min-width: 1001px) and (max-width: 1120px) { .nav__links a { padding: 6px 7px; } }
 .nav__indicator {
   position: absolute;
   left: 0; top: 0;

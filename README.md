@@ -5,8 +5,8 @@ One Next.js application, exported as a static site:
 | URL | Section |
 | --- | --- |
 | `/` | Portfolio |
-| `/blog/` | The Scrapbook |
-| `/how/` | How Things Work: interactive simulations |
+| `/scrapebook/my-journey/` | The Scrapbook |
+| `/scrapebook/how-things-works/` | How Things Work: interactive simulations |
 
     npm install
     npm run dev       # http://localhost:3000
@@ -81,7 +81,7 @@ after a utility (`block`, `hidden`, `flex`): the utility wins.
 
 1. Add or update its entry in `src/lib/content/topics.ts`, and a drawing in
    `components/topics/TopicPreview.tsx`. It now appears on the homepage, and at
-   `/how/topics/<slug>`, as "On the drawing board".
+   `/scrapebook/how-things-works/topics/<slug>`, as "On the drawing board".
 2. Write `src/features/<slug>/<slug>-engine.ts` with tests. Start here: if the
    model is wrong, nothing else matters.
 3. Add `<slug>-content.ts`, with a `describe(frame)` that narrates from the frame's

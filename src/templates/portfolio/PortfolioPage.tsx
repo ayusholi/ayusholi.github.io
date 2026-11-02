@@ -2,6 +2,7 @@
 // The portfolio's markup, converted from the original index.html and kept
 // element for element, because portfolio.css and features/portfolio target it.
 import { PortfolioEffects } from "@/features/portfolio/PortfolioEffects";
+import { HOW_URL, JOURNEY_URL } from "@/lib/site";
 
 // The hero name, split into masked letters that animate one at a time.
 const SplitWord = ({ text, start }: { text: string; start: number }) => (
@@ -11,6 +12,12 @@ const SplitWord = ({ text, start }: { text: string; start: number }) => (
     ))}
   </span>
 );
+
+// The Scrapbook section. To add a link, add an entry here.
+const SCRAPBOOK = [
+  { href: JOURNEY_URL, title: "My Journey", text: "A growing collection of things I'm building, learning, seeing and figuring out along the way." },
+  { href: HOW_URL, title: "How Things Work", text: "Interactive simulations of how Redis, Kafka and the systems behind modern software actually work." },
+];
 
 export const PortfolioPage = () => (
   <>
@@ -45,6 +52,7 @@ export const PortfolioPage = () => (
       <a href="#founder">Founder</a>
       <a href="#experience">Experience</a>
       <a href="#life">Life</a>
+      <a href="#scrapbook">Scrapbook</a>
       <a href="#contact">Contact</a>
     </nav>
     <button className="btn btn--icon" id="theme-toggle" aria-label="Toggle dark mode">
@@ -76,7 +84,7 @@ export const PortfolioPage = () => (
 
         <div className="hero__row">
           <p className="hero__headline" data-reveal=""><span className="highlight">Product Engineer</span> — AI<span className="caret" aria-hidden="true"></span></p>
-          <p className="hero__sub" data-reveal="">From Nepal, based in London. I build products end to end, from architecture to <a className="hero__egg" href="/blog/" title="The Scrapbook">the last pixel</a>.</p>
+          <p className="hero__sub" data-reveal="">From Nepal, based in London. I build products end to end, from architecture to <a className="hero__egg" href={JOURNEY_URL} title="The Scrapbook">the last pixel</a>.</p>
         </div>
 
         <div className="hero__actions" data-reveal="">
@@ -258,7 +266,7 @@ export const PortfolioPage = () => (
       <div className="pg__intro" data-reveal="">
         <p className="pg__lead">How I think about the products I build.</p>
         <p className="pg__note">An <strong>illustrative</strong> architecture for a booking product with an AI assistant. It isn&apos;t a diagram of any specific live system, and nothing here is real traffic. Pick a component, or run a scenario.</p>
-        <p className="pg__note"><a className="link" href="/how/">Go deeper: how Redis, Kafka and friends actually work ↗</a></p>
+        <p className="pg__note"><a className="link" href={HOW_URL}>Go deeper: how Redis, Kafka and friends actually work ↗</a></p>
       </div>
 
       <div className="pg" id="playground" data-reveal="">
@@ -465,9 +473,23 @@ export const PortfolioPage = () => (
       </div>
     </section>
 
+    {/* ============ SCRAPBOOK ============ */}
+    <section id="scrapbook" className="section">
+      <h2 className="section__title" data-mask=""><span><i>08</i> Scrapbook</span></h2>
+      <div className="grid grid--3" data-stagger="">
+        {SCRAPBOOK.map(({ href, title, text }) => (
+          <article className="card card--life" data-reveal="" key={href}>
+            <h3>{title}</h3>
+            <p>{text}</p>
+            <a href={href} className="link">Read it →</a>
+          </article>
+        ))}
+      </div>
+    </section>
+
     {/* ============ CONTACT ============ */}
     <section id="contact" className="section contact">
-      <h2 className="section__title" data-mask=""><span><i>08</i> Contact</span></h2>
+      <h2 className="section__title" data-mask=""><span><i>09</i> Contact</span></h2>
       <p className="contact__big" data-reveal="">Want to build<br />something <em>together?</em></p>
       <p className="contact__lead" data-reveal="">Say hi.</p>
       <div className="contact__email" data-reveal="">

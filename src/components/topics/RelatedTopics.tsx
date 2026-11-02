@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Topic } from "@/lib/content/content-types";
 import { getCollection, getTopic } from "@/lib/content";
+import { topicUrl } from "@/lib/site";
 import { Section } from "@/components/layout/Section";
 import { TopicPreview } from "./TopicPreview";
 
@@ -16,7 +17,7 @@ const Card = async ({ topic }: { topic: Topic }) => {
       <span className="label next__state">{live ? `Interactive · ${topic.estimatedMinutes} min →` : "On the drawing board"}</span>
     </>
   );
-  return <Link className={`next${live ? "" : " next--planned"}`} href={`/how/topics/${topic.slug}`}>{body}</Link>;
+  return <Link className={`next${live ? "" : " next--planned"}`} href={topicUrl(topic.slug)}>{body}</Link>;
 };
 
 export const RelatedTopics = async ({ topic }: { topic: Topic }) => {

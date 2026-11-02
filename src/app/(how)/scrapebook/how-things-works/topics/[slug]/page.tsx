@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { getTopic, getTopics } from "@/lib/content";
+import { topicUrl } from "@/lib/site";
 import { TopicPage } from "@/templates/how/topics/TopicPage";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -19,7 +20,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
   return {
     title: topic.title,
     description: topic.description,
-    alternates: { canonical: `/how/topics/${topic.slug}/` },
+    alternates: { canonical: topicUrl(topic.slug) },
     robots: topic.status === "published" ? undefined : { index: false },
   };
 };
