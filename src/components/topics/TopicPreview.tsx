@@ -107,8 +107,18 @@ const actions = (
   </>
 );
 
+const automations = (
+  <>
+    <circle cx="16" cy="60" r="9" /><rect x="42" y="46" width="40" height="28" {...FILL} />
+    <path d="M128 42l18 18-18 18-18-18z" />
+    {[20, 60, 100].map((y) => <rect key={y} x="166" y={y - 9} width="28" height="18" />)}
+    <path d="M25 60h17M82 60h28M146 60h20M138 50c8-16 14-19 28-19M138 70c8 16 14 19 28 19" />
+    <rect className="sig" x="88" y="56" width="10" height="8" />
+  </>
+);
+
 const DRAWINGS: Record<string, JSX.Element> = {
-  redis, "apache-kafka": kafka, llms, docker, kubernetes, rag, databases, "ai-agents": agents, nginx, "ci-cd": cicd, "github-actions": actions,
+  redis, "apache-kafka": kafka, llms, docker, kubernetes, rag, databases, "ai-agents": agents, "ai-automations": automations, nginx, "ci-cd": cicd, "github-actions": actions,
 };
 
 export const TopicPreview = ({ slug }: { slug: string }) => {

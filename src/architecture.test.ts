@@ -69,8 +69,11 @@ describe("engines stay pure", () => {
     expect(bad).toEqual([]);
   });
 
+  // Prose like "context window" is fine. Strings with `${…}` are kept, since those run code.
+  const code = (f: string) => readFileSync(f, "utf8").replace(/\/\/.*$/gm, "").replace(/"(?:\\.|[^"\\\n])*"|`(?:\\.|[^`\\$])*`/g, '""');
+
   test("they don't touch window or document", () => {
-    const bad = engines.filter((f) => /\b(window|document|localStorage)\b/.test(readFileSync(f, "utf8").replace(/\/\/.*$/gm, "")));
+    const bad = engines.filter((f) => /\b(window|document|localStorage)\b/.test(code(f)));
     expect(bad.map((f) => relative(SRC, f))).toEqual([]);
   });
 

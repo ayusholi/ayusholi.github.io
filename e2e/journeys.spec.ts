@@ -122,7 +122,7 @@ ok((await p.locator('#hero-strips').innerText()).split('152 ms').length===3,'hom
 await p.click('[data-node=edge]'); ok((await p.locator('#hero-inspect').innerText()).includes('Nginx'),'home inspect');
 await p.fill('#find','agents'); ok(await p.locator('.plate:not(.is-hidden)').count()===1,'search'); ok(await p.locator('.coll[open]').count()>=1,'search opens');
 await p.fill('#find','zzz'); ok(await p.locator('#find-none').isVisible(),'none');
-await p.fill('#find',''); ok(await p.locator('.plate:not(.is-hidden)').count()===11,'clear');
+await p.fill('#find',''); ok(await p.locator('.plate:not(.is-hidden)').count()===12,'clear');
 await p.click('a.plate >> nth=0'); await p.waitForURL('**/scrapebook/how-things-works/topics/redis/'); ok(true,'plate link');
 await p.click('.mast nav a:last-child'); await p.waitForURL(U+'/'); await p.waitForTimeout(400);
 ok(await p.locator('a[href="/scrapebook/how-things-works/"]').count()===2,'portfolio link');
@@ -199,8 +199,63 @@ test("DOCKER, KUBERNETES, CI/CD, GITHUB ACTIONS", async () => {
   await p.context().close();
 });
 
-test("planned topics are honest and unknown ones are not found", async () => {
+test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
+  // Each bench runs its first scenario on sight, and the counters match what its engine says.
   const p = await open("/scrapebook/how-things-works/topics/llms/");
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "generated") === 3, "llms: “ Paris.” takes three passes", await cnt(p, "generated"));
+  await p.locator('#tabs [data-value="forget"]').click();
+  await idle(p);
+  ok(await cnt(p, "dropped") > 0, "llms: a small window drops the start");
+  ok(!(await p.locator("#window-view").innerText()).split("\n").slice(-1)[0]?.includes("Ayu"), "llms: the name is gone");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/ai-agents/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await p.locator('#tabs [data-value="approval"]').click();
+  await sp(p);
+  await idle(p);
+  await expect(p.locator("#approve")).toBeEnabled();
+  await p.locator("#deny").click();
+  await idle(p);
+  ok(await cnt(p, "recipients") === 0, "agents: a denied email isn't sent");
+  await p.locator('#tabs [data-value="injection"]').click();
+  await idle(p);
+  ok(await cnt(p, "recipients") === 214, "agents: the injection emails everyone");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/rag/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "grounded") === 1, "rag: a grounded answer");
+  await p.locator('#tabs [data-value="stale"]').click();
+  await idle(p);
+  ok(await cnt(p, "stale") === 1, "rag: the stale index answers");
+  await p.locator("#reindex").click();
+  await idle(p);
+  await p.locator("#ask-return").click();
+  await idle(p);
+  ok(await cnt(p, "stale") === 1 && await cnt(p, "grounded") === 2, "rag: re-indexed answer is fresh");
+  await expect(p.locator("#prompt")).toContainText("14 days");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/ai-automations/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await p.locator('#tabs [data-value="duplicate"]').click();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "replies") === 2, "automations: a duplicate replies twice");
+  await expect(p.locator("#item")).toContainText('"category": "order"');
+  await p.locator('#dedupe [data-value="on"]').click();
+  await p.locator("#redeliver").click();
+  await idle(p);
+  ok(await cnt(p, "replies") === 2 && await cnt(p, "executions") === 3, "automations: dedupe skips the repeat");
+  await expect(p.locator("#executions")).toContainText("–");
+  await p.context().close();
+});
+
+test("planned topics are honest and unknown ones are not found", async () => {
+  const p = await open("/scrapebook/how-things-works/topics/databases/");
   await expect(p.locator("body")).toContainText("hasn't been built yet");
   await expect(p.locator("#bench")).toHaveCount(0);
   const missing = await p.goto(`${U}/scrapebook/how-things-works/topics/nope/`);
@@ -226,7 +281,7 @@ test("static HTML carries the content before any script runs", async ({ request 
 
 for (const [width, height] of [[390, 844], [820, 1100], [1440, 900]] as const) {
   test(`no horizontal overflow at ${width}px`, async () => {
-    for (const url of ["/scrapebook/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions"].map((t) => `/scrapebook/how-things-works/topics/${t}/`)]) {
+    for (const url of ["/scrapebook/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions", "llms", "ai-agents", "rag", "ai-automations"].map((t) => `/scrapebook/how-things-works/topics/${t}/`)]) {
       const p = await open(url, { viewport: { width, height } });
       await p.waitForTimeout(600);
       const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
