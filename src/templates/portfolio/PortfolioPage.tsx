@@ -493,8 +493,8 @@ export const PortfolioPage = () => (
       <p className="contact__big" data-reveal="">Want to build<br />something <em>together?</em></p>
       <p className="contact__lead" data-reveal="">Say hi.</p>
       <div className="contact__email" data-reveal="">
-        <a href="mailto:ayusholi540@gmail.com" className="btn btn--primary btn--lg btn--fill" data-magnetic=""><span>ayusholi540@gmail.com</span><span className="btn__arrow" aria-hidden="true">→</span></a>
-        <button type="button" className="btn btn--fill copy" id="copy-email" data-copy="ayusholi540@gmail.com"><span className="copy__label">Copy</span></button>
+        <a href="mailto:hello@ayush.oli.com.np" className="btn btn--primary btn--lg btn--fill" data-magnetic=""><span>hello@ayush.oli.com.np</span><span className="btn__arrow" aria-hidden="true">→</span></a>
+        <button type="button" className="btn btn--fill copy" id="copy-email" data-copy="hello@ayush.oli.com.np"><span className="copy__label">Copy</span></button>
         <span className="copy__status" id="copy-status" role="status"></span>
       </div>
       <div className="contact__links" data-reveal="">
