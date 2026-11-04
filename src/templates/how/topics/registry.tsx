@@ -15,6 +15,10 @@ export const EXPERIENCES: Record<ExperienceSlug, ComponentType> = {
   "ai-agents": dynamic(() => import("./AgentsArticle")),
   rag: dynamic(() => import("./RagArticle")),
   "ai-automations": dynamic(() => import("./AutomationsArticle")),
+  nginx: dynamic(() => import("./NginxArticle")),
+  databases: dynamic(() => import("./DatabasesArticle")),
+  mcp: dynamic(() => import("./McpArticle")),
+  "whatsapp-reminders": dynamic(() => import("./RemindersArticle")),
 };
 
 export const renderExperience = (slug: string): ReactNode => {

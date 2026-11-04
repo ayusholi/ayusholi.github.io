@@ -2,10 +2,6 @@ import type { Topic } from "./content-types";
 
 // The local content source. Order sets the plates' composition on the homepage:
 // each row of sizes adds up to twelve columns (see .plate--* in publication.css).
-const planned = (t: Omit<Topic, "status" | "description" | "learningObjectives" | "relatedTopics">): Topic => ({
-  ...t, status: "coming-soon", description: t.question, learningObjectives: [], relatedTopics: [],
-});
-
 export const TOPICS: Topic[] = [
   {
     slug: "redis", title: "Redis", status: "published", collection: "memory", estimatedMinutes: 6,
@@ -87,6 +83,36 @@ export const TOPICS: Topic[] = [
     relatedTopics: ["ci-cd", "docker", "kubernetes"],
     plate: { size: "wide", stock: "ochre" },
   },
-  planned({ slug: "nginx", title: "Nginx", collection: "request", estimatedMinutes: 5, question: "How does one server handle thousands of connections?", plate: { size: "wide", stock: "film" } }),
-  planned({ slug: "databases", title: "Databases", collection: "memory", estimatedMinutes: 8, question: "What really happens when you execute a query?", plate: { size: "medium", stock: "paper" } }),
+  {
+    slug: "nginx", title: "Nginx", status: "published", collection: "request", estimatedMinutes: 6,
+    question: "How does one server handle thousands of connections?",
+    description: "An interactive simulation of nginx as a reverse proxy: the event loop against one thread per connection, ten thousand idle connections, static files, round-robin load balancing, a crashed upstream and response buffering.",
+    learningObjectives: ["Explain why idle connections are cheap for an event loop and expensive for threads, and predict what a proxy does when an upstream fails."],
+    relatedTopics: ["kubernetes", "redis", "databases"],
+    plate: { size: "wide", stock: "film" },
+  },
+  {
+    slug: "databases", title: "Databases", status: "published", collection: "memory", estimatedMinutes: 8,
+    question: "What really happens when you execute a query?",
+    description: "An interactive simulation of a PostgreSQL-style database: parsing and planning, sequential and index scans, the buffer pool, an index that can't be used, the write-ahead log and crash recovery.",
+    learningObjectives: ["Read a query plan, predict how many pages a query touches, and say which commits survive a crash."],
+    relatedTopics: ["redis", "nginx", "apache-kafka"],
+    plate: { size: "medium", stock: "paper" },
+  },
+  {
+    slug: "mcp", title: "MCP", status: "published", collection: "ai", estimatedMinutes: 7,
+    question: "How does an AI app plug into tools it has never seen?",
+    description: "An interactive simulation of the Model Context Protocol: the initialize handshake, tools/list and tools/call over JSON-RPC, stdio and HTTP transports, two servers at once, tool errors and approval.",
+    learningObjectives: ["Follow a tool call from the model through the host to the right server, and say which side owns discovery, routing and permission."],
+    relatedTopics: ["ai-agents", "llms", "whatsapp-reminders"],
+    plate: { size: "medium", stock: "ink" },
+  },
+  {
+    slug: "whatsapp-reminders", title: "WhatsApp reminders", status: "published", collection: "ai", estimatedMinutes: 6,
+    question: "How does “remind me tomorrow at 9” become a message at 9?",
+    description: "An interactive simulation of an AI reminder bot on WhatsApp: webhooks, one model call that turns words into a time, timezones, a scheduler, the 24-hour customer service window and template messages.",
+    learningObjectives: ["Trace a chat message to a scheduled reminder, and predict when it arrives late, asks a question, or never arrives."],
+    relatedTopics: ["ai-automations", "llms", "mcp"],
+    plate: { size: "wide", stock: "ochre" },
+  },
 ];

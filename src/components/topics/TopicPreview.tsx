@@ -71,6 +71,7 @@ const databases = (
     <path d="M100 24L52 48M100 24l48 24" />
     {[8, 48, 104, 144].map((x) => <rect key={x} x={x} y="92" width="30" height="16" />)}
     <path d="M52 64L23 92M52 64l11 28M148 64l-29 28M148 64l11 28" />
+    <path className="sig sig--a" d="M100 24L52 48M52 64l11 28" pathLength={100} />
   </>
 );
 
@@ -86,6 +87,7 @@ const nginx = (
   <>
     <rect x="12" y="44" width="40" height="32" />
     {range(8).map((i) => <g key={i}><path d={`M52 60C100 60 90 ${10 + i * 14} 150 ${10 + i * 14}`} /><rect x="150" y={6 + i * 14} width="8" height="8" /></g>)}
+    <path className="sig sig--a" d="M52 60C100 60 90 52 150 52" pathLength={100} />
   </>
 );
 
@@ -117,7 +119,27 @@ const automations = (
   </>
 );
 
+const mcp = (
+  <>
+    <circle cx="26" cy="60" r="16" /><rect x="64" y="38" width="44" height="44" {...FILL} />
+    {[22, 76].map((y) => <rect key={y} x="152" y={y} width="40" height="22" />)}
+    <path d="M42 60h22M108 52c22 0 22-19 44-19M108 68c22 0 22 19 44 19" />
+    {[44, 56, 68].map((y) => <path key={y} d={`M70 ${y}h32`} opacity=".5" />)}
+    <path className="sig" d="M108 52c22 0 22-19 44-19" strokeDasharray="3 3" />
+  </>
+);
+
+const reminders = (
+  <>
+    <rect x="8" y="14" width="74" height="20" /><rect x="40" y="44" width="74" height="20" {...FILL} />
+    <rect x="8" y="86" width="96" height="20" />
+    <circle cx="158" cy="56" r="30" /><path d="M158 56V36M104 96h24c12 0 22-8 26-10" />
+    <path className="sig" d="M158 56l14 8" />
+  </>
+);
+
 const DRAWINGS: Record<string, JSX.Element> = {
+  mcp, "whatsapp-reminders": reminders,
   redis, "apache-kafka": kafka, llms, docker, kubernetes, rag, databases, "ai-agents": agents, "ai-automations": automations, nginx, "ci-cd": cicd, "github-actions": actions,
 };
 

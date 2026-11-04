@@ -122,7 +122,7 @@ ok((await p.locator('#hero-strips').innerText()).split('152 ms').length===3,'hom
 await p.click('[data-node=edge]'); ok((await p.locator('#hero-inspect').innerText()).includes('Nginx'),'home inspect');
 await p.fill('#find','agents'); ok(await p.locator('.plate:not(.is-hidden)').count()===1,'search'); ok(await p.locator('.coll[open]').count()>=1,'search opens');
 await p.fill('#find','zzz'); ok(await p.locator('#find-none').isVisible(),'none');
-await p.fill('#find',''); ok(await p.locator('.plate:not(.is-hidden)').count()===12,'clear');
+await p.fill('#find',''); ok(await p.locator('.plate:not(.is-hidden)').count()===14,'clear');
 await p.click('a.plate >> nth=0'); await p.waitForURL('**/scrapebook/how-things-works/topics/redis/'); ok(true,'plate link');
 await p.click('.mast nav a:last-child'); await p.waitForURL(U+'/'); await p.waitForTimeout(400);
 ok(await p.locator('a[href="/scrapebook/how-things-works/"]').count()===2,'portfolio link');
@@ -254,10 +254,76 @@ test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
   await p.context().close();
 });
 
-test("planned topics are honest and unknown ones are not found", async () => {
-  const p = await open("/scrapebook/how-things-works/topics/databases/");
-  await expect(p.locator("body")).toContainText("hasn't been built yet");
-  await expect(p.locator("#bench")).toHaveCount(0);
+test("NGINX, DATABASES, MCP, WHATSAPP REMINDERS", async () => {
+  const p = await open("/scrapebook/how-things-works/topics/nginx/");
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  await expect(p.locator("#requests")).toContainText("app1");
+  await p.locator('#tabs [data-value="threads"]').click();
+  await idle(p);
+  ok(await cnt(p, "errors") === 1 && await cnt(p, "memoryMb") === 410, "nginx: threads run out");
+  await p.locator('#tabs [data-value="c10k"]').click();
+  await idle(p);
+  ok(await cnt(p, "errors") === 0 && await cnt(p, "memoryMb") === 12.5, "nginx: the event loop holds 10,000");
+  await p.locator('#tabs [data-value="down"]').click();
+  await idle(p);
+  ok(await cnt(p, "retries") === 1 && await cnt(p, "errors") === 0, "nginx: a dead upstream is retried");
+  await p.locator("#toggle-app1").click();
+  await p.locator("#toggle-app3").click();
+  await p.locator("#req-page").click();
+  await idle(p);
+  ok(await cnt(p, "errors") === 1, "nginx: no live upstreams is a 502");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/databases/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "diskReads") === 12500 && await cnt(p, "cacheHits") === 12500, "databases: a cold then a warm scan");
+  await expect(p.locator("#explain")).toContainText("Seq Scan");
+  await p.locator("#toggle-index").click();
+  await idle(p);
+  await p.locator("#q-find").click();
+  await idle(p);
+  await expect(p.locator("#explain")).toContainText("Index Scan");
+  await p.locator('#tabs [data-value="async"]').click();
+  await idle(p);
+  ok(await cnt(p, "lost") === 1, "databases: an async commit is lost");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/mcp/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "tools") === 2 && await cnt(p, "messages") === 5, "mcp: the handshake lists two tools");
+  await expect(p.locator("#message")).toContainText("tools");
+  await p.locator('#tabs [data-value="approval"]').click();
+  await idle(p);
+  await expect(p.locator("#approve")).toBeEnabled();
+  await p.locator("#deny").click();
+  await idle(p);
+  ok(await cnt(p, "toolCalls") === 0, "mcp: a denied write is never sent");
+  await p.locator('#tabs [data-value="error"]').click();
+  await idle(p);
+  ok(await cnt(p, "toolErrors") === 1 && await cnt(p, "toolCalls") === 2, "mcp: the model recovers from a tool error");
+
+  await p.goto(`${U}/scrapebook/how-things-works/topics/whatsapp-reminders/`);
+  await p.locator("#stage").scrollIntoViewIfNeeded();
+  await sp(p);
+  await idle(p);
+  ok(await cnt(p, "delivered") === 1 && await cnt(p, "aiCalls") === 1, "reminders: one call, one reminder");
+  await p.locator('#tabs [data-value="daytwo"]').click();
+  await idle(p);
+  ok(await cnt(p, "rejected") === 1, "reminders: day two is outside the window");
+  await expect(p.locator("#api")).toContainText("131047");
+  await p.locator('#tabs [data-value="template"]').click();
+  await idle(p);
+  ok(await cnt(p, "delivered") === 2 && await cnt(p, "aiCalls") === 1, "reminders: a template gets through");
+  await expect(p.locator("#api")).toContainText("reminder_due");
+  await p.context().close();
+});
+
+test("unknown topics are not found", async () => {
+  const p = await open("/scrapebook/how-things-works/");
   const missing = await p.goto(`${U}/scrapebook/how-things-works/topics/nope/`);
   expect(missing?.status()).toBe(404);
   await expect(p.locator("body")).toContainText("We haven't drawn this one.");
@@ -281,7 +347,7 @@ test("static HTML carries the content before any script runs", async ({ request 
 
 for (const [width, height] of [[390, 844], [820, 1100], [1440, 900]] as const) {
   test(`no horizontal overflow at ${width}px`, async () => {
-    for (const url of ["/scrapebook/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions", "llms", "ai-agents", "rag", "ai-automations"].map((t) => `/scrapebook/how-things-works/topics/${t}/`)]) {
+    for (const url of ["/scrapebook/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions", "llms", "ai-agents", "rag", "ai-automations", "nginx", "databases", "mcp", "whatsapp-reminders"].map((t) => `/scrapebook/how-things-works/topics/${t}/`)]) {
       const p = await open(url, { viewport: { width, height } });
       await p.waitForTimeout(600);
       const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
