@@ -143,12 +143,15 @@ export function initPortfolio() {
   const bar = document.getElementById("progress-bar") as HTMLElement;
   const timeline = document.getElementById("timeline");
   const timelineFill = document.getElementById("timeline-fill") as HTMLElement;
+  const xp = document.getElementById("pad-xp") as HTMLElement;
   let ticking = false;
 
   const onScroll = () => {
     ticking = false;
     const max = document.documentElement.scrollHeight - window.innerHeight;
-    bar.style.transform = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+    const progress = `scaleX(${max > 0 ? Math.min(1, window.scrollY / max) : 0})`;
+    bar.style.transform = progress;
+    xp.style.transform = progress;
     nav.classList.toggle("is-scrolled", window.scrollY > 10);
     if (timeline) {
       const r = timeline.getBoundingClientRect();
@@ -162,56 +165,76 @@ export function initPortfolio() {
   window.addEventListener("resize", onScroll);
   onScroll();
 
-  // ===== Nav: active-section indicator =====
+  // ===== Controller: active level and level select =====
+  const pad = document.getElementById("pad") as HTMLElement;
   const navLinks = document.getElementById("nav-links") as HTMLElement;
-  const indicator = navLinks.querySelector(".nav__indicator") as HTMLElement;
-  const links = [...navLinks.querySelectorAll("a")];
-  let activeLink: HTMLAnchorElement | null = null;
+  const links = [...navLinks.querySelectorAll<HTMLAnchorElement>("a")];
+  const sections = [...document.querySelectorAll<HTMLElement>("main > section[id]")];
+  const padNum = document.getElementById("pad-num") as HTMLElement;
+  const padName = document.getElementById("pad-name") as HTMLElement;
 
-  const placeIndicator = () => {
-    if (!activeLink || getComputedStyle(indicator).display === "none") { indicator.style.opacity = "0"; return; }
-    indicator.style.opacity = "1";
-    indicator.style.width = `${activeLink.offsetWidth}px`;
-    indicator.style.transform = `translateX(${activeLink.offsetLeft}px)`;
-  };
   const setActive = (id: string) => {
-    activeLink = links.find((a) => a.getAttribute("href") === `#${id}`) || null;
+    let label = "Start";
     links.forEach((a) => {
-      const on = a === activeLink;
+      const on = a.getAttribute("href") === `#${id}`;
       a.classList.toggle("is-active", on);
-      if (on) a.setAttribute("aria-current", "true"); else a.removeAttribute("aria-current");
+      if (on) {
+        a.setAttribute("aria-current", "true");
+        label = a.querySelector(".pad__label")?.textContent ?? label;
+      } else a.removeAttribute("aria-current");
     });
-    placeIndicator();
+    // the screen counts levels the way the keys do: About is 01
+    const level = links.findIndex((a) => a.getAttribute("href") === `#${id}`) + 1;
+    padNum.textContent = String(level).padStart(2, "0");
+    padName.textContent = label;
   };
   if ("IntersectionObserver" in window) {
     const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id === "top" ? "" : entry.target.id); });
+      entries.forEach((entry) => { if (entry.isIntersecting) setActive(entry.target.id); });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    document.querySelectorAll("main > section[id]").forEach((s) => sectionObserver.observe(s));
+    sections.forEach((s) => sectionObserver.observe(s));
   }
-  window.addEventListener("resize", placeIndicator);
+  setActive("top");
 
-  // ===== Mobile menu =====
-  const menuToggle = document.getElementById("menu-toggle") as HTMLElement;
-  const setMenu = (open: boolean) => {
-    navLinks.classList.toggle("is-open", open);
-    menuToggle.setAttribute("aria-expanded", String(open));
-    menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
-  };
-  menuToggle.addEventListener("click", () => setMenu(menuToggle.getAttribute("aria-expanded") !== "true"));
-  links.forEach((a) => a.addEventListener("click", () => {
-    setMenu(false);
-    // briefly mark the destination's title once the scroll has landed
-    const title = document.querySelector<HTMLElement>(`${a.getAttribute("href")} .section__title`);
+  // briefly mark the destination's title once the scroll has landed
+  const flash = (id: string) => {
+    const title = document.querySelector<HTMLElement>(`#${id} .section__title`);
     if (!title) return;
     setTimeout(() => {
       title.classList.remove("is-flash");
       void title.offsetWidth;
       title.classList.add("is-flash");
     }, reduceMotion ? 0 : 650);
+  };
+
+  // Level select: a menu sheet on phones, always-on keys on desktop
+  const menuToggle = document.getElementById("menu-toggle") as HTMLElement;
+  const isOpen = () => menuToggle.getAttribute("aria-expanded") === "true";
+  const setMenu = (open: boolean) => {
+    navLinks.classList.toggle("is-open", open);
+    pad.classList.toggle("is-open", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  };
+  menuToggle.addEventListener("click", () => setMenu(!isOpen()));
+  links.forEach((a) => a.addEventListener("click", () => {
+    setMenu(false);
+    flash((a.getAttribute("href") as string).slice(1));
   }));
+  // arrow keys move between level keys, like a menu on a console
+  navLinks.addEventListener("keydown", (e) => {
+    const i = links.indexOf(document.activeElement as HTMLAnchorElement);
+    if (i < 0) return;
+    const to = { ArrowDown: i + 1, ArrowRight: i + 1, ArrowUp: i - 1, ArrowLeft: i - 1, Home: 0, End: links.length - 1 }[e.key];
+    if (to === undefined) return;
+    e.preventDefault();
+    links[(to + links.length) % links.length]?.focus();
+  });
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && menuToggle.getAttribute("aria-expanded") === "true") { setMenu(false); menuToggle.focus(); }
+    if (e.key === "Escape" && isOpen()) { setMenu(false); menuToggle.focus(); }
+  });
+  document.addEventListener("click", (e) => {
+    if (isOpen() && !pad.contains(e.target as Node)) setMenu(false);
   });
   window.matchMedia("(min-width: 1001px)").addEventListener("change", (e) => { if (e.matches) setMenu(false); });
 

@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-// The portfolio and Scrapbook, with animation on, plus the links between all
+// The portfolio and Run & Debug, with animation on, plus the links between all
 // three parts of the site.
 const watch = (page: import("@playwright/test").Page) => {
   const errors: string[] = [];
@@ -20,7 +20,9 @@ test("portfolio: entrance, reveal and theme", async ({ page }) => {
 
   await page.locator("#about .about__lead").scrollIntoViewIfNeeded();
   await expect(page.locator("#about .about__lead")).toHaveClass(/is-in/);
-  await expect(page.locator("#nav-links a.is-active")).toHaveText("About");
+  await expect(page.locator("#nav-links a.is-active")).toHaveAttribute("href", "#about");
+  await expect(page.locator("#pad-name")).toHaveText("About");
+
 
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await page.click("#theme-toggle");
@@ -60,9 +62,18 @@ test("portfolio: phone menu and copy button", async ({ page, context }) => {
   expect(errors).toEqual([]);
 });
 
-test("scrapbook: reveals and field notes", async ({ page }) => {
+test("portfolio: Click button downloads the CV", async ({ page, request }) => {
+  await page.goto("/");
+  const download = page.locator('.pad a[download]');
+  await expect(download).toHaveAttribute("href", "/docs/ayush-oli-cv.pdf");
+  const res = await request.get("/docs/ayush-oli-cv.pdf");
+  expect(res.ok()).toBe(true);
+  expect(res.headers()["content-type"]).toContain("pdf");
+});
+
+test("run & debug: reveals and field notes", async ({ page }) => {
   const errors = watch(page);
-  await page.goto("/scrapebook/my-journey/");
+  await page.goto("/run-and-debug/my-journey/");
   await expect(page.locator("html")).toHaveClass(/sb-js/);
   await page.locator("#pl-01").scrollIntoViewIfNeeded();
   await expect(page.locator("#pl-01")).toHaveClass(/is-visible/);
@@ -76,12 +87,12 @@ test("scrapbook: reveals and field notes", async ({ page }) => {
 
 test("the three parts of the site link together", async ({ page }) => {
   await page.goto("/");
-  await page.locator('a[href="/scrapebook/my-journey/"]').first().click();
-  await expect(page).toHaveTitle("The Scrapbook — Ayush Oli");
-  await expect(page.locator("body")).toHaveClass("scrapbook");
+  await page.locator('a[href="/run-and-debug/my-journey/"]').first().click();
+  await expect(page).toHaveTitle("Run & Debug — Ayush Oli");
+  await expect(page.locator("body")).toHaveClass("run-debug");
   await page.locator('.masthead a[href="/"]').click();
   await expect(page).toHaveURL(/\/$/);
-  await page.locator('#systems a[href="/scrapebook/how-things-works/"]').click();
+  await page.locator('#systems a[href="/run-and-debug/how-things-works/"]').click();
   await expect(page).toHaveTitle("How Things Work — Ayush Oli");
   await page.getByRole("link", { name: "← Ayush Oli" }).click();
   await expect(page.locator("#hero-name")).toBeVisible();
@@ -89,22 +100,25 @@ test("the three parts of the site link together", async ({ page }) => {
   await expect(page.locator("h1").first()).toHaveCSS("font-family", /Space Grotesk/);
 });
 
-test("the homepage links to both scrapbook sections", async ({ page }) => {
+test("the homepage links to both Run & Debug sections", async ({ page }) => {
   await page.goto("/");
-  await expect(page.locator("#scrapbook .card")).toHaveCount(2);
-  await page.locator("#scrapbook .link").first().click();
-  await expect(page).toHaveTitle("The Scrapbook — Ayush Oli");
-  await page.goBack();
-  await page.locator("#scrapbook .link").last().click();
+  await expect(page.locator("#run-and-debug .card")).toHaveCount(2);
+  await expect(page.locator("#run-and-debug .card h3")).toHaveText(["How Things Work"]);
+  await page.locator("#run-and-debug .link").first().click();
   await expect(page).toHaveTitle("How Things Work — Ayush Oli");
+  await page.goBack();
+  await page.locator("#run-and-debug .link").last().click();
+  await expect(page).toHaveTitle("Run & Debug — Ayush Oli");
 });
 
 test("old URLs and unknown pages", async ({ page }) => {
   await page.goto("/blog.html#notes");
-  await expect(page).toHaveURL(/\/scrapebook\/my-journey\/#notes$/);
+  await expect(page).toHaveURL(/\/run-and-debug\/my-journey\/#notes$/);
+  await page.goto("/scrapebook/how-things-works/topics/redis/");
+  await expect(page).toHaveURL(/\/run-and-debug\/how-things-works\/topics\/redis\/$/);
   for (const [from, to] of [["/blog/", "my-journey/"], ["/how/", "how-things-works/"], ["/how/topics/redis/", "how-things-works/topics/redis/"]] as const) {
     await page.goto(from);
-    await expect(page).toHaveURL(new RegExp(`/scrapebook/${to}$`));
+    await expect(page).toHaveURL(new RegExp(`/run-and-debug/${to}$`));
   }
   const missing = await page.goto("/nope/");
   expect(missing?.status()).toBe(404);

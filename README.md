@@ -5,8 +5,8 @@ One Next.js application, exported as a static site:
 | URL | Section |
 | --- | --- |
 | `/` | Portfolio |
-| `/scrapebook/my-journey/` | The Scrapbook |
-| `/scrapebook/how-things-works/` | How Things Work: interactive simulations |
+| `/run-and-debug/my-journey/` | Run & Debug |
+| `/run-and-debug/how-things-works/` | How Things Work: interactive simulations |
 
     npm install
     npm run dev       # http://localhost:3000
@@ -20,10 +20,10 @@ One Next.js application, exported as a static site:
 src/
   app/          routing only: routes, metadata, layouts. Pages here stay under 70 lines
   templates/    one page's markup each, composed from the layers below
-    portfolio/  scrapbook/  how/ (home, topic pages, 404)
+    portfolio/  run-and-debug/  how/ (home, topic pages, 404)
   features/     interactive behaviour, one folder each
     redis/  kafka/            simulation engines and their views
-    portfolio/  scrapbook/    the original page scripts, ported and typed
+    portfolio/  run-and-debug/    the original page scripts, ported and typed
   components/   reusable presentation with no domain knowledge
   lib/          content catalogue, simulation runtime, fonts, site constants
   styles/       portfolio.css (no Tailwind) and how.css (Tailwind layer)
@@ -44,8 +44,8 @@ A layer may import from itself and from anything to its right. Engines
 React or Next, touch the DOM, or read the real clock, so they run in plain Node.
 
 Each section has its own root layout, so styles never cross: the portfolio and
-Scrapbook load `portfolio.css` and no Tailwind. Moving between sections is a full page
-load. Portfolio and Scrapbook markup is kept element for element, because their CSS
+Run & Debug load `portfolio.css` and no Tailwind. Moving between sections is a full page
+load. Portfolio and Run & Debug markup is kept element for element, because their CSS
 and scripts target it.
 
 ## Deploying
@@ -81,7 +81,7 @@ after a utility (`block`, `hidden`, `flex`): the utility wins.
 
 1. Add or update its entry in `src/lib/content/topics.ts`, and a drawing in
    `components/topics/TopicPreview.tsx`. It now appears on the homepage, and at
-   `/scrapebook/how-things-works/topics/<slug>`, as "On the drawing board".
+   `/run-and-debug/how-things-works/topics/<slug>`, as "On the drawing board".
 2. Write `src/features/<slug>/<slug>-engine.ts` with tests. Start here: if the
    model is wrong, nothing else matters.
 3. Add `<slug>-content.ts`, with a `describe(frame)` that narrates from the frame's

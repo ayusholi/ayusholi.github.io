@@ -24,7 +24,7 @@ test.beforeEach(({ browser }) => { b = browser; errs.length = 0; });
 test.afterEach(() => { expect(errs, "page errors and hydration warnings").toEqual([]); });
 
 test("REDIS", async () => {
-const p = await open('/scrapebook/how-things-works/topics/redis/');
+const p = await open('/run-and-debug/how-things-works/topics/redis/');
 await p.locator('#stage').scrollIntoViewIfNeeded(); await sp(p); await p.waitForTimeout(500); await idle(p);
 ok(await cnt(p,'misses')===1 && await cnt(p,'dbQueries')===1,'A miss');
 ok((await p.locator('#strips').innerText()).includes('150 ms'),'A latency');
@@ -79,7 +79,7 @@ await p.context().close();
 });
 
 test("KAFKA", async () => {
-const p = await open('/scrapebook/how-things-works/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await sp(p); await p.waitForTimeout(3500);
+const p = await open('/run-and-debug/how-things-works/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await sp(p); await p.waitForTimeout(3500);
 ok(await stat(p,'delivered')===9,'ordering drains'); ok(await stat(p,'lag')===0,'lag 0');
 await p.click('#keys [data-value=off]'); await p.click('#send-10'); await p.waitForTimeout(600);  await p.click('#send-10'); await p.waitForTimeout(6000);
 ok(await stat(p,'outOfOrder')>0,'keyless overtakes', await stat(p,'outOfOrder'));
@@ -114,7 +114,7 @@ await p.context().close();
 
 test("HOME", async () => {
   let p: Page;
-p=await open('/scrapebook/how-things-works/'); await p.waitForTimeout(8500);
+p=await open('/run-and-debug/how-things-works/'); await p.waitForTimeout(8500);
 
 const s=await p.locator('#hero-strips').innerText(); ok(s.includes('152 ms')&&s.includes('7 ms'),'home miss+hit',s);
 await p.click('#hero-wait'); await p.waitForTimeout(500); await p.click('#hero-send'); await p.waitForTimeout(9000);
@@ -123,40 +123,40 @@ await p.click('[data-node=edge]'); ok((await p.locator('#hero-inspect').innerTex
 await p.fill('#find','agents'); ok(await p.locator('.plate:not(.is-hidden)').count()===1,'search'); ok(await p.locator('.coll[open]').count()>=1,'search opens');
 await p.fill('#find','zzz'); ok(await p.locator('#find-none').isVisible(),'none');
 await p.fill('#find',''); ok(await p.locator('.plate:not(.is-hidden)').count()===14,'clear');
-await p.click('a.plate >> nth=0'); await p.waitForURL('**/scrapebook/how-things-works/topics/redis/'); ok(true,'plate link');
+await p.click('a.plate >> nth=0'); await p.waitForURL('**/run-and-debug/how-things-works/topics/redis/'); ok(true,'plate link');
 await p.click('.mast nav a:last-child'); await p.waitForURL(U+'/'); await p.waitForTimeout(400);
-ok(await p.locator('a[href="/scrapebook/how-things-works/"]').count()===2,'portfolio link');
+ok(await p.locator('a[href="/run-and-debug/how-things-works/"]').count()===2,'portfolio link');
 ok(await p.evaluate(()=>!!document.getElementById('hero-name')?.querySelector('.ch')),'portfolio js works');
 await p.click('[data-scenario=booking]'); await p.waitForTimeout(800); ok((await p.locator('#pg-content').innerText()).includes('booking'),'playground intact');
 await p.context().close();
-p=await open('/blog.html'); await p.waitForTimeout(500); ok(await p.locator('.opening__title').isVisible(),'scrapbook'); await p.context().close();
+p=await open('/blog.html'); await p.waitForTimeout(500); ok(await p.locator('.opening__title').isVisible(),'run & debug'); await p.context().close();
 
 });
 
 test("reduced motion", async () => {
-let p = await open('/scrapebook/how-things-works/topics/redis/',{reducedMotion:'reduce'}); await p.locator('#stage').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500);
+let p = await open('/run-and-debug/how-things-works/topics/redis/',{reducedMotion:'reduce'}); await p.locator('#stage').scrollIntoViewIfNeeded(); await p.waitForTimeout(1500);
 ok(await p.locator('.pk').count()>0 && await p.locator('.js-in').count()===0,'rm packet static');
 const rm1=await p.locator('.pk').first().getAttribute('transform'); await p.waitForTimeout(300); ok(rm1===await p.locator('.pk').first().getAttribute('transform'),'rm no travel');
 await p.getByRole('button',{name:'2×'}).click(); await idle(p); ok(await cnt(p,'misses')===1,'rm completes');
 ok((await p.locator('#status').textContent())!.length>0,'status text');
 await p.context().close();
 // offscreen: no frames when hidden
-p=await open('/scrapebook/how-things-works/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await p.waitForTimeout(1200); await p.click('#auto [data-value=on]'); await p.waitForTimeout(800);
+p=await open('/run-and-debug/how-things-works/topics/apache-kafka/'); await p.locator('#yard').scrollIntoViewIfNeeded(); await p.waitForTimeout(1200); await p.click('#auto [data-value=on]'); await p.waitForTimeout(800);
 await p.evaluate(()=>window.scrollTo(0,document.body.scrollHeight)); await p.waitForTimeout(600); const a=await p.locator('[data-testid=position]').textContent(); await p.waitForTimeout(1200); ok(a===await p.locator('[data-testid=position]').textContent(),'suspends offscreen');
 await p.context().close();
 });
 
 test("routes work by direct entry, refresh and history", async () => {
-  const p = await open("/scrapebook/how-things-works/topics/redis/");
+  const p = await open("/run-and-debug/how-things-works/topics/redis/");
   await expect(p).toHaveTitle("Redis · How Things Work — Ayush Oli");
   await p.reload();
   await expect(p.locator("#title")).toContainText("5 ms");
-  await p.goto(`${U}/scrapebook/how-things-works/topics/apache-kafka/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/apache-kafka/`);
   await expect(p).toHaveTitle(/Apache Kafka/);
   await p.getByRole("link", { name: "How Things Work" }).first().click();
-  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/`);
+  await expect(p).toHaveURL(`${U}/run-and-debug/how-things-works/`);
   await p.goBack();
-  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/topics/apache-kafka/`);
+  await expect(p).toHaveURL(`${U}/run-and-debug/how-things-works/topics/apache-kafka/`);
   await expect(p.locator("#yard")).toBeVisible();
   await p.goForward();
   await expect(p.locator("#hero")).toBeVisible();
@@ -165,7 +165,7 @@ test("routes work by direct entry, refresh and history", async () => {
 
 test("DOCKER, KUBERNETES, CI/CD, GITHUB ACTIONS", async () => {
   // Each bench runs its first scenario on sight, and the counters match what its engine says.
-  const p = await open("/scrapebook/how-things-works/topics/docker/");
+  const p = await open("/run-and-debug/how-things-works/topics/docker/");
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -174,13 +174,13 @@ test("DOCKER, KUBERNETES, CI/CD, GITHUB ACTIONS", async () => {
   await idle(p);
   ok(await cnt(p, "reusedLayers") === 3, "docker: a warm run reuses every layer");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/kubernetes/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/kubernetes/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await expect(p.locator('[data-c="created"] b')).toHaveText("4", { timeout: 30000 });
   await expect(p.locator('[data-c="ready"] b')).toHaveText("3", { timeout: 30000 });
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/ci-cd/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/ci-cd/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await p.locator('#tabs [data-value="escape"]').click();
   await sp(p);
@@ -190,7 +190,7 @@ test("DOCKER, KUBERNETES, CI/CD, GITHUB ACTIONS", async () => {
   await idle(p);
   ok(await cnt(p, "errorRate") === 0, "ci/cd: rollback restores the old artifact");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/github-actions/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/github-actions/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await p.locator('#tabs [data-value="pr"]').click();
   await sp(p);
@@ -201,7 +201,7 @@ test("DOCKER, KUBERNETES, CI/CD, GITHUB ACTIONS", async () => {
 
 test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
   // Each bench runs its first scenario on sight, and the counters match what its engine says.
-  const p = await open("/scrapebook/how-things-works/topics/llms/");
+  const p = await open("/run-and-debug/how-things-works/topics/llms/");
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -211,7 +211,7 @@ test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
   ok(await cnt(p, "dropped") > 0, "llms: a small window drops the start");
   ok(!(await p.locator("#window-view").innerText()).split("\n").slice(-1)[0]?.includes("Ayu"), "llms: the name is gone");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/ai-agents/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/ai-agents/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await p.locator('#tabs [data-value="approval"]').click();
   await sp(p);
@@ -224,7 +224,7 @@ test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
   await idle(p);
   ok(await cnt(p, "recipients") === 214, "agents: the injection emails everyone");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/rag/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/rag/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -239,7 +239,7 @@ test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
   ok(await cnt(p, "stale") === 1 && await cnt(p, "grounded") === 2, "rag: re-indexed answer is fresh");
   await expect(p.locator("#prompt")).toContainText("14 days");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/ai-automations/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/ai-automations/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await p.locator('#tabs [data-value="duplicate"]').click();
   await sp(p);
@@ -255,7 +255,7 @@ test("LLMS, AI AGENTS, RAG, AI AUTOMATIONS", async () => {
 });
 
 test("NGINX, DATABASES, MCP, WHATSAPP REMINDERS", async () => {
-  const p = await open("/scrapebook/how-things-works/topics/nginx/");
+  const p = await open("/run-and-debug/how-things-works/topics/nginx/");
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -275,7 +275,7 @@ test("NGINX, DATABASES, MCP, WHATSAPP REMINDERS", async () => {
   await idle(p);
   ok(await cnt(p, "errors") === 1, "nginx: no live upstreams is a 502");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/databases/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/databases/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -290,7 +290,7 @@ test("NGINX, DATABASES, MCP, WHATSAPP REMINDERS", async () => {
   await idle(p);
   ok(await cnt(p, "lost") === 1, "databases: an async commit is lost");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/mcp/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/mcp/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -306,7 +306,7 @@ test("NGINX, DATABASES, MCP, WHATSAPP REMINDERS", async () => {
   await idle(p);
   ok(await cnt(p, "toolErrors") === 1 && await cnt(p, "toolCalls") === 2, "mcp: the model recovers from a tool error");
 
-  await p.goto(`${U}/scrapebook/how-things-works/topics/whatsapp-reminders/`);
+  await p.goto(`${U}/run-and-debug/how-things-works/topics/whatsapp-reminders/`);
   await p.locator("#stage").scrollIntoViewIfNeeded();
   await sp(p);
   await idle(p);
@@ -323,8 +323,8 @@ test("NGINX, DATABASES, MCP, WHATSAPP REMINDERS", async () => {
 });
 
 test("unknown topics are not found", async () => {
-  const p = await open("/scrapebook/how-things-works/");
-  const missing = await p.goto(`${U}/scrapebook/how-things-works/topics/nope/`);
+  const p = await open("/run-and-debug/how-things-works/");
+  const missing = await p.goto(`${U}/run-and-debug/how-things-works/topics/nope/`);
   expect(missing?.status()).toBe(404);
   await expect(p.locator("body")).toContainText("We haven't drawn this one.");
   await p.context().close();
@@ -333,21 +333,21 @@ test("unknown topics are not found", async () => {
 
 test("old URLs redirect to the new ones", async () => {
   const p = await open("/how/redis/");
-  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/topics/redis/`);
+  await expect(p).toHaveURL(`${U}/run-and-debug/how-things-works/topics/redis/`);
   await p.goto(`${U}/how/kafka/`);
-  await expect(p).toHaveURL(`${U}/scrapebook/how-things-works/topics/apache-kafka/`);
+  await expect(p).toHaveURL(`${U}/run-and-debug/how-things-works/topics/apache-kafka/`);
   await p.context().close();
 });
 
 test("static HTML carries the content before any script runs", async ({ request }) => {
-  const html = await (await request.get(`${U}/scrapebook/how-things-works/topics/redis/`)).text();
+  const html = await (await request.get(`${U}/run-and-debug/how-things-works/topics/redis/`)).text();
   expect(html).toContain("The cache is a decision in your code");
   expect(html).toContain("GET user:42");
 });
 
 for (const [width, height] of [[390, 844], [820, 1100], [1440, 900]] as const) {
   test(`no horizontal overflow at ${width}px`, async () => {
-    for (const url of ["/scrapebook/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions", "llms", "ai-agents", "rag", "ai-automations", "nginx", "databases", "mcp", "whatsapp-reminders"].map((t) => `/scrapebook/how-things-works/topics/${t}/`)]) {
+    for (const url of ["/run-and-debug/how-things-works/", ...["redis", "apache-kafka", "docker", "kubernetes", "ci-cd", "github-actions", "llms", "ai-agents", "rag", "ai-automations", "nginx", "databases", "mcp", "whatsapp-reminders"].map((t) => `/run-and-debug/how-things-works/topics/${t}/`)]) {
       const p = await open(url, { viewport: { width, height } });
       await p.waitForTimeout(600);
       const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

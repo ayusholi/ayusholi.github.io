@@ -2,7 +2,7 @@
 // The portfolio's markup, converted from the original index.html and kept
 // element for element, because portfolio.css and features/portfolio target it.
 import { PortfolioEffects } from "@/features/portfolio/PortfolioEffects";
-import { HOW_URL, JOURNEY_URL } from "@/lib/site";
+import { CV_FILENAME, CV_URL, HOW_URL, JOURNEY_URL } from "@/lib/site";
 
 // The hero name, split into masked letters that animate one at a time.
 const SplitWord = ({ text, start }: { text: string; start: number }) => (
@@ -13,10 +13,17 @@ const SplitWord = ({ text, start }: { text: string; start: number }) => (
   </span>
 );
 
-// The Scrapbook section. To add a link, add an entry here.
-const SCRAPBOOK = [
-  { href: JOURNEY_URL, title: "My Journey", text: "A growing collection of things I'm building, learning, seeing and figuring out along the way." },
-  { href: HOW_URL, title: "How Things Work", text: "Interactive simulations of how Redis, Kafka and the systems behind modern software actually work." },
+// The controller's level keys, in page order. Each id is a section below.
+const LEVELS = [
+  { id: "about", label: "About" },
+  { id: "skills", label: "Skills" },
+  { id: "projects", label: "Projects" },
+  { id: "systems", label: "Systems" },
+  { id: "founder", label: "Founder" },
+  { id: "experience", label: "Experience" },
+  { id: "life", label: "Life" },
+  { id: "run-and-debug", label: "Run & Debug" },
+  { id: "contact", label: "Contact" },
 ];
 
 export const PortfolioPage = () => (
@@ -43,26 +50,42 @@ export const PortfolioPage = () => (
   {/* ============ NAV ============ */}
   <header className="nav" id="nav">
     <a href="#top" className="nav__logo" aria-label="Ayush Oli, back to top">AO.</a>
-    <nav className="nav__links" id="nav-links" aria-label="Main">
-      <span className="nav__indicator" aria-hidden="true"></span>
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#systems">Systems</a>
-      <a href="#founder">Founder</a>
-      <a href="#experience">Experience</a>
-      <a href="#life">Life</a>
-      <a href="#scrapbook">Scrapbook</a>
-      <a href="#contact">Contact</a>
-    </nav>
     <button className="btn btn--icon" id="theme-toggle" aria-label="Toggle dark mode">
       <span className="theme-icon theme-icon--light">☾</span>
       <span className="theme-icon theme-icon--dark">☀</span>
     </button>
-    <button className="btn btn--icon nav__burger" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
-      <span></span><span></span>
-    </button>
   </header>
+
+  {/* ============ CONTROLLER (the section menu) ============
+       A sidebar on desktop, a bottom bar on phones. The screen mirrors the
+       active section; two round buttons: back to top, and "Click" to download the CV. */}
+  <div className="pad" id="pad">
+    <div className="pad__screen" aria-hidden="true">
+      <span className="pad__lv">LV</span>
+      <span className="pad__num" id="pad-num">00</span>
+      <span className="pad__name" id="pad-name">Start</span>
+      <span className="pad__xp"><i id="pad-xp"></i></span>
+    </div>
+    <nav className="pad__keys" id="nav-links" aria-label="Main">
+      {LEVELS.map(({ id, label }, i) => (
+        <a href={`#${id}`} className="pad__key" key={id}>
+          <span className="pad__key-num">{String(i + 1).padStart(2, "0")}</span>{" "}
+          <span className="pad__label">{label}</span>
+        </a>
+      ))}
+    </nav>
+    <div className="pad__btns">
+      <a href="#top" className="gbtn gbtn--top" aria-label="Back to top">
+        <span className="gbtn__face" aria-hidden="true">↑</span><span className="gbtn__label" aria-hidden="true">Top</span>
+      </a>
+      <a href={CV_URL} download={CV_FILENAME} className="gbtn gbtn--click" aria-label="Click: download my CV (PDF)">
+        <span className="gbtn__face" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"/></svg></span><span className="gbtn__label" aria-hidden="true">Click</span>
+      </a>
+    </div>
+    <button type="button" className="pad__select" id="menu-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+      <span className="pad__select-dots" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Menu
+    </button>
+  </div>
 
   <main id="main">
 
@@ -84,7 +107,7 @@ export const PortfolioPage = () => (
 
         <div className="hero__row">
           <p className="hero__headline" data-reveal=""><span className="highlight">Product Engineer</span> — AI<span className="caret" aria-hidden="true"></span></p>
-          <p className="hero__sub" data-reveal="">From Nepal, based in London. I build products end to end, from architecture to <a className="hero__egg" href={JOURNEY_URL} title="The Scrapbook">the last pixel</a>.</p>
+          <p className="hero__sub" data-reveal="">From Nepal, based in London. I build products end to end, from architecture to <a className="hero__egg" href={JOURNEY_URL} title="Run &amp; Debug">the last pixel</a>.</p>
         </div>
 
         <div className="hero__actions" data-reveal="">
@@ -473,17 +496,20 @@ export const PortfolioPage = () => (
       </div>
     </section>
 
-    {/* ============ SCRAPBOOK ============ */}
-    <section id="scrapbook" className="section">
-      <h2 className="section__title" data-mask=""><span><i>08</i> Scrapbook</span></h2>
-      <div className="grid grid--3" data-stagger="">
-        {SCRAPBOOK.map(({ href, title, text }) => (
-          <article className="card card--life" data-reveal="" key={href}>
-            <h3>{title}</h3>
-            <p>{text}</p>
-            <a href={href} className="link">Read it →</a>
-          </article>
-        ))}
+    {/* ============ RUN & DEBUG ============ */}
+    <section id="run-and-debug" className="section">
+      <h2 className="section__title" data-mask=""><span><i>08</i> Run &amp; Debug</span></h2>
+      <div className="grid grid--split" data-stagger="">
+        <article className="card card--life" data-reveal="">
+          <h3>How Things Work</h3>
+          <p>Interactive simulations of how Redis, Kafka and the systems behind modern software actually work.</p>
+          <a href={HOW_URL} className="link">Read it →</a>
+        </article>
+        {/* One third wide, and deliberately untitled */}
+        <article className="card card--life card--small" data-reveal="" aria-label="My Journey">
+          <p>A growing collection of things I&apos;m building, learning, seeing and figuring out along the way.</p>
+          <a href={JOURNEY_URL} className="link">My journey →</a>
+        </article>
       </div>
     </section>
 

@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 
 const out = fileURLToPath(new URL("../out", import.meta.url));
 const port = Number(process.env.PORT ?? 8124);
-const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2", ".ico": "image/x-icon", ".png": "image/png", ".jpg": "image/jpeg", ".txt": "text/plain" };
+const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2", ".ico": "image/x-icon", ".png": "image/png", ".jpg": "image/jpeg", ".txt": "text/plain", ".pdf": "application/pdf" };
 
 const resolve = async (path) => {
   try {

@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect } from "react";
-import { initScrapbook } from "./scrapbook-effects";
+import { initRunDebug } from "./run-debug-effects";
 
 // Starts the page's behaviour once. The guard covers Strict Mode's double effect.
 let started = false;
 
-export const ScrapbookEffects = () => {
+export const RunDebugEffects = () => {
   useEffect(() => {
     if (started) return;
     started = true;
-    initScrapbook();
+    initRunDebug();
   }, []);
   return null;
 };

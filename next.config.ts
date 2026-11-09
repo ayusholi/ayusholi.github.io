@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
-// One static site: the portfolio at /, the Scrapbook and the publication
-// under /scrapebook. A later backend phase only needs to drop `output`.
+// One static site: the portfolio at /, Run & Debug and the publication
+// under /run-and-debug. A later backend phase only needs to drop `output`.
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,

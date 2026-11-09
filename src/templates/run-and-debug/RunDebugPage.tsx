@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element, @next/next/no-html-link-for-pages -- these links cross root layouts */
-// The Scrapbook's markup, converted from the original blog.html and kept
+// Run & Debug's markup, converted from the original blog.html and kept
 // element for element, because its styles and effects target it.
-import { ScrapbookEffects } from "@/features/scrapbook/ScrapbookEffects";
+import { RunDebugEffects } from "@/features/run-and-debug/RunDebugEffects";
 
-export const ScrapbookPage = () => (
+export const RunDebugPage = () => (
   <>
 
   <a className="skip" href="#main">Skip to content</a>
@@ -11,11 +11,11 @@ export const ScrapbookPage = () => (
   {/* ============ A. NAVIGATION ============ */}
   <header className="masthead">
     <div className="masthead__inner wrap">
-      <a className="wordmark" href="#top" aria-label="The Scrapbook, home">
-        <span className="wordmark__title"><em>The</em> Scrapbook</span>
+      <a className="wordmark" href="#top" aria-label="Run &amp; Debug, home">
+        <span className="wordmark__title"><em>Run</em> &amp; Debug</span>
         <span className="wordmark__sub">A collection of things along the way.</span>
       </a>
-      <nav className="masthead__nav" aria-label="Scrapbook">
+      <nav className="masthead__nav" aria-label="Run &amp; Debug">
         <a className="link" href="#about">About</a>
         <a className="link" href="#archive">Archive</a>
         <a className="link masthead__back" href="/"><span aria-hidden="true">←</span> Portfolio</a>
@@ -330,7 +330,7 @@ export const ScrapbookPage = () => (
   {/* ============ G. FOOTER ============ */}
   <footer className="colophon">
     <div className="wrap colophon__inner">
-      <p className="wordmark__title colophon__mark"><em>The</em> Scrapbook</p>
+      <p className="wordmark__title colophon__mark"><em>Run</em> &amp; Debug</p>
       <p className="colophon__more">More to come.</p>
       <p className="colophon__links">
         <a className="link" href="/"><span aria-hidden="true">←</span> Back to the portfolio</a>
@@ -340,6 +340,6 @@ export const ScrapbookPage = () => (
   </footer>
 
   
-    <ScrapbookEffects />
+    <RunDebugEffects />
   </>
 );

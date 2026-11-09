@@ -1,7 +1,7 @@
-// The Scrapbook's behaviour, ported from the original script.js. It uses its own
+// Run & Debug's behaviour, ported from the original script.js. It uses its own
 // [data-sb-reveal] / .is-visible, so it never shares state with the portfolio.
 
-export function initScrapbook() {
+export function initRunDebug() {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // ===== Scroll reveals =====
@@ -47,7 +47,7 @@ export function initScrapbook() {
   // ===== Remote image fallback =====
   // If an image can't load, keep its frame and label the gap instead of a broken-image icon
   const markMissing = (img: HTMLImageElement) => img.closest(".frame")?.classList.add("is-missing");
-  document.querySelectorAll<HTMLImageElement>(".scrapbook .frame img").forEach((img) => {
+  document.querySelectorAll<HTMLImageElement>(".run-debug .frame img").forEach((img) => {
     if (img.complete && img.naturalWidth === 0) markMissing(img);
     else img.addEventListener("error", () => markMissing(img), { once: true });
   });
