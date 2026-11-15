@@ -2,7 +2,10 @@
 // The portfolio's markup, converted from the original index.html and kept
 // element for element, because portfolio.css and features/portfolio target it.
 import { PortfolioEffects } from "@/features/portfolio/PortfolioEffects";
-import { CV_FILENAME, CV_URL, HOW_URL, JOURNEY_URL } from "@/lib/site";
+import { CV_FILENAME, CV_URL, HOW_URL, JOURNEY_URL, OS_URL } from "@/lib/site";
+
+// The apps inside AYUSH.OS, shown on the card that links to it.
+const OS_APPS = ["CAREER.EXE", "PROJECTS.DB", "STACK.MAP", "ENGINEERING.LOG", "FOUNDER.MODE"];
 
 // The hero name, split into masked letters that animate one at a time.
 const SplitWord = ({ text, start }: { text: string; start: number }) => (
@@ -17,7 +20,7 @@ const SplitWord = ({ text, start }: { text: string; start: number }) => (
 const LEVELS = [
   { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
+  { id: "projects", label: "My work" },
   { id: "systems", label: "Systems" },
   { id: "founder", label: "Founder" },
   { id: "experience", label: "Experience" },
@@ -179,107 +182,104 @@ export const PortfolioPage = () => (
       </div>
     </section>
 
-    {/* ============ PROJECTS ============ */}
+    {/* ============ MY WORK ============
+         One large card into AYUSH.OS (the interactive portfolio), then the live sites as small cards. */}
     <section id="projects" className="section">
-      <h2 className="section__title" data-mask=""><span><i>03</i> Projects</span></h2>
+      <h2 className="section__title" data-mask=""><span><i>03</i> My work</span></h2>
 
-      <div className="work">
-        {/* Previews are built in HTML/CSS: swap a .preview for an <img /> once you have screenshots. */}
-        <article className="project project--feature" data-reveal="">
-          <div className="preview pv--accent" data-tilt="">
-            <div className="preview__bar"><i></i><i></i><i></i><span>thechair.flowtiva.co.uk</span></div>
+      <div className="work work--compact">
+        <article className="project project--os" data-reveal="">
+          <div className="preview pv--os" data-tilt="">
+            <div className="preview__bar"><i></i><i></i><i></i><span>ayusholi.com.np/interactive</span></div>
             <div className="preview__body">
-              <span className="preview__num">01</span>
-              <span className="preview__mark">The<br />Chair</span>
-              <span className="preview__shape preview__shape--chair" aria-hidden="true"></span>
+              <span className="preview__num">00</span>
+              <ul className="os-peek" aria-hidden="true">
+                {OS_APPS.map((app) => <li key={app}>{app}</li>)}
+              </ul>
+              <span className="preview__mark">AYUSH<span>.OS</span></span>
             </div>
           </div>
           <div className="project__info">
             <div className="card__head">
+              <h3><a href={OS_URL} className="project__link">Explore my work, interactively<span className="project__arrow" aria-hidden="true">→</span></a></h3>
+              <span className="badge">New</span>
+            </div>
+            <p>My career, client case studies, the stack behind them and the engineering decisions along the way, explored like an operating system.</p>
+          </div>
+        </article>
+
+        <div className="work__minis">
+          <article className="project project--mini" data-reveal="">
+            <div className="preview pv--accent">
+              <div className="preview__bar"><i></i><i></i><i></i><span>thechair.flowtiva.co.uk</span></div>
+              <div className="preview__body">
+                <span className="preview__num">01</span>
+                <span className="preview__mark">The<br />Chair</span>
+                <span className="preview__shape preview__shape--chair" aria-hidden="true"></span>
+              </div>
+            </div>
+            <div className="project__info">
               <h3><a href="https://thechair.flowtiva.co.uk/" target="_blank" rel="noopener" className="project__link">The Chair<span className="project__arrow" aria-hidden="true">↗</span></a></h3>
-              <span className="badge">Live</span>
+              <p>A booking app for barbers. I use it to take bookings for my own cuts.</p>
             </div>
-            {/* TODO: replace with your own 1–2 line description */}
-            <p>A booking app for barbers. I use it to take bookings for my own cuts.</p>
-            <ul className="tags tags--sm"></ul>
-          </div>
-        </article>
-
-        <article className="project project--side" data-reveal="">
-          <div className="preview pv--ink">
-            <div className="preview__bar"><i></i><i></i><i></i><span>hairswagg.com</span></div>
-            <div className="preview__body">
-              <span className="preview__num">02</span>
-              <span className="preview__mark">Hair<br />swagg</span>
-              <span className="preview__shape preview__shape--stripes" aria-hidden="true"></span>
+          </article>
+          <article className="project project--mini" data-reveal="">
+            <div className="preview pv--ink">
+              <div className="preview__bar"><i></i><i></i><i></i><span>hairswagg.com</span></div>
+              <div className="preview__body">
+                <span className="preview__num">02</span>
+                <span className="preview__mark">Hair<br />swagg</span>
+                <span className="preview__shape preview__shape--stripes" aria-hidden="true"></span>
+              </div>
             </div>
-          </div>
-          <div className="project__info">
-            <div className="card__head">
+            <div className="project__info">
               <h3><a href="https://hairswagg.com" target="_blank" rel="noopener" className="project__link">Hairswagg<span className="project__arrow" aria-hidden="true">↗</span></a></h3>
-              <span className="badge">Live</span>
+              <p>Marketing site for Hairswagg.</p>
             </div>
-            <p>Marketing site for Hairswagg.</p>
-            <ul className="tags tags--sm"></ul>
-          </div>
-        </article>
-
-        <article className="project project--side" data-reveal="">
-          <div className="preview pv--sun">
-            <div className="preview__bar"><i></i><i></i><i></i><span>app.hairswagg.com</span></div>
-            <div className="preview__body">
-              <span className="preview__num">03</span>
-              <span className="preview__mark">Hair<br />swagg<br />app</span>
-              <span className="preview__shape preview__shape--dots" aria-hidden="true"></span>
+          </article>
+          <article className="project project--mini" data-reveal="">
+            <div className="preview pv--sun">
+              <div className="preview__bar"><i></i><i></i><i></i><span>app.hairswagg.com</span></div>
+              <div className="preview__body">
+                <span className="preview__num">03</span>
+                <span className="preview__mark">Hair<br />swagg<br />app</span>
+                <span className="preview__shape preview__shape--dots" aria-hidden="true"></span>
+              </div>
             </div>
-          </div>
-          <div className="project__info">
-            <div className="card__head">
+            <div className="project__info">
               <h3><a href="https://app.hairswagg.com" target="_blank" rel="noopener" className="project__link">Hairswagg App<span className="project__arrow" aria-hidden="true">↗</span></a></h3>
-              <span className="badge">Live</span>
+              <p>The web app behind Hairswagg.</p>
             </div>
-            <p>The web app behind Hairswagg.</p>
-            <ul className="tags tags--sm"></ul>
-          </div>
-        </article>
-
-        <article className="project project--feature project--flip" data-reveal="">
-          <div className="preview pv--paper">
-            <div className="preview__bar"><i></i><i></i><i></i><span>alls-legal.co.uk</span></div>
-            <div className="preview__body">
-              <span className="preview__num">04</span>
-              <span className="preview__mark">Alls<br />Legal</span>
-              <span className="preview__shape preview__shape--lines" aria-hidden="true"></span>
+          </article>
+          <article className="project project--mini" data-reveal="">
+            <div className="preview pv--paper">
+              <div className="preview__bar"><i></i><i></i><i></i><span>alls-legal.co.uk</span></div>
+              <div className="preview__body">
+                <span className="preview__num">04</span>
+                <span className="preview__mark">Alls<br />Legal</span>
+                <span className="preview__shape preview__shape--lines" aria-hidden="true"></span>
+              </div>
             </div>
-          </div>
-          <div className="project__info">
-            <div className="card__head">
+            <div className="project__info">
               <h3><a href="https://alls-legal.co.uk" target="_blank" rel="noopener" className="project__link">Alls Legal<span className="project__arrow" aria-hidden="true">↗</span></a></h3>
-              <span className="badge">Live</span>
+              <p>Website for Alls Legal, a UK legal services business.</p>
             </div>
-            <p>Website for Alls Legal, a UK legal services business.</p>
-            <ul className="tags tags--sm"></ul>
-          </div>
-        </article>
-
-        <article className="project project--wide" data-reveal="">
-          <div className="preview pv--ink">
-            <div className="preview__bar"><i></i><i></i><i></i><span>flowtiva.co.uk</span></div>
-            <div className="preview__body">
-              <span className="preview__num">05</span>
-              <span className="preview__mark">Flowtiva</span>
-              <span className="preview__shape preview__shape--flow" aria-hidden="true"></span>
+          </article>
+          <article className="project project--mini" data-reveal="">
+            <div className="preview pv--ink">
+              <div className="preview__bar"><i></i><i></i><i></i><span>flowtiva.co.uk</span></div>
+              <div className="preview__body">
+                <span className="preview__num">05</span>
+                <span className="preview__mark">Flowtiva</span>
+                <span className="preview__shape preview__shape--flow" aria-hidden="true"></span>
+              </div>
             </div>
-          </div>
-          <div className="project__info">
-            <div className="card__head">
+            <div className="project__info">
               <h3><a href="https://flowtiva.co.uk" target="_blank" rel="noopener" className="project__link">Flowtiva<span className="project__arrow" aria-hidden="true">↗</span></a></h3>
-              <span className="badge">Live</span>
+              <p>Flowtiva&apos;s company site, the home of my products.</p>
             </div>
-            <p>Flowtiva&apos;s company site, the home of my products.</p>
-            <ul className="tags tags--sm"></ul>
-          </div>
-        </article>
+          </article>
+        </div>
       </div>
     </section>
 

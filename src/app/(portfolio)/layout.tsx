@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import "@/styles/portfolio.css";
 
-const TITLE = "Ayush Oli — Product Engineer, AI";
+const TITLE = "Ayush Oli | Product Engineer, AI";
 const SHARE = "https://www.ayusholi.com.np/images/assets/ayush-oli-favicon-512.png";
 
 export const viewport: Viewport = { themeColor: "#FE3602" };

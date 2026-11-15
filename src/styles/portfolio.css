@@ -681,6 +681,31 @@ a.btn[href="#projects"]:hover .btn__arrow { transform: translateY(4px); }
 .project__info h3 { font-size: clamp(1.4rem, 3vw, 2rem); }
 .project__info p { color: var(--muted); }
 
+/* My work: one large card into AYUSH.OS, then the live sites as small cards */
+.work--compact { row-gap: clamp(28px, 3.5vw, 44px); }
+.project--os { grid-column: 1 / -1; }
+.project--os .preview__body { aspect-ratio: 21 / 7; flex-direction: column; align-items: flex-start; justify-content: space-between; }
+.project--os .preview__mark { font-size: clamp(3rem, 10.5vw, 8rem); }
+.project--os .preview__mark span { color: var(--pfg-dim); }
+.pv--os { --pbg: #0a0b0a; --pfg: #f3efe4; --pfg-dim: #c4ef4b; --pbg-h: #c4ef4b; --pfg-h: #0a0b0a; }
+.project--os:hover .pv--os { --pfg-dim: #0a0b0a; }
+.os-peek { display: flex; flex-wrap: wrap; gap: 8px; font-family: var(--mono); font-size: clamp(0.62rem, 1vw, 0.78rem); font-weight: 700; }
+.os-peek li { padding: 4px 9px; border: 2px solid currentColor; opacity: 0.85; }
+.work__minis { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 22px; }
+.work__minis .project--mini { grid-column: auto; gap: 10px; }
+.project--mini .preview { box-shadow: var(--shadow-sm); }
+.project--mini:hover .preview { box-shadow: 6px 6px 0 var(--shadow-color); }
+.project--mini .preview__bar { padding: 6px 10px; font-size: 0.62rem; }
+.project--mini .preview__bar i { width: 8px; height: 8px; }
+.project--mini .preview__body { aspect-ratio: 4 / 3; padding: 12px; }
+.project--mini .preview__num { top: 10px; right: 12px; font-size: 0.75rem; }
+.project--mini .preview__mark { font-size: clamp(1.25rem, 2.1vw, 1.9rem); }
+.project--mini .preview__shape { width: 30%; top: 18%; right: 10%; }
+.project--mini .project__info h3 { font-size: 1.05rem; }
+.project--mini .project__info p { font-size: 0.88rem; line-height: 1.45; }
+.project--mini .preview::after { inset: 40px 10px 10px; }
+@media (max-width: 1100px) { .work__minis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
 /* ---------- Timeline ---------- */
 .timeline { position: relative; display: grid; gap: 24px; padding-left: 28px; }
 .timeline--plain { padding-left: 0; margin-top: 20px; }
@@ -803,6 +828,10 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   .work { grid-template-columns: 1fr; }
   .project, .project--feature, .project--side, .project--flip, .project--wide { grid-column: 1 / -1; margin-top: 0 !important; }
   .project--wide .preview__body { aspect-ratio: 16 / 10; }
+  .project--os .preview__body { aspect-ratio: 4 / 3; }
+  .work__minis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .work__minis .project--mini { grid-column: auto; }
+  .work__minis .project--mini:last-child { grid-column: 1 / -1; }
   .skill:nth-child(even) { margin-top: 0; }
 }
 @media (max-width: 640px) {
