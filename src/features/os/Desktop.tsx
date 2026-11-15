@@ -1,6 +1,7 @@
 "use client";
 
 import { CV_FILENAME, CV_URL, PORTFOLIO_URL } from "@/lib/site";
+import { AyushWorld } from "../world/AyushWorld";
 import { Glyph } from "./Glyph";
 import { toMonth, useNow, useOs } from "./OsContext";
 import { IDENTITY } from "./os-content";
@@ -46,13 +47,13 @@ export function Desktop({ hidden }: { hidden: boolean }) {
                     <kbd className="tile__key" aria-hidden="true">{a.key}</kbd>
                   </span>
                   <span className="tile__name">{a.name}</span>
-                  <span className="tile__blurb">{a.blurb}</span>
                   <span className="tile__open" aria-hidden="true">open →</span>
                 </button>
               </li>
             ))}
           </ul>
         </nav>
+        <AyushWorld />
         <p className="desk__hint">
           <span><kbd>1</kbd>–<kbd>5</kbd> open apps</span>
           <span><kbd>`</kbd> terminal</span>

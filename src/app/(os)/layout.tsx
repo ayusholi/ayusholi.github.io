@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { MotionRoot } from "@/components/ui/MotionRoot";
 import { fontClasses } from "@/lib/fonts";
 import "@/styles/os.css";
+import "@/styles/world.css";
 
 // AYUSH.OS has its own root layout, so its dark system never touches the
 // portfolio's styles, and theirs never reach it.

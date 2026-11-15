@@ -94,3 +94,24 @@ test("homepage: My work leads into AYUSH.OS", async ({ page }) => {
   await expect(page).toHaveURL(/\/the-terminal\/$/);
   await expect(page.locator("#ident-name")).toBeVisible();
 });
+
+test("world: walk, read the signpost, and keep the OS shortcuts", async ({ page }) => {
+  const errors = watch(page);
+  await page.goto("/the-terminal/");
+  const frame = page.locator(".world__frame");
+  await expect(frame.locator("canvas")).toBeVisible();
+  await frame.click();
+  // The signpost is just up and to the left of where you start.
+  await page.keyboard.down("ArrowLeft"); await page.waitForTimeout(450); await page.keyboard.up("ArrowLeft");
+  await page.keyboard.down("ArrowUp"); await page.waitForTimeout(300); await page.keyboard.up("ArrowUp");
+  await expect(page.locator(".world__hint")).toContainText("Read");
+  await page.keyboard.press("e");
+  await expect(page.locator(".wpanel")).toContainText("HONEYBADGER");
+  // Escape closes the panel, not an app; the page never scrolls.
+  await page.keyboard.press("Escape");
+  await expect(page.locator(".wpanel")).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight)).toBe(true);
+  await page.keyboard.press("1");
+  await expect(page.locator("#win-career")).toBeVisible();
+  expect(errors).toEqual([]);
+});
