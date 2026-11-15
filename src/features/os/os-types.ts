@@ -44,6 +44,7 @@ export type Project = {
   outcome?: string[];
   notes?: string[];
   logId?: string;
+  links?: { label: string; href: string }[];
 };
 
 export type TechGroup = "Languages" | "Frontend" | "Backend" | "Infrastructure" | "Data & messaging" | "Platforms & services" | "AI";

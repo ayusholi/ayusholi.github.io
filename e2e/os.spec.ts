@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 
-// AYUSH.OS at /interactive/: apps, deep links, keyboard, terminal, discoveries,
+// AYUSH.OS at /the-terminal/: apps, deep links, keyboard, terminal, discoveries,
 // and the phone layout. Plus the homepage card that leads into it.
 const watch = (page: Page) => {
   const errors: string[] = [];
@@ -11,7 +11,7 @@ const watch = (page: Page) => {
 
 test("os: desktop, apps and keyboard", async ({ page }) => {
   const errors = watch(page);
-  await page.goto("/interactive/");
+  await page.goto("/the-terminal/");
   await expect(page.locator("#ident-name")).toContainText("Ayush Oli");
   await expect(page.locator(".tile")).toHaveCount(5);
   expect(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight)).toBe(true);
@@ -37,7 +37,7 @@ test("os: desktop, apps and keyboard", async ({ page }) => {
 });
 
 test("os: deep link into the stack map shows only stated links", async ({ page }) => {
-  await page.goto("/interactive/#stack/go");
+  await page.goto("/the-terminal/#stack/go");
   await expect(page.locator("#win-stack")).toBeVisible();
   await expect(page.locator(".target[data-lit]")).toHaveCount(1);
   await expect(page.locator(".target[data-lit]")).toContainText("Excitation");
@@ -48,7 +48,7 @@ test("os: deep link into the stack map shows only stated links", async ({ page }
 
 test("os: terminal, discoveries and persistence", async ({ page }) => {
   const errors = watch(page);
-  await page.goto("/interactive/");
+  await page.goto("/the-terminal/");
   await page.keyboard.press("`");
   await expect(page.locator("#term-input")).toBeFocused();
   await page.keyboard.type("stack rabb");
@@ -72,7 +72,7 @@ test("os: terminal, discoveries and persistence", async ({ page }) => {
 test("os: phone layout", async ({ page }) => {
   const errors = watch(page);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/interactive/");
+  await page.goto("/the-terminal/");
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
   await page.locator(".tile", { hasText: "PROJECTS.DB" }).click();
   await expect(page.locator("#win-projects")).toHaveAttribute("data-full", "true");
@@ -91,6 +91,6 @@ test("homepage: My work leads into AYUSH.OS", async ({ page }) => {
   await expect(page.locator("#projects .section__title")).toContainText("My work");
   await expect(page.locator("#projects .project--mini")).toHaveCount(5);
   await page.locator("#projects .project--os .project__link").click();
-  await expect(page).toHaveURL(/\/interactive\/$/);
+  await expect(page).toHaveURL(/\/the-terminal\/$/);
   await expect(page.locator("#ident-name")).toBeVisible();
 });

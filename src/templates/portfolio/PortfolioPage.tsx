@@ -190,7 +190,7 @@ export const PortfolioPage = () => (
       <div className="work work--compact">
         <article className="project project--os" data-reveal="">
           <div className="preview pv--os" data-tilt="">
-            <div className="preview__bar"><i></i><i></i><i></i><span>ayusholi.com.np/interactive</span></div>
+            <div className="preview__bar"><i></i><i></i><i></i><span>ayusholi.com.np/the-terminal</span></div>
             <div className="preview__body">
               <span className="preview__num">00</span>
               <ul className="os-peek" aria-hidden="true">

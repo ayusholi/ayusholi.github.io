@@ -153,6 +153,7 @@ export const PROJECTS: Project[] = [
     solution: "Took ownership end to end: shaped the team, brought developers up to speed, and ran delivery and priorities directly.",
     outcome: ["Delivered under the deadline.", "Strong client satisfaction."],
     logId: "eng-003",
+    links: [{ label: "concordtheatricals.com", href: "https://www.concordtheatricals.com/" }],
   },
   {
     id: "excitation", name: "Excitation", client: "Australian communications platform", roleId: "excitation",
@@ -169,6 +170,7 @@ export const PROJECTS: Project[] = [
     ],
     notes: ["Core experience: Go concurrency, microservices, message brokers, distributed systems, notifications and scheduling, infrastructure and deployments."],
     logId: "eng-004",
+    links: [{ label: "coax.com.au", href: "https://coax.com.au" }],
   },
   {
     id: "timepieces", name: "TIMEPieces", client: "TIME Magazine", roleId: "fusemachines",
@@ -185,6 +187,7 @@ export const PROJECTS: Project[] = [
     outcome: ["Launched. One engineer stayed on for maintenance and support; the rest of the team moved on to TIME.com."],
     notes: ["TIME's wider Web3 business reported significant commercial success. That isn't a TIMEPieces-specific figure."],
     logId: "eng-001",
+    links: [{ label: "nft.time.com", href: "https://nft.time.com" }],
   },
   {
     id: "timecom", name: "TIME.com", client: "TIME", roleId: "fusemachines",
@@ -197,6 +200,7 @@ export const PROJECTS: Project[] = [
       "Built a conversion tool: legacy PHP-rendered pages to HTML, then adapted into the new Next.js templating structure.",
     ],
     logId: "eng-002",
+    links: [{ label: "time.com", href: "https://time.com" }],
   },
   {
     id: "squadery", name: "Squadery.com", client: "Squadery", roleId: "fusemachines",
@@ -215,12 +219,14 @@ export const PROJECTS: Project[] = [
     role: "Software Engineer · handled independently", kind: "entry",
     summary: "Managed WordPress hosting for a Swedish client.",
     contributions: ["Independently handled development and maintenance of the application."],
+    links: [{ label: "keplercloud.se", href: "https://keplercloud.se/" }],
   },
   {
     id: "hdl", name: "HDL Ecommerce", client: "HDL", roleId: "hazesoft",
     role: "Software Engineer", kind: "entry",
     summary: "A React and Laravel ecommerce project.",
     contributions: ["Frontend and backend implementation, as part of a development team."],
+    links: [{ label: "hdlcommerce.com", href: "https://hdlcommerce.com/" }],
   },
 ];
 

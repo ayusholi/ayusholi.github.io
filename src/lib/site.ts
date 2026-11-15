@@ -10,7 +10,7 @@ export const PORTFOLIO_URL = "/";
 
 // Every link to these sections comes from here. Old URLs are stubs in public/.
 // AYUSH.OS, the interactive portfolio. It has its own root layout too.
-export const OS_URL = "/interactive/";
+export const OS_URL = "/the-terminal/";
 
 export const JOURNEY_URL = "/run-and-debug/my-journey/";
 export const HOW_URL = "/run-and-debug/how-things-works/";

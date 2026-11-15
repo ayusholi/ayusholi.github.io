@@ -6,16 +6,16 @@ import "@/styles/os.css";
 
 // AYUSH.OS has its own root layout, so its dark system never touches the
 // portfolio's styles, and theirs never reach it.
-export const viewport: Viewport = { themeColor: "#0a0b0a", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#0e0b0a", colorScheme: "dark" };
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.ayusholi.com.np"),
   title: "AYUSH.OS — Ayush Oli",
   description: "An interactive engineering portfolio: career, case studies, stack, engineering decisions and independent products, explored like an operating system.",
-  alternates: { canonical: "/interactive/" },
+  alternates: { canonical: "/the-terminal/" },
   icons: { icon: [{ url: "/images/assets/favicon.ico", sizes: "any" }] },
   openGraph: {
-    type: "website", siteName: "Ayush Oli", url: "/interactive/", title: "AYUSH.OS — Ayush Oli",
+    type: "website", siteName: "Ayush Oli", url: "/the-terminal/", title: "AYUSH.OS — Ayush Oli",
     description: "Senior Software Engineer · Technical Leader · Product Builder. Explore the career like an operating system.",
   },
 };

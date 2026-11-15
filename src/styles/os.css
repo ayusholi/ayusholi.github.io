@@ -1,26 +1,26 @@
 /* =========================================================
    AYUSH.OS — an interactive engineering operating system.
    Near-black ground, one lime accent, restrained borders.
-   Lime marks what's active or interactive, nothing else.
+   Red marks what's active or interactive, nothing else.
    ========================================================= */
 
 :root {
   color-scheme: dark;
-  --bg: #0a0b0a;
-  --bg-2: #0d0f0d;
-  --panel: #111311;
-  --panel-2: #151815;
-  --raise: #1b1f1b;
-  --line: #222622;
-  --line-2: #2e332e;
-  --text: #e8ebe5;
-  --muted: #a3aba2;
-  --dim: #6f776e;
-  --lime: #c4ef4b;
-  --lime-2: #9fc62f;
-  --lime-ink: #0a0b0a;
-  --lime-wash: rgb(196 239 75 / 0.07);
-  --lime-line: rgb(196 239 75 / 0.38);
+  --bg: #0e0b0a;
+  --bg-2: #120e0d;
+  --panel: #171211;
+  --panel-2: #1c1614;
+  --raise: #251d1b;
+  --line: #2d2321;
+  --line-2: #3d302d;
+  --text: #f3efe4;
+  --muted: #b9b4a7;
+  --dim: #8a8179;
+  --lime: #fe3602;
+  --lime-2: #c42a00;
+  --lime-ink: #0d0d0d;
+  --lime-wash: rgb(254 54 2 / 0.09);
+  --lime-line: rgb(254 54 2 / 0.5);
   --warn: #e6c56a;
   --err: #ff8f7d;
 
@@ -78,7 +78,7 @@ kbd { font-family: var(--mono); font-size: 10px; padding: 1px 5px; border: 1px s
 .bar__brand:hover { background: var(--raise); }
 .bar__mark { width: 9px; height: 9px; background: var(--lime); transform: rotate(45deg); border-radius: 1px; }
 .bar__status { display: flex; align-items: center; gap: 6px; min-width: 0; white-space: nowrap; overflow: hidden; text-transform: uppercase; }
-.bar__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgb(196 239 75 / 0.12); }
+.bar__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 3px rgb(254 54 2 / 0.12); }
 .bar__online { color: var(--lime); }
 .bar__sep { color: var(--line-2); }
 .bar__right { margin-left: auto; flex: none; display: flex; align-items: center; gap: 4px; }
@@ -128,7 +128,7 @@ kbd { font-family: var(--mono); font-size: 10px; padding: 1px 5px; border: 1px s
   padding: 22px 24px;
 }
 .desk[hidden] { display: none; }
-.desk__right { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; gap: 18px; min-width: 0; min-height: 0; }
+.desk__right { display: grid; grid-template-rows: auto auto; align-content: start; gap: 18px; min-width: 0; min-height: 0; }
 
 .ident {
   display: flex; flex-direction: column; gap: 14px; min-height: 0;
@@ -538,7 +538,7 @@ button.chip:hover { border-color: var(--lime-line); color: var(--lime); }
   transition: border-color 0.2s;
 }
 .product[data-selected] { border-color: var(--lime); }
-.product[data-flagship] { border-top: 2px solid var(--lime); background: linear-gradient(180deg, rgb(196 239 75 / 0.05), transparent 220px), var(--panel-2); }
+.product[data-flagship] { border-top: 2px solid var(--lime); background: linear-gradient(180deg, rgb(254 54 2 / 0.05), transparent 220px), var(--panel-2); }
 .product__head { display: grid; gap: 8px; justify-items: start; }
 .product__name { font-size: 28px; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
 .product[data-flagship] .product__name { font-size: clamp(40px, 6cqi, 60px); }
@@ -613,7 +613,7 @@ button.chip:hover { border-color: var(--lime-line); color: var(--lime); }
 @keyframes reveal { from { clip-path: inset(-20% 100% -20% 0); } to { clip-path: inset(-20% -2% -20% 0); } }
 @keyframes draw { to { stroke-dashoffset: 0; } }
 @keyframes flow { to { stroke-dashoffset: -14; } }
-@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(196 239 75 / 0.45); } 70%, 100% { box-shadow: 0 0 0 8px rgb(196 239 75 / 0); } }
+@keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(254 54 2 / 0.45); } 70%, 100% { box-shadow: 0 0 0 8px rgb(254 54 2 / 0); } }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; animation-delay: 0s !important; transition-duration: 0.01ms !important; }

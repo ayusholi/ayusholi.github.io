@@ -95,6 +95,11 @@ function ProjectDetail({ p }: { p: Project }) {
       <Block label="Outcome" items={p.outcome} />
       {p.notes?.map((n) => <p className="note" key={n}>{n}</p>)}
       {!p.contributions.length && <p className="note">More detail to come.</p>}
+      {p.links && (
+        <ul className="chips">
+          {p.links.map((l) => <li key={l.href}><a className="xref" href={l.href} target="_blank" rel="noopener">{l.label} <span aria-hidden="true">↗</span></a></li>)}
+        </ul>
+      )}
       <TechChips techs={techFor(p.id)} />
       {log && (
         <button type="button" className="xref" onClick={() => open("log", log.id)}>

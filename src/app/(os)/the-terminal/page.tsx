@@ -1,5 +1,5 @@
 import { OsPage } from "@/templates/os/OsPage";
 
-export default function Interactive() {
+export default function TheTerminal() {
   return <OsPage />;
 }
