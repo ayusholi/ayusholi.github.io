@@ -443,14 +443,6 @@ a.btn[href="#projects"]:hover .btn__arrow { transform: translateY(4px); }
   transform: rotate(-1.5deg);
 }
 .hero__sub { max-width: 420px; color: var(--muted); font-size: 1.15rem; margin: 0; }
-/* "the last pixel" quietly leads to Run & Debug (blog.html) */
-.hero__egg {
-  text-decoration: underline dotted var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-  transition: background 0.3s var(--ease), color 0.3s var(--ease);
-}
-.hero__egg:hover { background: var(--accent); color: var(--accent-text); text-decoration: none; }
 .hero__actions { display: flex; flex-wrap: wrap; gap: 16px; }
 
 .scroll-cue {
