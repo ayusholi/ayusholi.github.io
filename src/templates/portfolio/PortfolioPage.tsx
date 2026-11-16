@@ -110,7 +110,7 @@ export const PortfolioPage = () => (
 
         <div className="hero__row">
           <p className="hero__headline" data-reveal=""><span className="highlight">Product Engineer</span> — AI<span className="caret" aria-hidden="true"></span></p>
-          <p className="hero__sub" data-reveal="">From Nepal, based in London. I build products end to end, from architecture to <a className="hero__egg" href={JOURNEY_URL} title="Run &amp; Debug">the last pixel</a>.</p>
+          <p className="hero__sub" data-reveal="">From Nepal, based in London. I build products end to end, from architecture to the last pixel.</p>
         </div>
 
         <div className="hero__actions" data-reveal="">
