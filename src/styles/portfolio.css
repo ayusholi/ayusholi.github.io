@@ -2365,3 +2365,8 @@ html:not(.js-anim) .card--life:hover { transform: translateY(-6px) rotate(-0.6de
   .run-debug .frame:hover .frame__img img { transform: none; }
 }
 
+
+/* My crafts: lead sentence above a row of skill cards */
+.crafts { margin-top: clamp(28px, 4vw, 48px); }
+.skill h4 { font-size: 1.15rem; margin: 14px 0 8px; }
+.skill p { line-height: 1.55; }

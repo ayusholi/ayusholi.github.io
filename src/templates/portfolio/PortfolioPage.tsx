@@ -18,7 +18,7 @@ const SplitWord = ({ text, start }: { text: string; start: number }) => (
 
 // The controller's level keys, in page order. Each id is a section below.
 const LEVELS = [
-  { id: "about", label: "About" },
+  { id: "about", label: "Crafts" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "My work" },
   { id: "systems", label: "Systems" },
@@ -119,7 +119,7 @@ export const PortfolioPage = () => (
         </div>
       </div>
 
-      <a href="#about" className="scroll-cue" aria-label="Scroll to about">
+      <a href="#about" className="scroll-cue" aria-label="Scroll to my crafts">
         <span>Scroll</span><span className="scroll-cue__line" aria-hidden="true"></span>
       </a>
     </section>
@@ -134,20 +134,31 @@ export const PortfolioPage = () => (
 
     {/* ============ ABOUT ============ */}
     <section id="about" className="section">
-      <h2 className="section__title" data-mask=""><span><i>01</i> About</span></h2>
-      <div className="about">
-        <p className="about__lead" data-reveal="">
-          I&apos;m an <mark>MSc Artificial Intelligence</mark> graduate and a <mark>full-stack engineer</mark>.
-        </p>
-        <div className="about__side" data-reveal="">
-          <p>
-            I work across Next.js, React, Express, NestJS, AWS, Docker and Tailwind,
-            and I&apos;ve built mobile apps with Flutter.
-          </p>
-          <p>
-            Outside of code, I&apos;m a barber<svg className="motif motif--snip" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-scissors"/></svg>, a photographer<svg className="motif" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-camera"/></svg> and a musician<svg className="motif" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-eq"/></svg>.
-          </p>
-        </div>
+      <h2 className="section__title" data-mask=""><span><i>01</i> My crafts</span></h2>
+      <p className="about__lead" data-reveal="">
+        My <mark>swiss army knife</mark> is <mark>system design</mark>, <mark>AI and agentic platforms</mark>, <mark>distributed systems &amp; event-driven architecture</mark> and <mark>infrastructure</mark> with a product mindset.
+      </p>
+      <div className="skills crafts" data-stagger="">
+        <article className="skill" data-reveal="">
+          <h3><span>#01 · IA</span></h3>
+          <h4>Agents &amp; applied AI</h4>
+          <p>Conversational agents, RAG and LLM integrations shipped to production to automate information retrieval and decision-making.</p>
+        </article>
+        <article className="skill" data-reveal="">
+          <h3><span>#02 · OPS</span></h3>
+          <h4>Automation &amp; data</h4>
+          <p>Python, n8n and Power Automate pipelines that sync catalogs, suppliers and reports — fewer manual tasks, more reliability.</p>
+        </article>
+        <article className="skill" data-reveal="">
+          <h3><span>#03 · CLOUD</span></h3>
+          <h4>Cloud &amp; observability</h4>
+          <p>Azure, DigitalOcean, Cloudflare and New Relic: deployment, monitoring and alerting for fast, well-watched systems.</p>
+        </article>
+        <article className="skill" data-reveal="">
+          <h3><span>#04 · DESIGN</span></h3>
+          <h4>Crafted interfaces</h4>
+          <p>Trained in multimedia integration, I keep design at the heart of the code: every tool, internal ones included, gets a clear, accessible and pleasant interface.</p>
+        </article>
       </div>
     </section>
 
